@@ -1,0 +1,39 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+vector<vector<int> > nCrTable;
+
+// Relation: C(n,r) = C(n-1, r) + C(n-1, r-1)
+// Another relation: C(n, k+1) = C(n, k) * (n-k)/(k+1) not used, but good to keep in mind
+int Combination(int n, int r) {
+    if(n == r)
+        nCrTable[n][r] = 1;
+    if(r == 1)
+        nCrTable[n][r] = n;
+    if(r == 0)
+        nCrTable[n][r] = 1;
+    if(!nCrTable[n][r])
+        nCrTable[n][r] = (Combination(n-1, r)%1000000000 + Combination(n-1, r-1)%1000000000)%1000000000;
+    return nCrTable[n][r];
+}
+
+int main() {
+    int t;
+    cin >> t;
+    nCrTable.resize(1000); // Max size for this problem
+    for(int i = 0; i < 1000; i++)
+        nCrTable[i].resize(1000, 0);
+    for(int i = 0; i < t; i++) {
+        int k;
+        cin >> k;
+        
+        for(int j = 0; j <= k; j++)
+            cout << Combination(k, j) << " ";
+        cout << endl;
+    }
+    return 0;
+}

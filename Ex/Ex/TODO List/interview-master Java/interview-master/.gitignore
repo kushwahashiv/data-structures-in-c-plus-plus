@@ -1,0 +1,10 @@
+bin
+src/com/interview/competation/
+test/com/interview/competation/
+.project
+.settings
+.idea
+.DS_Store
+*.iml
+target
+

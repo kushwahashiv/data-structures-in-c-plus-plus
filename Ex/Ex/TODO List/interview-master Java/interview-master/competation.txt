@@ -1,0 +1,16 @@
+1. Given an array of N integer, 3 integer appears more than N/4, write code to find the 3 integer.
+2. Given an integer N, calculate how many 1 appears in the binary form of 1 ~ N
+3. Given an decimal, such as 0.a1a2a3(b1b2b3), which means b1b2b3 is  circulation part, this decimal can be denote using fraction.
+   such as: 0.3 -> 3/10, 0.3(3) -> 1/3
+   Write code to find the corresponding fraction of the given decimal.
+4. Given N point in 2 dimensional space, find the farthest two points.
+5. Given an array of N integer, find two integer which sum is closest to K.
+6. Given an array of N integer, find the combination using the integer in the array which sum is K.
+7. Given an array of N integer, find the combination using the integer in the array which sum is closest to K.
+8. Given an circulated array of N integer, write code to find the sub array which sum is maximal.
+9. Given an int array with positive and negitive numbers, find the sub arrays whose sum is equals or closest smaller to a given K
+10.Given a integer, write code to find a combination of continuous integer which sum is the given integer.
+    Such as: 9 -> 4 + 5, 11 -> 5 + 6,  6 -> 1 + 2 + 3,  20 ->  2 + 3 + 4 + 5 + 6
+    a. Some integer can't find this kind of combination, please specify the rules of this kind of integer.
+    b. In 32-bit integer, which number have most combination.
+
