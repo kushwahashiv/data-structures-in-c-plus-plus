@@ -88,7 +88,8 @@ int main()
   {
     std::cout << "No repeating elements" << std::endl;
   }
-  //printRepeating(arr, arr_size);
+  
+  printRepeating(arr, arr_size);
 
   system("pause");
 
