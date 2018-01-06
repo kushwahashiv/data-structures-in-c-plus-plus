@@ -56,8 +56,7 @@ vector<string> Solution::anagrams(vector<string> & strs)
 int main()
 {
   Solution obj;
-  //obj.anagrams()
-
+  obj.anagrams()
   system("pause");
 }
 
