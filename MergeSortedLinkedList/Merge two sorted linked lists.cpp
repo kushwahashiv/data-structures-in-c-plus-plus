@@ -115,6 +115,15 @@ void push(struct node** head_ref, int new_data)
   (*head_ref) = new_node;
 }
 
+
+// method 2
+#include<vector>
+struct ListNode {
+	int val;
+	ListNode *next;
+	ListNode(int x) : val(x), next(nullptr) {}
+};
+
 //Function to print nodes in a given linked list
 void printList(struct node *node)
 {
@@ -123,9 +132,47 @@ void printList(struct node *node)
     std::cout<<node->data << " ";
     node = node->next;
   }
-
   std::cout <<std::endl;
 }
+
+ListNode *merge2Lists(ListNode* l1, ListNode* l2) {
+	if (nullptr == l1) return l2;
+	else if (nullptr == l2) return l1;
+	if (l1->val <= l2->val) {
+		l1->next = merge2Lists(l1->next, l2);
+		return l1;
+	} else {
+		l2->next = merge2Lists(l1, l2->next);
+		return l2;
+	}
+}
+
+ListNode* mergeKLists(std::vector<ListNode*>& lists) {
+	if (lists.empty())  return nullptr;
+	if (lists.size() == 1) return lists[0];
+	std::vector<ListNode*> newLists;
+	if (lists.size() % 2)
+		newLists.push_back(lists.back());
+	for (int i = 0; i < lists.size() - 1; i += 2)
+		newLists.push_back(merge2Lists(lists[i], lists[i + 1]));
+	return mergeKLists(newLists);
+}
+
+
+/*
+ListNode *mergeKLists(std::vector<ListNode *> &lists) {
+if (lists.empty()) return nullptr;
+int len = lists.size();
+while (len > 1) {
+for (int i = 0; i < len / 2; ++i) {
+lists[i] = merge2Lists(lists[i], lists[len - 1 - i]);
+}
+len = (len + 1) / 2;
+}
+return lists.front();
+}
+*/
+
 
 //Drier program to test above functions
 int main()

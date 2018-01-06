@@ -38,156 +38,89 @@ http://en.wikipedia.org/wiki/3SUM
 #include <algorithm>
 using namespace std;
 
-vector<vector<int> > threeSum(vector<int> &num)
-{
-  vector< vector<int> > result;
-  //sort the array, this is the key
-  sort(num.begin(), num.end());
+// method: 1
+/*
+vector<vector<int> > threeSum(vector<int> &num) {
+	vector<vector<int> > res;
 
-  int n = num.size();
+	std::sort(num.begin(), num.end());
 
-  for (int i = 0; i < n - 2; i++)
-  {
-    //skip the duplication
-    if (i>0 && num[i - 1] == num[i])
-      continue;
+	for (int i = 0; i < num.size(); i++) {
 
-    int a = num[i];
-    int low = i + 1;
-    int high = n - 1;
-    while (low < high)
-    {
-      int b = num[low];
-      int c = num[high];
-      if (a + b + c == 0)
-      {
-        //got the soultion
-        vector<int> v;
-        v.push_back(a);
-        v.push_back(b);
-        v.push_back(c);
-        result.push_back(v);
+		int target = -num[i];
+		int front = i + 1;
+		int back = num.size() - 1;
 
-        // Continue search for all triplet combinations summing to zero.
-        //skip the duplication
-        while (low < n && num[low] == num[low + 1])
-          low++;
+		if (target < 0)
+		{
+			break;
+		}
 
-        while (high > 0 && num[high] == num[high - 1])
-          high--;
+		while (front < back) {
 
-        low++;
-        high--;
-      }
-      else if (a + b + c > 0)
-      {
-        //skip the duplication
-        while (high > 0 && num[high] == num[high - 1])
-          high--;
+			int sum = num[front] + num[back];
 
-        high--;
-      }
-      else
-      {
-        //skip the duplication
-        while (low < n && num[low] == num[low + 1])
-          low++;
+			// Finding answer which start from number num[i]
+			if (sum < target)
+				front++;
 
-        low++;
-      }
-    }
-  }
-  return result;
-}
+			else if (sum > target)
+				back--;
+
+			else {
+				vector<int> triplet(3, 0);
+				triplet[0] = num[i];
+				triplet[1] = num[front];
+				triplet[2] = num[back];
+				res.push_back(triplet);
+
+				// Processing duplicates of Number 2
+				// Rolling the front pointer to the next different number forwards
+				while (front < back && num[front] == triplet[1]) front++;
+
+				// Processing duplicates of Number 3
+				// Rolling the back pointer to the next different number backwards
+				while (front < back && num[back] == triplet[2]) back--;
+			}
+
+		}
+
+		// Processing duplicates of Number 1
+		while (i + 1 < num.size() && num[i + 1] == num[i])
+		i++;
+	}
+	return res;
+} */
 
 
 //2.
-//using combination method could meet <<Time Limit Exceeded>> error
-vector<vector<int> > combination(vector<int> &v, int k);
-bool isSumZero(vector<int>& v);
-int sum(vector<int>& v);
+vector<vector<int>> threeSum(vector<int>& nums) {
+	vector<vector<int>> result;
+	sort(nums.begin(), nums.end());
 
-vector<vector<int> > threeSum2(vector<int> &num)
-{
-  vector< vector<int> > result;
-  vector< vector<int> > r = combination(num, 3);
-  for (int i = 0; i < r.size(); i++)
-  {
-    if (isSumZero(r[i]))
-    {
-      result.push_back(r[i]);
-    }
-  }
-  return result;
+	for (auto i = 0; i < nums.size();) {
+		auto target = -nums[i];
+		int l = i + 1, u = nums.size() - 1;
+
+		while (l < u) {
+			auto sum = nums[l] + nums[u];
+
+			if (sum < target)
+				while (++l < nums.size() && nums[l] == nums[l - 1]);  // Processing duplicates of Number 2
+			else if (sum > target)
+				while (--u < nums.size() && nums[u] == nums[u + 1]);  // Processing duplicates of Number 3
+			else {
+				result.push_back(vector<int>{nums[i], nums[l], nums[u]});
+				while (++l < nums.size() && nums[l] == nums[l - 1]);  // Processing duplicates of Number 2
+				while (--u < nums.size() && nums[u] == nums[u + 1]);  // Processing duplicates of Number 3
+			}
+		}
+		// Processing duplicates of Number 1
+		while (++i < nums.size() && nums[i] == nums[i - 1]);
+	}
+
+	return result;
 }
-
-bool isSumZero(vector<int>& v)
-{
-  return sum(v) == 0;
-}
-
-int sum(vector<int>& v)
-{
-  int s = 0;
-  for (int i = 0; i < v.size(); i++)
-  {
-    s += v[i];
-  }
-  return s;
-}
-
-vector<vector<int> > combination(vector<int> &v, int k)
-{
-
-  vector<vector<int> > result;
-  vector<int> d;
-  int n = v.size();
-  for (int i = 0; i < n; i++)
-  {
-    d.push_back((i < k) ? 1 : 0);
-  }
-
-  //1) from the left, find the [1,0] pattern, change it to [0,1]
-  //2) move all of the 1 before the pattern to the most left side
-  //3) check all of 1 move to the right
-  while (1)
-  {
-    vector<int> tmp;
-    for (int x = 0; x < n; x++)
-    {
-      if (d[x]) tmp.push_back(v[x]);
-    }
-    sort(tmp.begin(), tmp.end());
-    result.push_back(tmp);
-    //step 1), find [1,0] pattern
-    int i;
-    bool found = false;
-    int ones = 0;
-    for (i = 0; i < n - 1; i++)
-    {
-
-      if (d[i] == 1 && d[i + 1] == 0)
-      {
-        d[i] = 0; d[i + 1] = 1;
-        found = true;
-        //step 2) move all of right 1 to the most left side
-        for (int j = 0; j < i; j++)
-        {
-          d[j] = (ones > 0) ? 1 : 0;
-          ones--;
-        }
-        break;
-      }
-      if (d[i] == 1) ones++;
-    }
-    if (!found){
-      break;
-    }
-
-  }
-  return result;
-}
-
 
 void printMatrix(vector<vector<int> > &matrix)
 {

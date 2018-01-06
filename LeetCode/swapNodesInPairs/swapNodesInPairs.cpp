@@ -62,6 +62,7 @@ public:
     }
     return head;
   }
+
   /*swap the list nodes physically*/
   ListNode *swapPairs2(ListNode *head) {
     ListNode *h = nullptr;
@@ -86,6 +87,18 @@ public:
     return head;
   }
 };
+
+
+ListNode* swapPairs(ListNode* head) {
+	ListNode **current = &head, *a, *b;
+	while ((a = *current) && (b = a->next)) {
+		a->next = b->next;
+		b->next = a;
+		*current = b;
+		current = &(a->next);
+	}
+	return head;
+}
 
 
 int main()

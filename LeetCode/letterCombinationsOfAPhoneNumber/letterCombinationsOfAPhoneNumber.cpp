@@ -48,7 +48,7 @@ vector<string> letterCombinations(string digits) {
         } 
         int d = digits[i] - '0';
         if (result.size()<=0){
-            for( int j=0; j<4 && phone[d][j]!='\0'; j++ ){
+            for( int j=0; j < 4 && phone[d][j] != '\0'; j++ ){
                 string s;
                 s += phone[d][j];
                 result.push_back(s);
@@ -57,7 +57,7 @@ vector<string> letterCombinations(string digits) {
         }
         vector<string> r;
         for (int j=0; j<result.size(); j++){
-            for( int k=0; k<4 && phone[d][k]!='\0'; k++ ){
+            for( int k=0; k < 4 && phone[d][k] != '\0'; k++ ){
                 string s = result[j] + phone[d][k];
                 //sort(s.begin(), s.end());
                 r.push_back(s); 
@@ -79,13 +79,38 @@ void printVector(vector<string>& ss){
     cout << " }" << endl;
 }
 
+// method 2
+vector<string> letterCombinations2(string digits) {
+	vector<string> result;
+	if (digits.empty()) return vector<string>();
+
+	static const vector<string> v = { "", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz" };
+	result.push_back("");   // add a seed for the initial case
+	
+	for (int i = 0; i < digits.size(); ++i) {
+		int num = digits[i] - '0';
+		if (num < 0 || num > 9) break;
+		const string& candidate = v[num];
+		if (candidate.empty()) continue;
+		vector<string> tmp;
+		for (int j = 0; j < candidate.size(); ++j) {
+			for (int k = 0; k < result.size(); ++k) {
+				tmp.push_back(result[k] + candidate[j]);
+			}
+		}
+		result.swap(tmp);
+	}
+	return result;
+}
+
+
 int main(int argc, char**argv)
 {
     string s="23";
     if (argc>1){
         s=argv[1];
     }
-    vector<string> ss = letterCombinations(s);
+    vector<string> ss = letterCombinations2(s);
     printVector(ss);
     return 0;
 }
