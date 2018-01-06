@@ -10,7 +10,7 @@ This method uses the range given in the question to restrict the size of count[]
 but doesn't use the data that there are only two repeating elements.
 
 
-```cmd
+```cpp
 #include<iostream>
 #include<array>
 
@@ -98,7 +98,7 @@ int main()
 
 > Complete the BitCount function below.  The result from the function should equal the number of bits that are set. For example if 0101 1111 is passed in, the return value = 6       
 
-```
+```cpp
 //#include <tchar.h>
 #include <iostream>
 
@@ -132,7 +132,7 @@ int BitCount(unsigned char uc)
 
 # ClosestNumber
 
-```
+```cpp
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -239,7 +239,7 @@ int main() {
 
 # Combinations
 
-```
+```cpp
 #include<iostream>
 #include<ctime>
 #include<cmath>
@@ -421,7 +421,7 @@ int main()
 >
 >n_i = m_i * n_{i-1} + n_{i-2}, where:n_0=1  and n_1=2
 
-```
+```cpp
 #include<iostream>
 #include<vector>
 
@@ -703,7 +703,7 @@ int main()
 
 # DFS
 
-```
+```cpp
 #include<iostream>
 #include <list>
 
@@ -813,7 +813,7 @@ Sample Output
 2
 Explanation On removing the edges (1, 3) and (1, 6), we can get the desired result.
 
-```
+```cpp
 #include <cmath>
 #include <cstdio>
 #include <vector>
@@ -884,7 +884,7 @@ you will get the missing number.
 
 //Time Complexity : O(n)
 
-```
+```cpp
 #include<iostream>
 
 //getMissingNo takes array and size of array as arguments
@@ -921,7 +921,7 @@ int main()
 2) XOR all numbers from 1 to n, let XOR be X2.
 3) XOR of X1 and X2 gives the missing number.
 
-```
+```cpp
 #include<stdio.h>
 
 //getMissingNo takes array and size of array as arguments
@@ -959,7 +959,7 @@ int main()
 Problm:
 program to take 2 sentences/string and find common letters
 
-```
+```cpp
 #include <iostream>
 #include <string>
 #include <set>
@@ -1068,7 +1068,7 @@ Output Format
 
 For each test case, display the count of digits in N that exactly divide N in separate line.
 
-```
+```cpp
 #include<iostream>
 #include<vector>
 using namespace std;
@@ -1141,7 +1141,7 @@ All of the above methods can be used to find the kth largest (or smallest) eleme
 
 Implementation of min heap method:
 
-```
+```cpp
 #include<iostream>
 
 void swap(int *a, int *b)
@@ -1297,7 +1297,7 @@ int main()
 Problem:
 Find nth Fibonacci number using recursive templates
 
-```
+```cpp
 #include <iostream>
 
 template< unsigned N >
@@ -1344,7 +1344,7 @@ This makes the code more concise and is actually also more efficient.
 read more about std::unordered_map:
 http://www.cplusplus.com/reference/unordered_map/unordered_map/
 
-```
+```cpp
 #include <iostream>
 #include <unordered_map>
 #include <vector>
@@ -1385,7 +1385,7 @@ C++11 and C++14 samples
 Demonstrates creation of a hash function for a user defined type.
 Using this as a template parameter for std::unordered_map, std::unordered_set, etc. also requires specialization of std::equal_to.
 
-```
+```cpp
 #include <iostream>
 #include <functional>
 #include <string>
@@ -1438,7 +1438,7 @@ int main()
 - and Insert is called with a node with value 34 and offset 2, the
 - modified list would contain 4,8,34,15,16,23, and 42.
 
-```
+```cpp
 //#include <tchar.h>
 #include <assert.h>
 
@@ -1509,7 +1509,7 @@ Problem:
 Intersecting node of a Y shaped linked list
 
 
-```
+```cpp
 #include<iostream>
 
 struct node
@@ -1655,7 +1655,7 @@ Sample output #00
 
 13
 
-```
+```cpp
 #include <iostream>  
 #include <vector>  
 #include <algorithm>  
@@ -1747,7 +1747,7 @@ Given a BinarySearchTree and value K, find all value pairs whose sum is K in O(n
 or
 Given a binary search tree of n nodes, find two nodes whose sum is equal to a given number k in O(n) time and constant space O(logn) 
 
-```
+```cpp
 #include <iostream>
 
 typedef struct Node
@@ -1910,7 +1910,7 @@ Given two sequence of integers, A=[a1,a2,',an] and B=[b1,b2,',bm], find any one 
 
 In case multiple solutions exist, print any of them. It is guaranteed that at least one non-empty common subsequence will exist.
 
-```
+```cpp
 #include <algorithm>
 #include <cstdlib>
 #include <iostream>
@@ -2202,7 +2202,7 @@ Constraints
 Output Format
 The maximal value as mentioned in the problem statement.
 
-```
+```cpp
 #include<iostream>
 using namespace std;
 
@@ -2258,7 +2258,7 @@ node is efficient, since it is only temporary, and it is allocated in the stack.
 removing one node from either 'a' or 'b', and adding it to tail. When
 we are done, the result is in dummy.next
 
-```
+```cpp
 //Program to alternatively split a linked list into two halves
 #include<iostream>
 #include<assert.h>
@@ -2402,7 +2402,7 @@ int main()
 
 # Palindromes
 
-```
+```cpp
 #include <stdlib.h>
 //#include <tchar.h>
 #include <iostream>
@@ -2479,7 +2479,7 @@ Complete the ParityCheck function below.  The result from the function
 should equal 1 if the parity is even, 0 if it is odd                       
 For example if 0101 1111 is passed in, the return value = 1          
 
-```
+```cpp
 #include <iostream>
 
 unsigned char ParityCheck(unsigned char uc);
@@ -2513,7 +2513,7 @@ unsigned char ParityCheck(unsigned char uc)
 
 # Permutation
 
-```
+```cpp
 #include <iostream>
 
 void print(const int *v, const int size)
@@ -2573,7 +2573,7 @@ the function will output:
 8
 4
 
-```
+```cpp
 #include <iostream>
 
 struct Node
@@ -2642,7 +2642,7 @@ recursion. The function should print the characters
 in the string in reverse order.         
 For example, 'Hello' entered would output 'olleH'  
 
-```
+```cpp
 #include <iostream>
 
 void PrintReverse(const char* aString);
@@ -2694,7 +2694,7 @@ or
 Program to implement a queue using two stacks
 Can implement it use template
 
-```
+```cpp
 #include<iostream>
 
 struct Node
@@ -2813,7 +2813,7 @@ Create an in-place version of Quicksort. Also, always select the last element in
 'sub-array' as a pivot. Partition the left side and then the right side of the array. 
 Print out the whole array at the end of every partitioning method.
 
-```
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -2921,7 +2921,7 @@ Problem:
   Random shuffle the deck.
 //1. Using STD random_reshuffle function
 
-```
+```cpp
 #include <iostream>     // std::cout
 #include <algorithm>    // std::random_shuffle
 #include <vector>       // std::vector
@@ -2977,7 +2977,7 @@ int main()
 
 
 ## 2. Using STD rand() function
-```
+```cpp
 #include<iostream>
 
 #define DECK_SIZE 24
@@ -3026,7 +3026,7 @@ int main(int argc, char **argv)
 
 # RemoveDuplicatesFromLinkedList
 
-```
+```cpp
 #include <iostream>
 
 using namespace std;
@@ -3153,7 +3153,7 @@ int main(int argc, char* argv[])
 # ReverseString
 Complete the ReverseString function below. The function should reverse a string in place. For example, 'Hello' entered would output 'olleH'  
 
-```
+```cpp
 #include <iostream>
 
 void ReverseString(char* const szString);
@@ -3216,7 +3216,7 @@ start 2---3
 // Program to print BFS traversal from a given source vertex. BFS(int s) 
 // traverses vertices reachable from s.
 
-```
+```cpp
 #include<iostream>
 #include <list>
 
@@ -3340,7 +3340,7 @@ Constraints
 1<=r<=R
 1<=c<=C
 
-```
+```cpp
 #include <cmath>
 #include <cstdio>
 #include <vector>
