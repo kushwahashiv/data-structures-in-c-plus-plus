@@ -25,7 +25,7 @@ in the sorted list, achieving worst-case O(n^n)
 Solution:  Quadratic algorithm
 http://en.wikipedia.org/wiki/3SUM
 
-```
+```cpp
 #include <stdio.h>
 #include <iostream>
 #include <vector>
@@ -125,7 +125,7 @@ take -1(skip the duplication), can cacluate the "two number problem" of the rese
 [-4,-1,(-1),1,2]  target=2  distance=1
 ^ ^
 
-```
+```cpp
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
@@ -231,7 +231,7 @@ Solution:
 1. Sort the array,
 2. traverse the array, and solve the problem by using "3Sum" soultion.
 
-```
+```cpp
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -370,7 +370,7 @@ a = "11"
 b = "1"
 Return "100".
 
-```
+```cpp
 #include <iostream>
 #include <string>
 using namespace std;
@@ -439,7 +439,7 @@ ListNode *next;
 ListNode(int x) : val(x), next(nullptr) {}
 };
 
-```
+```cpp
 #include <iostream>
 #include <string>
 using namespace std;
@@ -542,7 +542,7 @@ Problem:
 Given an array of strings, return all groups of strings that are anagrams.
 Note: All inputs will be in lower-case.
 
-```
+```cpp
 #include<iostream>
 #include<vector>
 #include<map>
@@ -601,7 +601,7 @@ Problem:
 Given a binary tree, determine if it is height-balanced.
 For this problem, a height-balanced binary tree is defined as a binary tree in which
 the depth of the two subtrees of every node never differ by more than 1.
-```
+```cpp
 #include <iostream>
 #include <string>
 #include <math.h>
@@ -685,7 +685,7 @@ Notes:
 Some people think find the highest-price & lowest-price, this is wrong.
 Because the highest-price must be after lowest-price
 
-```
+```cpp
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -770,7 +770,7 @@ Here's an example:
 
 The above binary tree is serialized as "{1,2,3,#,#,4,#,#,5}".
 
-```
+```cpp
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -870,7 +870,7 @@ Here's an example:
 
 The above binary tree is serialized as "{1,2,3,#,#,4,#,#,5}".
 
-```
+```cpp
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -1127,7 +1127,7 @@ Given the below binary tree,
 
 Return 6.
 
-```
+```cpp
 #include <iostream>
 #include <algorithm>
 using namespace std;
@@ -1203,7 +1203,7 @@ return [3,2,1].
 
 Note: Recursive solution is trivial, could you do it iteratively?
 
-```
+```cpp
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -1368,7 +1368,7 @@ int main()
     3
  return [1,2,3].
  Note: Recursive solution is trivial, could you do it iteratively?
-```
+```cpp
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -1543,7 +1543,7 @@ return the root of the binary tree [4,5,2,#,#,3,1].
    3   1
 confused what "{1,#,2,3}" means? > read more on how binary tree is serialized on OJ.
 
-```
+```cpp
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -1692,7 +1692,7 @@ Here's an example:
     \
      5
 The above binary tree is serialized as "{1,2,3,#,#,4,#,#,5}". 
-```
+```cpp
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
@@ -1888,7 +1888,7 @@ For example:
 
 3) total candy is 19
 
-```
+```cpp
 #include <stdlib.h>
 #include <time.h>
 #include <iostream>
@@ -1971,7 +1971,7 @@ int main(int argc, char**argv)
 You are climbing a stair case. It takes n steps to reach to the top.
 Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
 
-```
+```cpp
 #include<iostream>
 
 
@@ -2030,7 +2030,7 @@ Visually, the graph looks like the following:
     0 --- 2
          / \
          \_/
-```
+```cpp
 #include<iostream>
 #include<vector>
 #include<map>
@@ -2116,7 +2116,7 @@ Given two integers n and k, return all possible combinations of k numbers out of
  [1,3],
  [1,4],
  ]
-```
+```cpp
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -2263,7 +2263,7 @@ int main()
  A solution set is:
  [7]
  [2, 2, 3]
-```
+```cpp
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -2352,7 +2352,7 @@ int main(int argc, char** argv)
 # constructBinaryTreeFromInorderAndPostorderTraversal
 Given inorder and postorder traversal of a tree, construct the binary tree.
 Note: You may assume that duplicates do not exist in the tree.
-```
+```cpp
 #include <stdio.h>
 #include <vector>
 #include <queue>
@@ -2508,7 +2508,7 @@ int main()
 Given preorder and inorder traversal of a tree, construct the binary tree.
 Note: You may assume that duplicates do not exist in the tree.
 
-```
+```cpp
 #include <stdio.h>
 #include <vector>
 #include <queue>
@@ -2634,7 +2634,7 @@ int main()
 # convertSortedArrayToBinarySearchTree
 Given a singly linked list where elements are sorted in ascending order, 
 convert it to a height balanced BST.
-```
+```cpp
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
@@ -2752,7 +2752,7 @@ A linked list is given such that each node contains an additional random pointer
 which could point to any node in the list or null.
 Return a deep copy of the list.
 
-```
+```cpp
 /**
  * Definition for singly-linked list with a random pointer.
  * struct RandomListNode {
@@ -2946,7 +2946,7 @@ The count-and-say sequence is the sequence of integers beginning as follows:
  
 Given an integer n, generate the nth sequence. 
 Note: The sequence of integers will be represented as a string.
-```
+```cpp
 #include <stdlib.h>
 #include <iostream>
 #include <sstream>
@@ -3029,7 +3029,7 @@ For example,
 Given encoded message "12",
 it could be decoded as "AB" (1 2) or "L" (12). 
 The number of ways decoding "12" is 2.
-```
+```cpp
 #include <iostream>
 #include <string>
 #include <string.h>
@@ -3096,7 +3096,7 @@ S = "rabbbit", T = "rabbit"
  
 Return 3.
 
-```
+```cpp
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
@@ -3247,7 +3247,7 @@ int main(int argc, char** argv)
 # divideTwoInt
 Divide two integers without using multiplication, division and mod operator.
 
-```
+```cpp
 #include <stdio.h>
 #include <string.h>
 #include <iostream>
@@ -3322,7 +3322,7 @@ a) Insert a character
 b) Delete a character
 c) Replace a character
 
-```
+```cpp
 #include <iostream>
 #include <string>
 #include <vector>
@@ -3440,7 +3440,7 @@ Some examples:
 ["2", "1", "+", "3", "*"] -> ((2 + 1) * 3) -> 9
 ["4", "13", "5", "/", "+"] -> (4 + (13 / 5)) -> 6
 
-```
+```cpp
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
