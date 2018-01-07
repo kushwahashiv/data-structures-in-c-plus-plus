@@ -1,105 +1,63 @@
-// Source : https://oj.leetcode.com/problems/sudoku-solver/
+// Source : https://leetcode.com/problems/sudoku-solver/description/
 // Author : Shiv S. Kushwaha
 // Date   : 2014-09-20
 
-/********************************************************************************** 
-* 
-* Write a program to solve a Sudoku puzzle by filling the empty cells.
-* 
-* Empty cells are indicated by the character '.'.
-* 
-* You may assume that there will be only one unique solution.
-* 
-* A sudoku puzzle...
-* 
-* ...and its solution numbers marked in red.
-* 
-*               
-**********************************************************************************/
+/*
+Write a program to solve a Sudoku puzzle by filling the empty cells.
+Empty cells are indicated by the character '.'.
+You may assume that there will be only one unique solution.
+A sudoku puzzle...
+...and its solution numbers marked in red.
 
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
+*/
+
 #include <iostream>
 #include <vector>
 using namespace std;
 
 
-const int SodukuSize = 9;
-bool row_mask[SodukuSize][SodukuSize];
-bool col_mask[SodukuSize][SodukuSize];
-bool area_mask[SodukuSize][SodukuSize];
+bool check(vector<vector<char>>& board, int i, int j, char val) {
 
-bool initSudokuMask(vector< vector<char> > &board){
-    //reset the memory
-    memset(row_mask, false, sizeof(row_mask));
-    memset(col_mask, false, sizeof(col_mask));
-    memset(area_mask, false, sizeof(area_mask));
-
-    //check each rows and cols
-    for(int r=0; r<board.size(); r++){
-        for (int c=0; c<board[r].size(); c++){
-            if (!isdigit(board[r][c])) {
-                continue;
-            };
-            int idx =  board[r][c] - '0' - 1;
-
-            //check the rows/cols/areas
-            int area = (r/3) * 3 + (c/3);
-            if (row_mask[r][idx] || col_mask[c][idx] || area_mask[area][idx] ){
-                return false;
-            }
-            row_mask[r][idx] = col_mask[c][idx] = area_mask[area][idx] = true;
+    for( int h=0;h<9;h++)
+        {
+        if(board[i][h]==val) return false; /* check row */
+        if(board[h][j]==val) return false; /* check col */
+        if(board[i-i%3+h/3][j-j%3+h%3]==val)return false; /* check cube */
         }
-    }
-    return true;
 
+    return true;
 }
 
+/*bool check(vector<vector<char>> &board, int i, int j, char val)
+{
+    int row = i - i%3, column = j - j%3;
+    for(int x=0; x<9; x++) if(board[x][j] == val) return false;
+    for(int y=0; y<9; y++) if(board[i][y] == val) return false;
+    for(int x=0; x<3; x++)
+    for(int y=0; y<3; y++)
+        if(board[row+x][column+y] == val) return false;
+    return true;
+}*/
 
-bool recursiveSudoKu(vector< vector<char> > &board, int row, int col){
+bool solveSudoku(vector<vector<char>> &board, int i, int j)
+{
+    if(i==9) return true;
+    if(j==9) return solveSudoku(board, i+1, 0);
+    if(board[i][j] != '.') return solveSudoku(board, i, j+1);
 
-    if (row >= SodukuSize) {
-        return true;
-    }
-
-    if (col >= SodukuSize){
-        return recursiveSudoKu(board, row+1, 0);
-    }
-    
-    if (board[row][col] != '.'){
-        return recursiveSudoKu(board, row, col+1);    
-    }
-    //pick a number for empty cell
-    int area;
-    for(int i=0; i<SodukuSize; i++){
-        area = (row/3) * 3 + (col/3);
-        if (row_mask[row][i] || col_mask[col][i] || area_mask[area][i] ){
-            continue;
+    for(char c='1'; c<='9'; c++)
+    {
+        if(check(board, i, j, c))
+        {
+            board[i][j] = c;
+            if(solveSudoku(board, i, j+1)) return true;
+            board[i][j] = '.';
         }
-        //set the number and sovle it recursively
-        board[row][col] = i + '1';
-        row_mask[row][i] = col_mask[col][i] = area_mask[area][i] = true;
-        if (recursiveSudoKu(board, row, col+1) == true){
-            return true;
-        }
-        //backtrace
-        board[row][col] = '.';
-        row_mask[row][i] = col_mask[col][i] = area_mask[area][i] = false;
-         
     }
+
     return false;
 }
 
-
-void solveSudoku(vector<vector<char> > &board) {
-    if (initSudokuMask(board) == false){
-        return;
-    }
-    recursiveSudoKu(board, 0, 0); 
-}
-
-
-int main(int argc, char**argv) {
+int main() {
     return 0;
 }

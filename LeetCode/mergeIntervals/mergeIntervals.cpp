@@ -1,17 +1,14 @@
-// Source : https://oj.leetcode.com/problems/merge-intervals/
+// Source : https://leetcode.com/problems/merge-intervals/description/
 // Author : Shiv S. Kushwaha
 // Date   : 2014-08-26
 
-/********************************************************************************** 
-* 
-* Given a collection of intervals, merge all overlapping intervals.
-* 
-* For example,
-* Given [1,3],[2,6],[8,10],[15,18],
-* return [1,6],[8,10],[15,18].
-* 
-*               
-**********************************************************************************/
+/*
+Given a collection of intervals, merge all overlapping intervals.
+
+For example,
+Given [1,3],[2,6],[8,10],[15,18],
+return [1,6],[8,10],[15,18].
+*/
 
 #include <iostream>
 #include <vector>
@@ -25,32 +22,18 @@ struct Interval {
     Interval(int s, int e) : start(s), end(e) {}
 };
 
-//Two factos sorting [start:end]
-bool compare(const Interval& lhs, const Interval& rhs){
-    return (lhs.start==rhs.start) ? lhs.end < rhs.end : lhs.start < rhs.start;
-}
-
-vector<Interval> merge(vector<Interval> &intervals) {
-
-    vector<Interval> result;
-
-    if (intervals.size() <= 0) return result;
-    //sort the inervals. Note: using the customized comparing function.
-    sort(intervals.begin(), intervals.end(), compare);
-    for(int i=0; i<intervals.size(); i++) { 
-        int size = result.size();
-        // if the current intervals[i] is overlapped with previous interval.
-        // merge them together
-        if( size>0 && result[size-1].end >= intervals[i].start) {
-            result[size-1].end = max(result[size-1].end, intervals[i].end); 
-        }else{
-            result.push_back(intervals[i]);
-        }
+vector<Interval> merge(vector<Interval>& ins) {
+    if (ins.empty()) return vector<Interval>{};
+    vector<Interval> res;
+    sort(ins.begin(), ins.end(), [](Interval a, Interval b){return a.start < b.start;});
+    res.push_back(ins[0]);
+    for (int i = 1; i < ins.size(); i++) {
+        if (res.back().end < ins[i].start) res.push_back(ins[i]);
+        else
+            res.back().end = max(res.back().end, ins[i].end);
     }
-    
-    return result;
+    return res;
 }
-
 
 int main(int argc, char**argv)
 {

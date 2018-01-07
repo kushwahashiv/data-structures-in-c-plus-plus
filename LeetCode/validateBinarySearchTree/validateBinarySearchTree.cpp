@@ -1,38 +1,24 @@
-// Source : https://oj.leetcode.com/problems/validate-binary-search-tree/
+// Source : https://leetcode.com/problems/validate-binary-search-tree/description/
 // Author : Shiv S. Kushwaha
 // Date   : 2014-07-05
 
-/********************************************************************************** 
-* 
-* Given a binary tree, determine if it is a valid binary search tree (BST).
-* 
-* Assume a BST is defined as follows:
-* 
-* The left subtree of a node contains only nodes with keys less than the node's key.
-* The right subtree of a node contains only nodes with keys greater than the node's key.
-* Both the left and right subtrees must also be binary search trees.
-* 
-* confused what "{1,#,2,3}" means? > read more on how binary tree is serialized on OJ.
-* 
-* OJ's Binary Tree Serialization:
-* 
-* The serialization of a binary tree follows a level order traversal, where '#' signifies 
-* a path terminator where no node exists below.
-* 
-* Here's an example:
-* 
-*    1
-*   / \
-*  2   3
-*     /
-*    4
-*     \
-*      5
-* 
-* The above binary tree is serialized as "{1,2,3,#,#,4,#,#,5}". 
-* 
-*               
-**********************************************************************************/
+/*
+Given a binary tree, determine if it is a valid binary search tree (BST).
+Assume a BST is defined as follows:
+The left subtree of a node contains only nodes with keys less than the node's key.
+The right subtree of a node contains only nodes with keys greater than the node's key.
+Both the left and right subtrees must also be binary search trees.
+Example 1:
+    2
+   / \
+  1   3
+Binary tree [2,1,3], return true.
+Example 2:
+    1
+   / \
+  2   3
+Binary tree [1,2,3], return false.
+*/
 
 #include <iostream>
 #include <vector>
@@ -46,35 +32,19 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
 };
 
-bool isValidBST(TreeNode *root) {
+bool isValidBST(TreeNode* root) {
+    return isValidBST(root, NULL, NULL);
+}
 
-    //travel the tree by inner-order
-    vector<TreeNode*> stack;
-    TreeNode* node = root;
-    vector<int> v;
-    while (stack.size()>0 || node!=nullptr) {
-        if (node!=nullptr){
-            stack.push_back(node);
-            node = node->left;
-        }else{
-            node = stack.back();
-            stack.pop_back();
-            v.push_back(node->val);
-            node = node->right;
-        }
-    }
-
-    //check the vector wehther sorted or not
-    for(int i=0; v.size()>0 && i<v.size()-1; i++){
-        if (v[i] >= v[i+1]) {
-            return false;
-        }
-    }
-
-    return true;
+bool isValidBST(TreeNode* root, TreeNode* minNode, TreeNode* maxNode) {
+    if(!root) return true;
+    if(minNode && root->val <= minNode->val || maxNode && root->val >= maxNode->val)
+        return false;
+    return isValidBST(root->left, minNode, root) && isValidBST(root->right, root, maxNode);
 }
 
 
+//
 TreeNode* createTree(int a[], int n)
 {
     if (n<=0) return nullptr;

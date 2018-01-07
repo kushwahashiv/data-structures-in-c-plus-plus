@@ -1,100 +1,35 @@
-// Source : https://oj.leetcode.com/problems/implement-strstr/
+// Source : https://leetcode.com/problems/implement-strstr/description/
 // Author : Shiv S. Kushwaha
 // Date   : 2014-07-19
 
-/********************************************************************************** 
-* 
-* Implement strStr().
-* 
-* Returns a pointer to the first occurrence of needle in haystack, or null if needle is not part of haystack.
-* 
-*               
-**********************************************************************************/
+/*
+Implement strStr().
+Return the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
 
-#include <stdio.h>
-#include <stdlib.h>
+Example 1:
+Input: haystack = "hello", needle = "ll"
+Output: 2
+Example 2:
+
+Input: haystack = "aaaaa", needle = "bba"
+Output: -1
+*/
+#include <iosteram>
 #include <time.h>
 
-char *strStr1(char *haystack, char *needle);
-char *strStr2(char *haystack, char *needle);
-
-char *strStr(char*haystack, char *needle) {
-    if (rand()%2){
-        printf("---KMP---\n");
-        return strStr1(haystack, needle);
-    }
-    printf("---brute-force---\n");
-    return strStr2(haystack, needle);
-}
-//KMP
-char *strStr1(char *haystack, char *needle) {
-    if(!haystack || !needle ) {
-        return nullptr;
-    }
-    if (!*needle ) {
-        return haystack;
-    }
-
-    char *ph = haystack;
-    char *pn = needle;
-    for( ;*ph && *pn ; ph++, pn++ );
-
-    //len(haystack) < len(needle)
-    if (!*ph && *pn){
-        return nullptr;    
-    }
-
-    for(ph=ph-1; *ph; haystack++, ph++) {
-        char *q=needle;
-        char *p=haystack;
-        int n=0;
-        while(*q && *p && *p==*q){
-            p++; q++;
-            if (n==0 && *p == *needle){
-                n = p - haystack;
-            }
+// https://leetcode.com/problems/implement-strstr/discuss/12956
+int strStr(string haystack, string needle) {
+        int m = haystack.length(), n = needle.length();
+        if (!n) return 0;
+        for (int i = 0; i < m - n + 1; i++) {
+            int j = 0;
+            for (; j < n; j++)
+                if (haystack[i + j] != needle[j])
+                    break;
+            if (j == n) return i;
         }
-        if (!*q){
-            return haystack;
-        }
-        haystack += (n>0 ? n-1 : n);
-    }
-    return nullptr;
-}
-
-//brute-force
-char *strStr2(char *haystack, char *needle) {
-
-    if(!haystack || !needle ) {
-        return nullptr;
-    }
-    if (!*needle ) {
-        return haystack;
-    }
-
-    char *ph = haystack;
-    char* pn = needle;
-    for( ;*ph && *pn ; ph++, pn++ );
-
-    //len(haystack) < len(needle)
-    if (!*ph && *pn){
-        return nullptr;    
-    }
-    ph--;
-
-    for( ; *ph; haystack++, ph++) {
-        char *q=needle;
-        char *p=haystack;
-        while(*q && *p && *p==*q){
-            p++; q++;
-        }
-        if (!*q){
-            return haystack;
-        }
-    }
-
-    return nullptr;
-}
+        return -1;
+ }
 
 int main(int argc, char** argv)
 {

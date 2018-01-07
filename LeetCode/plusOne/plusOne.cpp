@@ -1,18 +1,36 @@
-// Source : https://oj.leetcode.com/problems/plus-one/
+// Source : https://leetcode.com/problems/plus-one/description/
 // Author : Shiv S. Kushwaha
 // Date   : 2014-06-21
 
-/********************************************************************************** 
-* 
-* Given a non-negative number represented as an array of digits, plus one to the number.
-* 
-* The digits are stored such that the most significant digit is at the head of the list.
-*               
-**********************************************************************************/
+/*
+Given a non-negative integer represented as a non-empty array of digits, plus one to the integer.
+You may assume the integer do not contain any leading zero, except the number 0 itself.
+The digits are stored such that the most significant digit is at the head of the list.
+*/
 
 #include <iostream>
 #include <vector>
 using namespace std;
+
+void plusone(vector<int> &digits)
+{
+	int n = digits.size();
+	for (int i = n - 1; i >= 0; --i)
+	{
+		if (digits[i] == 9)
+		{
+			digits[i] = 0;
+		}
+		else
+		{
+			digits[i]++;
+			return;
+		}
+	}
+		digits[0] =1;
+		digits.push_back(0);
+}
+
 
 vector<int> plusOne(vector<int> &digits) {
     int carry=1;

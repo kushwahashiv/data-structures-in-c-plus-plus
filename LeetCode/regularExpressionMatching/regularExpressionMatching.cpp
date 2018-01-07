@@ -1,40 +1,36 @@
-// Source : https://oj.leetcode.com/problems/regular-expression-matching/
+// Source : https://leetcode.com/problems/regular-expression-matching/description/
 // Author : Shiv S. Kushwaha
 // Date   : 2014-08-24
 
-/********************************************************************************** 
-* 
-* Implement regular expression matching with support for '.' and '*'.
-* 
-* '.' Matches any single character.
-* '*' Matches zero or more of the preceding element.
-* 
-* The matching should cover the entire input string (not partial).
-* 
-* The function prototype should be:
-* bool isMatch(const char *s, const char *p)
-* 
-* Some examples:
-* isMatch("aa","a") → false
-* isMatch("aa","aa") → true
-* isMatch("aaa","aa") → false
-* isMatch("aa", "a*") → true
-* isMatch("aa", ".*") → true
-* isMatch("ab", ".*") → true
-* isMatch("aab", "c*a*b") → true
-* 
-*               
-**********************************************************************************/
+/*
+Implement regular expression matching with support for '.' and '*'.
+'.' Matches any single character.
+'*' Matches zero or more of the preceding element.
 
-#include <stdio.h>
-#include <string.h>
+The matching should cover the entire input string (not partial).
+The function prototype should be:
+bool isMatch(const char *s, const char *p)
+
+Some examples:
+isMatch("aa","a") → false
+isMatch("aa","aa") → true
+isMatch("aaa","aa") → false
+isMatch("aa", "a*") → true
+isMatch("aa", ".*") → true
+isMatch("ab", ".*") → true
+isMatch("aab", "c*a*b") → true
+*/
+
+#include <string>
 #include <iostream>
-
 using namespace std;
 
+/*
+1.’.’ is easy to handle. if p has a ‘.’, it can pass any single character in s except ‘\0’.
+2.’’ is a totally different problem. if p has a '’ character, it can pass any length of first-match characters in s including ‘\0’.
+*/
 
 bool isMatch(const char *s, const char *p) {
-
     if (*p=='\0') {
         return *s == '\0';
     }

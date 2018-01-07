@@ -1,30 +1,37 @@
-// Source : https://oj.leetcode.com/problems/same-tree/
+// Source : https://leetcode.com/problems/same-tree/description/
 // Author : Shiv S. Kushwaha
 // Date   : 2014-06-27
 
-/**********************************************************************************
-*
-* Given two binary trees, write a function to check if they are equal or not.
-*
-* Two binary trees are considered equal if they are structurally identical and the nodes have the same value.
-*
-*
-**********************************************************************************/
+/*
+Given two binary trees, write a function to check if they are the same or not.
+Two binary trees are considered the same if they are structurally identical and the nodes have the same value.
 
-/**
- * Definition for binary tree
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- * };
- */
+Example 1:
+Input:     1         1
+          / \       / \
+         2   3     2   3
+
+        [1,2,3],   [1,2,3]
+Output: true
+
+Example 2:
+Input:     1         1
+          /           \
+         2             2
+
+        [1,2],     [1,null,2]
+Output: false
+
+Example 3:
+Input:     1         1
+          / \       / \
+         2   1     1   2
+
+        [1,2,1],   [1,1,2]
+Output: false
+*/
 
 #include<iostream>
-#include<queue>
-#include<ctime>
-
 using namespace std;
 
 struct TreeNode {
@@ -34,56 +41,24 @@ struct TreeNode {
   TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
 };
 
+/*
+Algorithm for the recursion:
+1)
+If one of the node is NULL then return the equality result of p an q.
+This boils down to if both are NULL then return true,
+but if one of them is NULL but not the other one then return false
+2)
+At this point both root nodes represent valid pointers.
+Return true if the root nodes have same value and
+the left tree of the roots are same (recursion)
+and the right tree of the roots are same (recursion).
+Otherwise return false.
+*/
 
-
-class Solution {
-public:
-  Solution(){
-    srand(time(nullptr));
-  }
-  bool isSameTree(TreeNode *p, TreeNode *q) {
-    if (rand() % 2){
-      return isSameTree1(p, q);
-    }
-    return isSameTree2(p, q);
-  }
-
-  bool isSameTree1(TreeNode *p, TreeNode *q) {
-    if (!p && !q) return true;
-    if (!p || !q) return false;
-    return (p->val == q->val) &&
-      isSameTree(p->left, q->left) &&
-      isSameTree(p->right, q->right);
-  }
-
-  bool isSameTree2(TreeNode *p, TreeNode *q) {
-
-    queue<TreeNode*> q1, q2;
-    q1.push(p);
-    q2.push(q);
-    while (q1.size() > 0 && q2.size() > 0){
-      TreeNode* p1 = q1.front();
-      q1.pop();
-      TreeNode* p2 = q2.front();
-      q2.pop();
-      if (!p1 && !p2) continue;
-      if (!p1 || !p2)  return false;
-
-      if (p1->val != p2->val) {
-        return false;
-      }
-
-      q1.push(p1->left);
-      q2.push(p2->left);
-
-      q1.push(p1->right);
-      q2.push(p2->right);
-
-    }
-    return true;
-  }
-};
-
+bool isSameTree(TreeNode *p, TreeNode *q) {
+    if (p == NULL || q == NULL) return (p == q);
+    return (p->val == q->val && isSameTree(p->left, q->left) && isSameTree(p->right, q->right));
+}
 
 int main()
 {

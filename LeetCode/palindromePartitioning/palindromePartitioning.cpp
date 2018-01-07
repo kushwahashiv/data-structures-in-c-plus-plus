@@ -1,99 +1,80 @@
-// Source : https://oj.leetcode.com/problems/palindrome-partitioning/
+// Source : https://leetcode.com/problems/palindrome-partitioning/description/
 // Author : Shiv S. Kushwaha
 // Date   : 2014-08-21
 
-/********************************************************************************** 
-* 
-* Given a string s, partition s such that every substring of the partition is a palindrome.
-* 
-* Return all possible palindrome partitioning of s.
-* 
-* For example, given s = "aab",
-* 
-* Return
-* 
-*   [
-*     ["aa","b"],
-*     ["a","a","b"]
-*   ]
-* 
-*               
-**********************************************************************************/
+/*
+Given a string s, partition s such that every substring of the partition is a palindrome.
+Return all possible palindrome partitioning of s.
+For example, given s = "aab",
+Return
+[
+  ["aa","b"],
+  ["a","a","b"]
+]
+*/
 
 #include <iostream>
 #include <vector>
 #include <string>
 using namespace std;
 
+/*
+DFS - Deepth First Search
+For example: "aaba"
+                    +------+           
+             +------| aaba |-----+     
+             |      +------+     |     
+           +-v-+              +-v--+  
+           | a |aba           | aa |ba
+       +---+---+--+           +--+-+  
+       |          |              |    
+     +-v-+     +--v--+         +-v-+  
+     | a |ba   | aba |\0       | b |a 
+     +-+-+     +-----+         +-+-+  
+       |        a, aba           |    
+     +-v-+                     +-v-+  
+     | b |a                    | a |\0
+     +-+-+                     +---+  
+       |                      aa, b, a
+     +-v-+                            
+     | a |\0                          
+     +---+                            
+   a, a, b, a
 
-bool isPalindrome(string &s, int start, int end)  {  
+  You can see this algorithm still can be optimized, becasue there are some dupliation.
+  (  The optimization you can see the "Palindrome Partitioning II" )
+*/
+vector<vector<string>> partition(string s) {
+        vector<vector<string> > ret;
+        if(s.empty()) return ret;
 
-    while(start < end)  
-    {  
-        if(s[start] != s[end]) { 
-            return false;  
-        }
-        start++; end--;  
-    }  
-    return true;  
-}  
+        vector<string> path;
+        dfs(0, s, path, ret);
 
-// DFS - Deepth First Search
-//    
-//   For example: "aaba"
-//    
-//                     +------+           
-//              +------| aaba |-----+     
-//              |      +------+     |     
-//            +-v-+              +-v--+  
-//            | a |aba           | aa |ba
-//        +---+---+--+           +--+-+  
-//        |          |              |    
-//      +-v-+     +--v--+         +-v-+  
-//      | a |ba   | aba |\0       | b |a 
-//      +-+-+     +-----+         +-+-+  
-//        |        a, aba           |    
-//      +-v-+                     +-v-+  
-//      | b |a                    | a |\0
-//      +-+-+                     +---+  
-//        |                      aa, b, a
-//      +-v-+                            
-//      | a |\0                          
-//      +---+                            
-//    a, a, b, a                         
-//
-//   You can see this algorithm still can be optimized, becasue there are some dupliation.
-//   (  The optimization you can see the "Palindrome Partitioning II" )
-//
-   
-void partitionHelper(string &s, int start, vector<string> &output, vector< vector<string> > &result) {
-
-    if (start == s.size()) {
-        result.push_back(output);
-        return;
+        return ret;
     }
-    for(int i=start; i<s.size(); i++) {
-        if ( isPalindrome(s, start, i) == true ) {
-            //put the current palindrome substring into ouput
-            output.push_back(s.substr(start, i-start+1) );
-            //Recursively check the rest substring
-            partitionHelper(s, i+1, output, result);
-            //take out the current palindrome substring, in order to check longer substring.
-            output.pop_back();
+
+    void dfs(int index, string& s, vector<string>& path, vector<vector<string> >& ret) {
+        if(index == s.size()) {
+            ret.push_back(path);
+            return;
+        }
+        for(int i = index; i < s.size(); ++i) {
+            if(isPalindrome(s, index, i)) {
+                path.push_back(s.substr(index, i - index + 1));
+                dfs(i+1, s, path, ret);
+                path.pop_back();
+            }
         }
     }
-}
 
-vector< vector<string> > partition(string s) {
-
-    vector< vector<string> > result;
-    vector<string> output;
-
-    partitionHelper(s, 0,  output, result);
-
-    return result;
-
-}
+    bool isPalindrome(const string& s, int start, int end) {
+        while(start <= end) {
+            if(s[start++] != s[end--])
+                return false;
+        }
+        return true;
+    }
 
 void printMatrix(vector< vector<string> > &matrix)
 {

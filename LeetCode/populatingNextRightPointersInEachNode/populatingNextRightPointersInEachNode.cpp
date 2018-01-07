@@ -1,54 +1,37 @@
-// Source : https://oj.leetcode.com/problems/populating-next-right-pointers-in-each-node/
+// Source : https://leetcode.com/problems/populating-next-right-pointers-in-each-node/description/
 // Author : Shiv S. Kushwaha
 // Date   : 2014-06-19
 
-/********************************************************************************** 
-* 
-* Given a binary tree
-* 
-*     struct TreeLinkNode {
-*       TreeLinkNode *left;
-*       TreeLinkNode *right;
-*       TreeLinkNode *next;
-*     }
-* 
-* Populate each next pointer to point to its next right node. 
-* If there is no next right node, the next pointer should be set to nullptr.
-* 
-* Initially, all next pointers are set to nullptr.
-* 
-* Note:
-* 
-* You may only use constant extra space.
-* You may assume that it is a perfect binary tree (ie, all leaves are at the same level, and every parent has two children).
-* 
-* For example,
-* Given the following perfect binary tree,
-* 
-*          1
-*        /  \
-*       2    3
-*      / \  / \
-*     4  5  6  7
-* 
-* After calling your function, the tree should look like:
-* 
-*          1 -> nullptr
-*        /  \
-*       2 -> 3 -> nullptr
-*      / \  / \
-*     4->5->6->7 -> nullptr
-* 
-*               
-**********************************************************************************/
+/*
+Given a binary tree
+    struct TreeLinkNode {
+      TreeLinkNode *left;
+      TreeLinkNode *right;
+      TreeLinkNode *next;
+    }
+Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.
+Initially, all next pointers are set to NULL.
+Note:
+You may only use constant extra space.
+You may assume that it is a perfect binary tree (ie, all leaves are at the same level, and every parent has two children).
+For example,
+Given the following perfect binary tree,
+         1
+       /  \
+      2    3
+     / \  / \
+    4  5  6  7
+After calling your function, the tree should look like:
+         1 -> NULL
+       /  \
+      2 -> 3 -> NULL
+     / \  / \
+    4->5->6->7 -> NULL
+*/
 
-#include <stdio.h>
 #include <vector>
 using namespace std;
 
-/**
- * Definition for binary tree with next pointer.
- */
 struct TreeLinkNode {
     int val;
     TreeLinkNode *left, *right, *next;
@@ -56,6 +39,22 @@ struct TreeLinkNode {
     TreeLinkNode() : val(0), left(nullptr), right(nullptr), next(nullptr) {}
 };
 
+void connect(TreeLinkNode *root) {
+    if(!root)
+        return;
+    while(root -> left)
+    {
+        TreeLinkNode *p = root;
+        while(p)
+        {
+            p -> left -> next = p -> right;
+            if(p -> next)
+                p -> right -> next = p -> next -> left;
+            p = p -> next;
+        }
+        root = root -> left;
+    }
+}
 
 void connect(TreeLinkNode *root) {
 
@@ -71,63 +70,6 @@ void connect(TreeLinkNode *root) {
     connect(root->left);
     connect(root->right);
 
-}
-
-void connect1(TreeLinkNode *root) {
-
-    if (root==nullptr){
-        return;
-    }
-
-    vector<TreeLinkNode*> v;    
-    v.push_back(root);
-    int i = 0;
-    
-    while (i < v.size()){
-        if (v[i]->left){
-            v.push_back(v[i]->left);
-        }
-        if (v[i]->right) {
-            v.push_back(v[i]->right);
-        }
-        i++;
-    }
-
-    i=1;
-    while(i<v.size()){
-        for (int j=i-1; j<2*(i-1); j++){
-           v[j]->next = v[j+1]; 
-        }
-        i *= 2; 
-    }
-
-}
-
-void connect2(TreeLinkNode *root) {
-
-    if (root==nullptr){
-        return;
-    }
-    
-    vector<TreeLinkNode*> v;
-
-    v.push_back(root);
-    
-    while(v.size()>0){
-        
-        if (root->left && root->right && root->left->next == nullptr ) {
-            root->left->next = root->right;
-            
-            if (root->next){
-                root->right->next = root->next->left;
-            }
-            
-            v.push_back(root->right);
-            v.push_back(root->left);
-        }
-        root=v.back();
-        v.pop_back();
-    }
 }
 
 void printTree(TreeLinkNode *root){
@@ -151,17 +93,13 @@ int main()
     TreeLinkNode a[cnt];
     for(int i=0; i<cnt; i++){
         a[i].val = i+1;
-    } 
-
-    
+    }
     for(int i=0, pos=0;  pos < cnt-1; i++ ){
         a[i].left = &a[++pos];
         a[i].right = &a[++pos];
     }
     
-    connect(&a[0]); 
-
+    connect(&a[0]);
     printTree(&a[0]);
-
     return 0;
 }

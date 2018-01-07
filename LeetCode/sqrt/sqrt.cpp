@@ -1,55 +1,28 @@
-// Source : https://oj.leetcode.com/problems/sqrtx/
-// Author : Hao Chen
-// Date   : 2014-08-26
+// Source : https://leetcode.com/problems/sqrtx/description/
 
-/********************************************************************************** 
-* 
-* Implement int sqrt(int x).
-* 
-* Compute and return the square root of x.
-*               
-**********************************************************************************/
+/*
+Implement int sqrt(int x).
+Compute and return the square root of x.
+x is guaranteed to be a non-negative integer.
+Example 1:
+Input: 4
+Output: 2
+Example 2:
 
-#include <stdlib.h>
+Input: 8
+Output: 2
+Explanation: The square root of 8 is 2.82842..., and since we want to return an integer, the decimal part will be truncated.
+*/
 #include <iostream>
 using namespace std;
 
 
 int sqrt(int x) {
-
-    if (x <=0 ) return 0;
-    
-    //the sqrt is not greater than x/2+1
-    int e = x/2+1;
-    int s = 0;
-    // binary search
-    while ( s <= e ) {
-        int mid = s + (e-s)/2;
-        long long sq = (long long)mid*(long long)mid;
-        if (sq == x ) return mid;
-        if (sq < x) {
-            s = mid + 1;
-        }else {
-            e = mid - 1;
-        }
-    }
-    return e; 
-        
+long r = x;
+    while (r*r > x)
+        r = (r + x/r) / 2;
+    return r;
 }
-
-// http://en.wikipedia.org/wiki/Newton%27s_method
-int sqrt_nt(int x) {
-    if (x == 0) return 0;
-    double last = 0;
-    double res = 1;
-    while (res != last)
-    {
-        last = res;
-        res = (res + x / res) / 2;
-    }
-    return int(res);
-}
-
 
 int main(int argc, char**argv)
 {

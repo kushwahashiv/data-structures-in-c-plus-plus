@@ -1,20 +1,16 @@
 /*
-Source : https://oj.leetcode.com/problems/binary-tree-maximum-path-sum/
+Source : https://leetcode.com/problems/binary-tree-maximum-path-sum/description/
 Author : Shiv S. Kushwaha
 Date   : 2014-10-10
 
-Problem:
 Given a binary tree, find the maximum path sum.
-The path may start and end at any node in the tree.
-
+For this problem, a path is defined as any sequence of nodes from some starting node to any node in the tree along the parent-child connections. The path must contain at least one node and does not need to go through the root.
 For example:
 Given the below binary tree,
 
-  1
- / \
-2   3
-
-Return 6.
+       1
+      / \
+     2   3
 */
 
 #include <iostream>
@@ -30,38 +26,22 @@ struct TreeNode
   TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
 };
 
-int maxPathSum(TreeNode *root, int& maxSum)
-{
-  if (nullptr == root)
-    return 0;
+int maxToRoot(TreeNode *root, int &re) {
+        if (!root) return 0;
+        int l = maxToRoot(root->left, re);
+        int r = maxToRoot(root->right, re);
+        if (l < 0) l = 0;
+        if (r < 0) r = 0;
+        if (l + r + root->val > re) re = l + r + root->val;
+        return root->val += max(l, r);
+    }
 
-  //get the maxPathSum for both left and right branch
-  int left = maxPathSum(root->left, maxSum);
-  int right = maxPathSum(root->right, maxSum);
+    int maxPathSum(TreeNode *root) {
+        int max = -2147483648;
+        maxToRoot(root, max);
+        return max;
+    }
 
-  // The max sum could be one of the following situations:
-  //    1) root + left
-  //    2) root + right
-  //    3) root
-  //    4) root + left + right   
-  //
-  // And the whole function need to return the the max of 1) 2) 3) 
-  int val = root->val;
-  int maxBranch = left > right ? max(left + val, val) : max(right + val, val);
-  int m = max(left + right + val, maxBranch);
-
-  maxSum = max(maxSum, m);
-
-  return maxBranch;
-}
-
-int maxPathSum(TreeNode *root)
-{
-#define INT_MIN     (-2147483647 - 1)
-  int maxSum = INT_MIN;
-  maxPathSum(root, maxSum);
-  return maxSum;
-}
 
 int main()
 {

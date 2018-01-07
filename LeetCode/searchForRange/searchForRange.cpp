@@ -1,78 +1,45 @@
-// Source : https://oj.leetcode.com/problems/search-for-a-range/
+// Source : https://leetcode.com/problems/search-for-a-range/description/
 // Author : Shiv S. Kushwaha
 // Date   : 2014-06-26
 
-/********************************************************************************** 
-* 
-* Given a sorted array of integers, find the starting and ending position of a given target value.
-* 
-* Your algorithm's runtime complexity must be in the order of O(log n).
-* 
-* If the target is not found in the array, return [-1, -1].
-* 
-* For example,
-* Given [5, 7, 7, 8, 8, 10] and target value 8,
-* return [3, 4].
-* 
-*               
-**********************************************************************************/
+/*
+Given an array of integers sorted in ascending order, find the starting and ending position of a given target value.
+Your algorithm's runtime complexity must be in the order of O(log n).
+If the target is not found in the array, return [-1, -1].
+
+For example,
+Given [5, 7, 7, 8, 8, 10] and target value 8,
+return [3, 4].
+*/
 
 #include <iostream>
 #include <vector>
 using namespace std;
 
-int binary_search(int A[], int low, int high, int key);
-
-/*
- *   O(log n) solution must be something like binary search.
- *
- *   So, we can use the binary search to find the one postion - `pos`
- *   
- *   then, we can keep using the binary search find the target in A[0..pos-1] and A[pos+1..n]
- *
- *   The code below is self-explaination
- */
+// https://leetcode.com/problems/search-for-a-range/discuss/14699
 vector<int> searchRange(int A[], int n, int target) {
-    int pos = binary_search(A, 0, n-1, target);
-
-    vector<int> v;
-    int low = -1, high = -1;
-    if (pos >=0){
-        low = high = pos;
-        int l = low;
-        do {
-            low = l;
-            l = binary_search(A, 0, low - 1, target);
-        }while (l>=0);
-
-        int h = high;
-        do {
-            high = h;
-            h = binary_search(A, high + 1, n-1, target);
-        }while (h>=0);
+    int i = 0, j = n - 1;
+    vector<int> ret(2, -1);
+    // Search for the left one
+    while (i < j)
+    {
+        int mid = (i + j) /2;
+        if (A[mid] < target) i = mid + 1;
+        else j = mid;
     }
+    if (A[i]!=target) return ret;
+    else ret[0] = i;
 
-    v.push_back(low);
-    v.push_back(high);
-    return v;
-
-}
-
-int binary_search(int A[], int low, int high, int key){
-
-    while (low<=high) {
-        int mid = low + (high-low)/2;
-        if (A[mid] == key) {
-            return mid;
-        }
-        if (key > A[mid]) {
-            low = mid + 1;
-        }
-        if (key < A[mid]) {
-            high = mid - 1;
-        }
+    // Search for the right one
+    j = n-1;  // We don't have to set i to 0 the second time.
+    while (i < j)
+    {
+        int mid = (i + j) /2 + 1;	// Make mid biased to the right
+        if (A[mid] > target) j = mid - 1;
+        else i = mid;				// So that this won't make the search range stuck.
     }
-    return -1;
+    ret[1] = j;
+    return ret;
 }
 
 void printVector( vector<int>&  pt)

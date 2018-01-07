@@ -1,14 +1,11 @@
-// Source : https://oj.leetcode.com/problems/integer-to-roman/
+// Source : https://leetcode.com/problems/integer-to-roman/description/
 // Author : Shiv S. Kushwaha
 // Date   : 2014-07-17
 
-/********************************************************************************** 
-* 
-* Given an integer, convert it to a roman numeral.
-* 
-* Input is guaranteed to be within the range from 1 to 3999.
-*               
-**********************************************************************************/
+/*
+Given an integer, convert it to a roman numeral.
+Input is guaranteed to be within the range from 1 to 3999.
+*/
 
 #include <stdlib.h>
 #include <string>
@@ -37,8 +34,7 @@ int main(int argc, char** argv)
     int num = 1234;
     if (argc>0){
         num = atoi(argv[1]);
-    }    
-
+    }
     cout << num << " : " << intToRoman(num) << endl;
     return 0;
 }

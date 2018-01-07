@@ -1,74 +1,47 @@
-// Source : https://oj.leetcode.com/problems/next-permutation/
+// Source : https://leetcode.com/problems/next-permutation/description/
 // Author : Shiv S. Kushwaha
 // Date   : 2014-08-21
 
-/********************************************************************************** 
-* 
-* Implement next permutation, which rearranges numbers into the lexicographically next 
-* greater permutation of numbers.
-* 
-* If such arrangement is not possible, it must rearrange it as the lowest possible order 
-* (ie, sorted in ascending order).
-* 
-* The replacement must be in-place, do not allocate extra memory.
-* 
-* Here are some examples. Inputs are in the left-hand column and its corresponding outputs 
-* are in the right-hand column.
-*
-*   1,2,3 → 1,3,2
-*   3,2,1 → 1,2,3
-*   1,1,5 → 1,5,1
-*               
-**********************************************************************************/
-
 /*
- * Take a look the following continuous permutation, can you find the patern?
- *
- *    1 2 3 4
- *    1 2 4 3
- *    1 3 2 4
- *    1 3 4 2
- *    1 4 2 3
- *    1 4 3 2
- *    2 1 3 4
- *    ...
- *
- * The pattern as below:
- *
- *    1) find the first place which num[i-1] < num[i]
- *    2) find the first number from n-1 to i which >= num[i-1]
- *    3) swap the 2) num with num[i-1]
- *    4) sort the sub-array [i, n) //actuall sort is fine as well
- * 
- * For example:
- * 
- *     1 4 3 2   <-- 1) find the first place which num[i-1] < num[i]
- *     ^
- * 
- *     1 4 3 2   <-- 2) find the first number from n-1 to i which >= num[i-1]
- *     ^     ^  
- * 
- *     2 4 3 1   <-- 3) swap them
- *     ^     ^
- * 
- *     2 4 3 1   <-- 4) sort
- *       ^   ^
- *
- *     2 1 3 4   
- * 
- * Edge Case:
- *
- *     4 3 2 1, the next permutation is 1 2 3 4
- */
+Implement next permutation, which rearranges numbers into the lexicographically next greater permutation of numbers.
 
-#include <stdio.h>
-#include <stdlib.h>
+If such arrangement is not possible, it must rearrange it as the lowest possible order (ie, sorted in ascending order).
+
+The replacement must be in-place, do not allocate extra memory.
+
+Here are some examples. Inputs are in the left-hand column and its corresponding outputs are in the right-hand column.
+1,2,3 → 1,3,2
+3,2,1 → 1,2,3
+1,1,5 → 1,5,1
+*/
 
 #include <iostream>
 #include <vector>
 #include <algorithm>
 using namespace std;
 
+void nextPermutation(vector<int>& nums) {
+    	int k = -1;
+    	for (int i = nums.size() - 2; i >= 0; i--) {
+    		if (nums[i] < nums[i + 1]) {
+    			k = i;
+    			break;
+    		}
+    	}
+    	if (k == -1) {
+    	    reverse(nums.begin(), nums.end());
+    	    return;
+    	}
+    	int l = -1;
+    	for (int i = nums.size() - 1; i > k; i--) {
+    		if (nums[i] > nums[k]) {
+    			l = i;
+    			break;
+    		}
+    	}
+    	swap(nums[k], nums[l]);
+    	reverse(nums.begin() + k + 1, nums.end());
+    }
 
 void nextPermutation(vector<int> &num) {
 

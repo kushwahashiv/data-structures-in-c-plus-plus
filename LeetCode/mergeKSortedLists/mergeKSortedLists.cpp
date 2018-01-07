@@ -1,16 +1,9 @@
-// Source : https://oj.leetcode.com/problems/merge-k-sorted-lists/
+// Source : https://leetcode.com/problems/merge-k-sorted-lists/description/
 // Author : Shiv S. Kushwaha
 // Date   : 2014-07-06
 
-/**********************************************************************************
-*
-* Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
-*
-*
-**********************************************************************************/
+//Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <time.h>
 #include <iostream>
 #include <vector>
@@ -23,31 +16,7 @@ struct ListNode {
 	ListNode(int x) : val(x), next(nullptr) {}
 };
 
-void printList(ListNode* h)
-{
-	while (h != nullptr) {
-		printf("%d ", h->val);
-		h = h->next;
-	}
-	printf("\n");
-}
 
-ListNode* createList(int a[], int n)
-{
-	ListNode *head = nullptr, *p = nullptr;
-	for (int i = 0; i < n; i++) {
-		if (head == nullptr) {
-			head = p = new ListNode(a[i]);
-		}
-		else {
-			p->next = new ListNode(a[i]);
-			p = p->next;
-		}
-	}
-	return head;
-}
-
-//
 struct ListNode* SortedMerge(struct ListNode* a, struct ListNode* b)
 {
 	struct ListNode* result(nullptr);
@@ -72,6 +41,29 @@ struct ListNode* SortedMerge(struct ListNode* a, struct ListNode* b)
 }
 
 
+void printList(ListNode* h)
+{
+	while (h != nullptr) {
+		printf("%d ", h->val);
+		h = h->next;
+	}
+	printf("\n");
+}
+
+ListNode* createList(int a[], int n)
+{
+	ListNode *head = nullptr, *p = nullptr;
+	for (int i = 0; i < n; i++) {
+		if (head == nullptr) {
+			head = p = new ListNode(a[i]);
+		}
+		else {
+			p->next = new ListNode(a[i]);
+			p = p->next;
+		}
+	}
+	return head;
+}
 
 int main(int argc, char**argv)
 {

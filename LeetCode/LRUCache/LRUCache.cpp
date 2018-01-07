@@ -2,227 +2,80 @@
 // Author : Shiv S. Kushwaha
 // Date   : 2014-10-12
 
-/********************************************************************************** 
-* 
-* Design and implement a data structure for Least Recently Used (LRU) cache. 
-* It should support the following operations: get and set.
-* 
-*    get(key) - Get the value (will always be positive) of the key if the key exists 
-*               in the cache, otherwise return -1.
-*
-*    set(key, value) - Set or insert the value if the key is not already present. 
-*                      When the cache reached its capacity, it should invalidate 
-*                      the least recently used item before inserting a new item.
-*               
-**********************************************************************************/
+/*
+Design and implement a data structure for Least Recently Used (LRU) cache. It should support the following operations: get and put.
+get(key) - Get the value (will always be positive) of the key if the key exists in the cache, otherwise return -1.
+put(key, value) - Set or insert the value if the key is not already present. When the cache reached its capacity, it should invalidate the least recently used item before inserting a new item.
+Follow up:
+Could you do both operations in O(1) time complexity?
+Example:
+LRUCache cache = new LRUCache( 2  ); // 2 = capacity
 
-#include <stdlib.h>
+cache.put(1, 1);
+cache.put(2, 2);
+cache.get(1);       // returns 1
+cache.put(3, 3);    // evicts key 2
+cache.get(2);       // returns -1 (not found)
+cache.put(4, 4);    // evicts key 1
+cache.get(1);       // returns -1 (not found)
+cache.get(3);       // returns 3
+cache.get(4);       // returns 4
+*/
+
 #include <time.h>
 #include <iostream>
 #include <map>
 using namespace std;
 
-// The idea here is quite simple:
-//    1) A Map to index the key.  O(1) key search time-complexity.
-//    2) A List to sort the cache data by accessed time.
-// 
-//  Considering there are too many insert/delete opreations for the List, 
-//  The ouble linked list is the good data structure to performance it.
+/*
+There is a similar example in Java, but I wanted to share my solution using the new C++11 unordered\_map and a list.
+The good thing about lists is that iterators are never invalidated by modifiers (unless erasing the element itself).
+This way, we can store the iterator to the corresponding LRU queue in the values of the hash map.
+Since using erase on a list with an iterator takes constant time, all operations of the LRU cache run in constant time.
+*/
+class LRUCache {
+public:
+    LRUCache(int capacity) : _capacity(capacity) {}
 
-class Node {
-    public:
-        int key;
-        int value;
-        Node *next, *prev;
-        Node(int k, int v) { key=k; value=v; next = prev = nullptr; }
-        //Node(int k, int v, Node* n=nullptr, Node* p=nullptr): key(k), value(v), next(n), prev(p) {}
+    int get(int key) {
+        auto it = cache.find(key);
+        if (it == cache.end()) return -1;
+        touch(it);
+        return it->second.first;
+    }
+
+    void set(int key, int value) {
+        auto it = cache.find(key);
+        if (it != cache.end()) touch(it);
+        else {
+			if (cache.size() == _capacity) {
+				cache.erase(used.back());
+				used.pop_back();
+			}
+            used.push_front(key);
+        }
+        cache[key] = { value, used.begin() };
+    }
+
+private:
+    typedef list<int> LI;
+    typedef pair<int, LI::iterator> PII;
+    typedef unordered_map<int, PII> HIPII;
+
+    void touch(HIPII::iterator it) {
+        int key = it->first;
+        used.erase(it->second.second);
+        used.push_front(key);
+        it->second.second = used.begin();
+    }
+
+    HIPII cache;
+    LI used;
+    int _capacity;
 };
-
-// the following double linked list seems a bit commplicated.
-class DoubleLinkedList {
-
-    private:
-
-        Node *pHead, *pTail;
-        int size;
-
-
-    public:
-
-        DoubleLinkedList(){
-            pHead = pTail = nullptr;
-            size = 0;
-        }
-        ~DoubleLinkedList() {
-            while(pHead!=nullptr){
-                Node*p = pHead;
-                pHead = pHead->next;
-                delete p;
-            }
-        }
-
-        int Size() const {
-            return size;
-        }
-
-        Node* NewAtBegin(int key, int value) {
-            Node *n = new Node(key, value);
-            return AddAtBegin(n);
-        }
-
-        Node* NewAtEnd(int key, int value) {
-            Node *n = new Node(key, value);
-            return AddAtEnd(n);
-        }
-
-        Node* AddAtBegin(Node* n){
-            size++;
-
-            if (pHead==nullptr) { 
-                pHead = pTail = n; 
-                return n; 
-            }
-
-            n->next = pHead;
-            n->prev = nullptr;
-            pHead->prev = n;
-            pHead = n;
-            return n;
-        }
-
-        Node* AddAtEnd(Node* n) {
-            size++;
-
-            if (pHead==nullptr) { 
-                pHead = pTail = n; 
-                return n; 
-            }
-
-            pTail->next = n;
-            n->prev = pTail;
-            n->next = nullptr;
-            pTail = n;
-        }
-
-        void Unlink(Node* n){
-            Node* before = n->prev;
-            Node* after = n->next;
-
-            if (before){
-                before->next = after;  
-            }
-
-            if (after){ 
-                after->prev = before;
-            }
-
-            if(pHead == n){
-                pHead = pHead->next;
-            }else if(pTail == n) {
-                pTail = pTail->prev;
-            }
-
-            size--;
-        }
-
-        void Delete(Node* n){
-            Unlink(n);
-            delete n;
-        }
-
-        void TakeToBegin(Node* n){
-            Unlink(n);
-            AddAtBegin(n);
-        } 
-
-        Node* GetTailNode() {
-            return pTail;
-        } 
-
-        void DeleteLast() {
-            Delete(pTail);
-        } 
-
-        void Print(){
-            Node* p = pHead;
-            while(p!=nullptr) {
-                cout << "(" << p->key << "," << p->value << ") ";
-                p = p->next;
-            }
-            cout << endl;
-        }
-};
-
-
-
-class LRUCache{
-
-    private:
-        //cacheList - store the date
-        DoubleLinkedList cacheList;
-        //cacheMap - index the date for searching
-        map<int, Node*> cacheMap;
-        //the max capcity of cache
-        int capacity;
-
-    public:
-        LRUCache(int capacity) {
-            this->capacity = capacity;    
-        }
-        void print(){
-            cacheList.Print();
-        }
-
-        int get(int key) {
-            // The accessed node must be up-to-time -- take to the front 
-            if (cacheMap.find(key) != cacheMap.end() ){
-                cacheList.TakeToBegin(cacheMap[key]);
-                return cacheMap[key]->value;
-            }
-            return -1;
-
-        }
-
-        void set(int key, int value) {
-            // key found, update the data, and take to the front 
-            if (cacheMap.find(key) != cacheMap.end() ){
-                Node *p = cacheMap[key];
-                p->value = value;
-                cacheList.TakeToBegin(cacheMap[key]);
-            }else{
-                // key not found, new a node to store data
-                cacheMap[key] = cacheList.NewAtBegin(key, value);
-                // if the capacity exceed, remove the last one.
-                if( cacheList.Size() > capacity) {
-                    int key = cacheList.GetTailNode()->key; 
-                    cacheMap.erase(key);
-                    cacheList.DeleteLast();
-                }
-            }
-        }
-};
-
 
 int main(int argc, char** argv) 
 {
-
-    /*
-    LRUCache c(2);
-    c.set(2,1);
-    c.print();
-    c.set(2,2);
-    c.print();
-    c.get(2);
-    c.print();
-    c.set(1,1);
-    c.print();
-    c.set(4,1);
-    c.print();
-    c.get(2);
-    c.print();
-
-    cout << "---------" << endl;
-    */
     srand(time(0));
 
     int capacity = 5;

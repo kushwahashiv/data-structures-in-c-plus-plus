@@ -1,28 +1,13 @@
-// Source : https://oj.leetcode.com/problems/swap-nodes-in-pairs/
+// Source : https://leetcode.com/problems/swap-nodes-in-pairs/description/
 // Author : Shiv S. Kushwaha
 // Date   : 2014-06-22
 
-/**********************************************************************************
-*
-* Given a linked list, swap every two adjacent nodes and return its head.
-*
-* For example,
-* Given 1->2->3->4, you should return the list as 2->1->4->3.
-*
-* Your algorithm should use only constant space. You may not modify the values in the list,
-* only nodes itself can be changed.
-*
-*
-**********************************************************************************/
-
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode(int x) : val(x), next(nullptr) {}
- * };
- */
+/*
+Given a linked list, swap every two adjacent nodes and return its head.
+For example,
+Given 1->2->3->4, you should return the list as 2->1->4->3.
+Your algorithm should use only constant space. You may not modify the values in the list, only nodes itself can be changed.
+*/
 
 #include<iostream>
 #include<vector>
@@ -30,31 +15,32 @@
 
 using namespace std;
 
+/*
+Pointer-pointer pp points to the pointer to the current node. So at first,
+pp points to head, and later it points to the next field of ListNodes.
+Additionally, for convenience and clarity, pointers a and b point to the current node and the next node.
 
+We need to go from *pp == a -> b -> (b->next) to *pp == b -> a -> (b->next).
+The first three lines inside the loop do that, setting those three pointers (from right to left). The fourth line moves pp to the next pair.
+*/
 struct ListNode {
   int val;
   ListNode *next;
   ListNode(int x) : val(x), next(nullptr) {}
 };
 
-class Solution {
-public:
-  Solution(){
-    srand(time(nullptr));
-  }
-  /*
-   * Here we have two ways to solve this problem:
-   * 1) keep the list's nodes no change. only swap the data in the list node.
-   * 2) swap the list node physically.
-   */
-  ListNode *swapPairs(ListNode *head) {
-    if (rand() % 2){
-      return swapPairs1(head);
+ListNode* swapPairs(ListNode* head) {
+    ListNode **pp = &head, *a, *b;
+    while ((a = *pp) && (b = a->next)) {
+        a->next = b->next;
+        b->next = a;
+        *pp = b;
+        pp = &(a->next);
     }
-    return swapPairs2(head);
-  }
-  /*just swap the node's value instead of node*/
-  ListNode *swapPairs1(ListNode *head) {
+    return head;
+}
+
+ ListNode *swapPairs1(ListNode *head) {
     for (ListNode *p = head; p && p->next; p = p->next->next) {
       int n = p->val;
       p->val = p->next->val;
@@ -62,44 +48,6 @@ public:
     }
     return head;
   }
-
-  /*swap the list nodes physically*/
-  ListNode *swapPairs2(ListNode *head) {
-    ListNode *h = nullptr;
-    //using `*p` to traverse the linked list
-    for (ListNode *p = head; p && p->next; p = p->next) {
-      //`n` is `p`'s next node, and swap `p` and `n` physcially
-      ListNode *n = p->next;
-      p->next = n->next;
-      n->next = p;
-      //using `h` as `p`'s previous node
-      if (h){
-        h->next = n;
-      }
-      h = p;
-
-      //determin the really 'head' pointer
-      if (head == p){
-        head = n;
-      }
-    }
-
-    return head;
-  }
-};
-
-
-ListNode* swapPairs(ListNode* head) {
-	ListNode **current = &head, *a, *b;
-	while ((a = *current) && (b = a->next)) {
-		a->next = b->next;
-		b->next = a;
-		*current = b;
-		current = &(a->next);
-	}
-	return head;
-}
-
 
 int main()
 {

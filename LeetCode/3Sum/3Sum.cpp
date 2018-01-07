@@ -1,37 +1,19 @@
 /*
-Source : https://oj.leetcode.com/problems/3sum/
+Source : https://leetcode.com/problems/3sum/description/
 Author : Shiv S. Kushwaha
 Date   : 2014-07-22
 
-Problem:
-Given an array S of n integers, are there elements a, b, c in S such that a + b + c = 0?
-Find all unique triplets in the array which gives the sum of zero.
+Given an array S of n integers, are there elements a, b, c in S such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.
+Note: The solution set must not contain duplicate triplets.
+For example, given array S = [-1, 0, 1, 2, -1, -4],
 
-Note:
-Elements in a triplet (a,b,c) must be in non-descending order. (ie, a ≤ b ≤ c)
-The solution set must not contain duplicate triplets.
-
-For example, given array S = {-1 0 1 2 -1 -4},
 A solution set is:
-(-1, 0, 1)
-(-1, -1, 2)
-
-Simlar like "Two Number" problem, we can have the simlar solution.
-
-Suppose the input array is S[0..n-1], 3SUM can be solved in O(n^2) time on average by
-inserting each number S[i] into a hash table, and then for each index i and j,
-checking whether the hash table contains the integer - (s[i]+s[j])
-
-Alternatively, the algorithm below first sorts the input array and then tests all
-possible pairs in a careful order that avoids the need to binary search for the pairs
-in the sorted list, achieving worst-case O(n^n)
-
-Solution:  Quadratic algorithm
-http://en.wikipedia.org/wiki/3SUM
-
+[
+  [-1, 0, 1],
+  [-1, -1, 2]
+]
 */
 
-#include <stdio.h>
 #include <iostream>
 #include <vector>
 #include <set>
@@ -39,58 +21,49 @@ http://en.wikipedia.org/wiki/3SUM
 using namespace std;
 
 // method: 1
-/*
 vector<vector<int> > threeSum(vector<int> &num) {
-	vector<vector<int> > res;
+    vector<vector<int> > res;
+    std::sort(num.begin(), num.end());
+    for (int i = 0; i < num.size(); i++) {
+        int target = -num[i];
+        int front = i + 1;
+        int back = num.size() - 1;
 
-	std::sort(num.begin(), num.end());
+        while (front < back) {
 
-	for (int i = 0; i < num.size(); i++) {
+            int sum = num[front] + num[back];
 
-		int target = -num[i];
-		int front = i + 1;
-		int back = num.size() - 1;
+            // Finding answer which start from number num[i]
+            if (sum < target)
+                front++;
 
-		if (target < 0)
-		{
-			break;
-		}
+            else if (sum > target)
+                back--;
 
-		while (front < back) {
+            else {
+                vector<int> triplet(3, 0);
+                triplet[0] = num[i];
+                triplet[1] = num[front];
+                triplet[2] = num[back];
+                res.push_back(triplet);
 
-			int sum = num[front] + num[back];
+                // Processing duplicates of Number 2
+                // Rolling the front pointer to the next different number forwards
+                while (front < back && num[front] == triplet[1]) front++;
 
-			// Finding answer which start from number num[i]
-			if (sum < target)
-				front++;
+                // Processing duplicates of Number 3
+                // Rolling the back pointer to the next different number backwards
+                while (front < back && num[back] == triplet[2]) rear--;
+            }
 
-			else if (sum > target)
-				back--;
+        }
 
-			else {
-				vector<int> triplet(3, 0);
-				triplet[0] = num[i];
-				triplet[1] = num[front];
-				triplet[2] = num[back];
-				res.push_back(triplet);
-
-				// Processing duplicates of Number 2
-				// Rolling the front pointer to the next different number forwards
-				while (front < back && num[front] == triplet[1]) front++;
-
-				// Processing duplicates of Number 3
-				// Rolling the back pointer to the next different number backwards
-				while (front < back && num[back] == triplet[2]) back--;
-			}
-
-		}
-
-		// Processing duplicates of Number 1
-		while (i + 1 < num.size() && num[i + 1] == num[i])
-		i++;
-	}
-	return res;
-} */
+        // Processing duplicates of Number 1
+        while (i + 1 < num.size() && num[i + 1] == num[i])
+            i++;
+    }
+    return res;
+}
 
 
 //2.

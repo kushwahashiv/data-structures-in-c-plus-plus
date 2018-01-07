@@ -1,8 +1,8 @@
-/*
-https://oj.leetcode.com/problems/binary-tree-zigzag-level-order-traversal/
- Author : Shiv S. Kushwaha
- Date   : 2014-07-05
+// https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/description/
+// Author : Shiv S. Kushwaha
+// Date   : 2014-07-05
 
+/*
 Given a binary tree, return the zigzag level order traversal of its nodes' values.
 (ie, from left to right, then right to left for the next level and alternate between).
 
@@ -22,7 +22,6 @@ return its zigzag level order traversal as:
 ]
 
 confused what "{1,#,2,3}" means? > read more on how binary tree is serialized on OJ.
-
 OJ's Binary Tree Serialization:
 The serialization of a binary tree follows a level order traversal, 
 where '#' signifies a path terminator where no node exists below.
@@ -38,8 +37,6 @@ Here's an example:
 The above binary tree is serialized as "{1,2,3,#,#,4,#,#,5}". 
 */
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <iostream>
 #include <vector>
 #include <queue>
@@ -54,97 +51,27 @@ struct TreeNode
   TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
 };
 
-vector<TreeNode*> TreeToArray_level_order(TreeNode* root);
-
-vector<vector<int> > zigzagLevelOrder(TreeNode *root)
-{
-  vector<vector<int> > result;
-  vector<TreeNode*> tree = TreeToArray_level_order(root);
-
-  int curLevelCnt = 1;
-  int nextLevelCnt = 1;
-  int level = 0;
-
-  for (int i = 0; i < tree.size(); i += curLevelCnt)
-  {
-    int cnt = 0;
-    level++;
-    vector<int> v;
-    if (level % 2 == 0)
-    {
-      for (int j = i + nextLevelCnt - 1; j >= i; j--)
-      {
-        if (tree[j])
-        {
-          cnt += 2;
-          v.push_back(tree[j]->val);
+vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+    queue<TreeNode*> q;
+    if(root)  q.push(root);
+    bool reverse = false;
+    vector<vector<int>> zigzagResult;
+    while(!q.empty()){
+        int size = q.size();
+        zigzagResult.push_back(vector<int>(size));
+        for(int i=0; i<size; i++){
+            int index = reverse ? size-i-1 : i;
+            zigzagResult.back()[index] = q.front()->val;
+            if(q.front()->left)  q.push(q.front()->left);
+            if(q.front()->right)  q.push(q.front()->right);
+            q.pop();
         }
-      }
+        reverse = !reverse;
     }
-    else
-    {
-      for (int j = i; j < i + nextLevelCnt; j++)
-      {
-        if (tree[j])
-        {
-          cnt += 2;
-          v.push_back(tree[j]->val);
-        }
-      }
-    }
-    curLevelCnt = nextLevelCnt;
-    nextLevelCnt = cnt;
-    if (v.size()>0)
-    {
-      result.push_back(v);
-    }
-  }
-  return result;
+    return zigzagResult;
 }
 
-vector<TreeNode*> TreeToArray_level_order(TreeNode* root)
-{
-  vector <TreeNode*> result;
-  queue<TreeNode*> q;
-  q.push(root);
-  while (q.size() > 0)
-  {
-    TreeNode* n = q.front();
-    q.pop();
-    result.push_back(n);
-    if (n == nullptr)
-    {
-      //   cout << "# ";
-      continue;
-    }
-    //cout << n->val << " ";
-    q.push(n->left);
-    q.push(n->right);
-  }
-  //cout << endl;
-  return result;
-}
-
-void printTree_level_order(TreeNode *root)
-{
-  queue<TreeNode*> q;
-  q.push(root);
-  while (q.size() > 0)
-  {
-    TreeNode* n = q.front();
-    q.pop();
-    if (n == nullptr)
-    {
-      cout << "# ";
-      continue;
-    }
-    cout << n->val << " ";
-    q.push(n->left);
-    q.push(n->right);
-  }
-  cout << endl;
-}
-
+// supporting functions
 TreeNode* createTree(int a[], int n)
 {
   if (n <= 0) 

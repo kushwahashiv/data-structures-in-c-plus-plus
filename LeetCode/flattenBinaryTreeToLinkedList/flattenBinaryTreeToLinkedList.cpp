@@ -1,41 +1,34 @@
-// Source : https://oj.leetcode.com/problems/flatten-binary-tree-to-linked-list/
+// Source : https://leetcode.com/problems/flatten-binary-tree-to-linked-list/description/
 // Author : Shiv S. Kushwaha
 // Date   : 2014-07-03
 
-/**********************************************************************************
-*
-* Given a binary tree, flatten it to a linked list in-place.
-*
-* For example,
-* Given
-*
-*          1
-*         / \
-*        2   5
-*       / \   \
-*      3   4   6
-*
-* The flattened tree should look like:
-*
-*    1
-*     \
-*      2
-*       \
-*        3
-*         \
-*          4
-*           \
-*            5
-*             \
-*              6
-*
-*
-* Hints:
-* If you notice carefully in the flattened tree, each node's right child points to
-* the next node of a pre-order traversal.
-*
-**********************************************************************************/
+/*
+Given a binary tree, flatten it to a linked list in-place.
+For example,
+Given
+    1
+   / \
+  2   5
+ / \   \
+3   4   6
 
+The flattened tree should look like:
+
+1
+ \
+  2
+   \
+    3
+     \
+      4
+       \
+        5
+         \
+          6
+Hints:
+If you notice carefully in the flattened tree, each node's right child points to
+the next node of a pre-order traversal.
+*/
 
 #include <iostream>
 #include <vector>
@@ -50,39 +43,29 @@ struct TreeNode {
   TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
 };
 
-class Solution {
-public:
-  void flatten(TreeNode *root) {
-
-    vector<TreeNode*> v, stack;
-    stack.push_back(root);
-    while (stack.size() > 0){
-      TreeNode* node = stack.back();
-      stack.pop_back();
-      v.push_back(node);
-
-      if (node && node->right){
-        stack.push_back(node->right);
-      }
-      if (node && node->left){
-        stack.push_back(node->left);
-      }
+void flatten(TreeNode *root) {
+		TreeNode*now = root;
+		while (now)
+		{
+			if(now->left)
+			{
+                //Find current node's prenode that links to current node's right subtree
+				TreeNode* pre = now->left;
+				while(pre->right)
+				{
+					pre = pre->right;
+				}
+				pre->right = now->right;
+                //Use current node's left subtree to replace its right subtree(original right
+                //subtree is already linked by current node's prenode
+				now->right = now->left;
+				now->left = NULL;
+			}
+			now = now->right;
+		}
     }
-
-    v.push_back(nullptr);
-    for (int i = 0; i < v.size(); i++){
-      if (v[i]){
-        v[i]->left = nullptr;
-        v[i]->right = v[i + 1];
-      }
-    }
-
-  }
-};
-
-
+ 
 int main()
 {
   return 0;
-
 }

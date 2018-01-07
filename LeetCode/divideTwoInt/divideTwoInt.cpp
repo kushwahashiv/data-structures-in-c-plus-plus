@@ -1,58 +1,34 @@
-// Source : https://oj.leetcode.com/problems/divide-two-integers/
+// Source : https://leetcode.com/problems/divide-two-integers/description/
 // Author : Shiv S. Kushwaha
 // Date   : 2014-06-20
 
-/********************************************************************************** 
-* 
-* Divide two integers without using multiplication, division and mod operator.
-* 
-*               
-**********************************************************************************/
+/*
+Divide two integers without using multiplication, division and mod operator.
+If it is overflow, return MAX_INT.
+*/
 
-#include <stdio.h>
-#include <string.h>
 #include <iostream>
 using namespace std;
 
 
 int divide(int dividend, int divisor) {
-  
-    int sign = 1;
-    long long dvd = dividend;
-    long long dvs = divisor;
-    if (dvd<0) {
-        dvd = -dvd;
-        sign = -sign;
-    } 
-    if (dvs<0) {
-        dvs = -dvs;
-        sign = -sign;
-    }
-
-    long long bit_num[32];
-    memset( bit_num, 0, sizeof(bit_num)/sizeof(bit_num[0]) );
-
-    int i=0;
-    long long d = dvs;
-    bit_num[i] = d;
-    while( d <= dvd ){
-        bit_num[++i] = d = d << 1;
-    }
-    i--;
-
-    unsigned int result = 0;
-    while(dvd >= dvs){
-        if (dvd >= bit_num[i]){
-            dvd -= bit_num[i];
-            result += (1<<i);
-        }else{
-            i--;
+        if (!divisor || (dividend == INT_MIN && divisor == -1))
+            return INT_MAX;
+        int sign = ((dividend < 0) ^ (divisor < 0)) ? -1 : 1;
+        long long dvd = labs(dividend);
+        long long dvs = labs(divisor);
+        int res = 0;
+        while (dvd >= dvs) {
+            long long temp = dvs, multiple = 1;
+            while (dvd >= (temp << 1)) {
+                temp <<= 1;
+                multiple <<= 1;
+            }
+            dvd -= temp;
+            res += multiple;
         }
+        return sign == 1 ? res : -res;
     }
-
-    return result * sign;
-}
-
 
 int main()
 {

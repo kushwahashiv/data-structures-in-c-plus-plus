@@ -1,75 +1,45 @@
-// Source : https://oj.leetcode.com/problems/multiply-strings/
+// Source : https://leetcode.com/problems/multiply-strings/description/
 // Author : Shiv S. Kushwaha
 // Date   : 2014-07-18
 
-/********************************************************************************** 
-* 
-* Given two numbers represented as strings, return multiplication of the numbers as a string.
-* 
-* Note: The numbers can be arbitrarily large and are non-negative.
-*               
-**********************************************************************************/
+/*
+Given two non-negative integers num1 and num2 represented as strings, return the product of num1 and num2.
+Note:
+The length of both num1 and num2 is < 110.
+Both num1 and num2 contains only digits 0-9.
+Both num1 and num2 does not contain any leading zero.
+You must not use any built-in BigInteger library or convert the inputs to integer directly.
+*/
 
 #include <iostream>
 #include <string>
 using namespace std;
 
-string multiply(string& num, char ch){
-    int n = ch - '0';
-    string s;
-    int carry = 0;
-    int x;
-    for(int i=num.size()-1; i>=0; i--){
-        x = (num[i]-'0') * n + carry;
-        carry = x/10;
-        s.insert(s.begin(), x%10+'0'); 
-    }
-    if (carry>0) {
-        s.insert(s.begin(), carry+'0');
-    }
-    return s;
-}
-
-string strPlus(string& num1, string& num2) {
-    string s;
-    int carry=0;
-    int x;
-    int n1 = num1.size(); 
-    int n2 = num2.size(); 
-    
-    int i, j;
-    for(i=n1-1, j=n2-1; i>=0 || j>=0; i--, j--){
-        int x1 = i>=0 ?  num1[i]-'0' : 0;
-        int x2 = j>=0 ?  num2[j]-'0' : 0;
-        x = x1 + x2 + carry; 
-        carry = x/10;
-        s.insert(s.begin(), x%10+'0');
-    }
-    if (carry>0) {
-        s.insert(s.begin(), carry+'0');
-    }
-    return s;
-}
-
+/*
+This is the standard manual multiplication algorithm. We use two nested for loops, working backward from the end of each input number.
+We pre-allocate our result and accumulate our partial result in there.
+One special case to note is when our carry requires us to write to our sum string outside of our for loop.
+At the end, we trim any leading zeros, or return 0 if we computed nothing but zeros.
+*/
 string multiply(string num1, string num2) {
+    string sum(num1.size() + num2.size(), '0');
 
-    if (num1.size()<=0 || num2.size()<=0) return "";
-
-    int shift=0;
-    string result="0";
-    for (int i=num1.size()-1; i>=0; i--) {
-        string s = multiply(num2, num1[i]);        
-        for(int j=0; j<shift; j++){
-            s.insert(s.end(), '0');
+    for (int i = num1.size() - 1; 0 <= i; --i) {
+        int carry = 0;
+        for (int j = num2.size() - 1; 0 <= j; --j) {
+            int tmp = (sum[i + j + 1] - '0') + (num1[i] - '0') * (num2[j] - '0') + carry;
+            sum[i + j + 1] = tmp % 10 + '0';
+            carry = tmp / 10;
         }
-        result = strPlus(result, s);
-        shift++;
+        sum[i] += carry;
     }
-    //check if it is zero
-    if (result[0]=='0') return "0";
-    return result;
-}
 
+    size_t startpos = sum.find_first_not_of("0");
+    if (string::npos != startpos) {
+        return sum.substr(startpos);
+    }
+    return "0";
+}
 
 int main(int argc, char**argv)
 {

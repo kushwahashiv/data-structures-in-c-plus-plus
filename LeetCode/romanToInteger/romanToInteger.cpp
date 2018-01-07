@@ -1,60 +1,42 @@
-// Source : https://oj.leetcode.com/problems/roman-to-integer/
+// Source : https://leetcode.com/problems/roman-to-integer/description/
 // Author : Shiv S. Kushwaha
 // Date   : 2014-07-17
 
-/********************************************************************************** 
-* 
-* Given a roman numeral, convert it to an integer.
-* 
-* Input is guaranteed to be within the range from 1 to 3999.
-*               
-**********************************************************************************/
+/*
+Given a roman numeral, convert it to an integer.
+Input is guaranteed to be within the range from 1 to 3999.
+*/
 
 #include <iostream>
 #include <string>
 using namespace std;
 
-int romanCharToInt(char ch){
-    int d = 0;
-    switch(ch){
-        case 'I':  
-            d = 1;  
-            break;  
-        case 'V':  
-            d = 5;  
-            break;  
-        case 'X':  
-            d = 10;  
-            break;  
-        case 'L':  
-            d = 50;  
-            break;  
-        case 'C':  
-            d = 100;  
-            break;  
-        case 'D':  
-            d = 500;  
-            break;  
-        case 'M':  
-            d = 1000;  
-            break;  
-    }
-    return d;
-}
-int romanToInt(string s) {
-    if (s.size()<=0) return 0;
-    int result = romanCharToInt(s[0]);
-    for (int i=1; i<s.size(); i++){
-        int prev = romanCharToInt(s[i-1]);
-        int curr = romanCharToInt(s[i]);
-        //if left<right such as : IV(4), XL(40), IX(9) ...
-        if (prev < curr) {
-            result = result - prev + (curr-prev);
-        }else{
-            result += curr;
-        }
-    }
-    return result;
+//Problem is simpler to solve by working the string from back to front and using a map. Runtime speed is 88 ms.
+
+int romanToInt(string s)
+{
+    unordered_map<char, int> T = { { 'I' , 1 },
+                                   { 'V' , 5 },
+                                   { 'X' , 10 },
+                                   { 'L' , 50 },
+                                   { 'C' , 100 },
+                                   { 'D' , 500 },
+                                   { 'M' , 1000 } };
+
+   int sum = T[s.back()];
+   for (int i = s.length() - 2; i >= 0; --i)
+   {
+       if (T[s[i]] < T[s[i + 1]])
+       {
+           sum -= T[s[i]];
+       }
+       else
+       {
+           sum += T[s[i]];
+       }
+   }
+
+   return sum;
 }
 
 int main(int argc, char**argv)

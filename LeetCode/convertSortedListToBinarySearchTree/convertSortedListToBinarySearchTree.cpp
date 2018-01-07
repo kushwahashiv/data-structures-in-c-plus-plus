@@ -1,16 +1,22 @@
-// Source : https://oj.leetcode.com/problems/convert-sorted-list-to-binary-search-tree/
+// Source : https://leetcode.com/problems/convert-sorted-list-to-binary-search-tree/description/
 // Author : Shiv S. Kushwaha
 // Date   : 2014-07-03
 
-/********************************************************************************** 
-* 
-* Given a singly linked list where elements are sorted in ascending order, 
-* convert it to a height balanced BST.
-*               
-**********************************************************************************/
+/*
+Given a singly linked list where elements are sorted in ascending order, convert it to a height balanced BST.
+For this problem, a height-balanced binary tree is defined as a binary tree in which the depth of the two subtrees of every node never differ by more than 1.
 
-#include <stdio.h>
-#include <stdlib.h>
+Example:
+Given the sorted linked list: [-10,-3,0,5,9],
+One possible answer is: [0,-3,9,-10,null,5], which represents the following height balanced BST:
+
+      0
+     / \
+   -3   9
+   /   /
+ -10  5
+*/
+
 #include <iostream>
 #include <queue>
 using namespace std;
@@ -31,34 +37,24 @@ struct TreeNode {
 };
 
 
-TreeNode* sortedListToBST(int low, int high, ListNode*& head);
+TreeNode* sortedListToBST(ListNode* head) {
+        if (head == nullptr)
+            return nullptr;
+        if (head->next == nullptr)
+            return new TreeNode(head->val);
+        ListNode *fast = head->next->next, *slow = head;
+        while (fast != nullptr && fast->next != nullptr) {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        TreeNode* root = new TreeNode(slow->next->val);
+        root->right = sortedListToBST(slow->next->next);
+        slow->next = nullptr;
+        root->left = sortedListToBST(head);
+        return root;
+ }
 
-TreeNode *sortedListToBST(ListNode *head) {
-    int len = 0;
-    
-    for(ListNode* p=head; p!=nullptr; p=p->next){
-        len++;
-    }
-    return sortedListToBST(0, len-1, head);
-}
-
-TreeNode* sortedListToBST(int low, int high, ListNode*& head) {
-    if (low>high || head==nullptr) return nullptr;
-
-    int mid = low + (high - low)/2;
-
-    TreeNode* leftNode = sortedListToBST(low, mid-1, head);
-
-    TreeNode* node = new TreeNode(head->val);
-    node->left = leftNode;
-    head = head->next;
-
-    TreeNode* rightNode = sortedListToBST(mid+1, high, head);
-    node->right = rightNode;
-
-    return node;
-}
-
+// SF
 void printTree_level_order(TreeNode *root)
 {
     queue<TreeNode*> q;
