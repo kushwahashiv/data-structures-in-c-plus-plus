@@ -23,44 +23,44 @@ Then we can take out the previous duplicated char, and keep tracking the maxiumn
 */
 
 int lengthOfLongestSubstring1(string s) {
-    map<char, int> m;
-    int maxLen = 0;
-    int lastRepeatPos = -1;
-    for(int i=0; i<s.size(); i++){
-        if (m.find(s[i])!=m.end() && lastRepeatPos < m[s[i]]) {
-            lastRepeatPos = m[s[i]];
-        }
-        if ( i - lastRepeatPos > maxLen ){
-            maxLen = i - lastRepeatPos;
-        }
-        m[s[i]] = i;
+  map<char, int> m;
+  int maxLen = 0;
+  int lastRepeatPos = -1;
+  for (int i = 0; i < s.size(); i++) {
+    if (m.find(s[i]) != m.end() && lastRepeatPos < m[s[i]]) {
+      lastRepeatPos = m[s[i]];
     }
-    return maxLen;
+    if (i - lastRepeatPos > maxLen) {
+      maxLen = i - lastRepeatPos;
+    }
+    m[s[i]] = i;
+  }
+  return maxLen;
 }
 
 int lengthOfLongestSubstring(string s) {
-        vector<int> dict(256, -1);
-        int maxLen = 0, start = -1;
-        for (int i = 0; i != s.length(); i++) {
-            if (dict[s[i]] > start)
-                start = dict[s[i]];
-            dict[s[i]] = i;
-            maxLen = max(maxLen, i - start);
-        }
-        return maxLen;
-    }
+  vector<int> dict(256, -1);
+  int maxLen = 0, start = -1;
+  for (int i = 0; i != s.length(); i++) {
+    if (dict[s[i]] > start)
+      start = dict[s[i]];
+    dict[s[i]] = i;
+    maxLen = max(maxLen, i - start);
+  }
+  return maxLen;
+}
 
 int main(int argc, char** argv)
 {
-    string s = "abcabcbb";
+  string s = "abcabcbb";
+  cout << s << " : " << lengthOfLongestSubstring(s) << endl;
+  s = "bbbbb";
+  cout << s << " : " << lengthOfLongestSubstring(s) << endl;
+  s = "bbabcdb";
+  cout << s << " : " << lengthOfLongestSubstring(s) << endl;
+  if (argc > 1) {
+    s = argv[1];
     cout << s << " : " << lengthOfLongestSubstring(s) << endl;
-    s = "bbbbb";
-    cout << s << " : " << lengthOfLongestSubstring(s) << endl;
-    s = "bbabcdb";
-    cout << s << " : " << lengthOfLongestSubstring(s) << endl;
-    if (argc>1){
-        s = argv[1];
-        cout << s << " : " << lengthOfLongestSubstring(s) << endl;
-    }
-    return 0;
+  }
+  return 0;
 }

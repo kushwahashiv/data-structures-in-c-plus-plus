@@ -25,32 +25,32 @@ Reduce them to a single space in the reversed string.
 using namespace std;
 
 void reverseWords(string &s) {
-    reverse(s.begin(), s.end());
-    int storeIndex = 0;
-    for (int i = 0; i < s.size(); i++) {
-        if (s[i] != ' ') {
-            if (storeIndex != 0) s[storeIndex++] = ' ';
-            int j = i;
-            while (j < s.size() && s[j] != ' ') { s[storeIndex++] = s[j++]; }
-            reverse(s.begin() + storeIndex - (j - i), s.begin() + storeIndex);
-            i = j;
-        }
+  reverse(s.begin(), s.end());
+  int storeIndex = 0;
+  for (int i = 0; i < s.size(); i++) {
+    if (s[i] != ' ') {
+      if (storeIndex != 0) s[storeIndex++] = ' ';
+      int j = i;
+      while (j < s.size() && s[j] != ' ') { s[storeIndex++] = s[j++]; }
+      reverse(s.begin() + storeIndex - (j - i), s.begin() + storeIndex);
+      i = j;
     }
-    s.erase(s.begin() + storeIndex, s.end());
+  }
+  s.erase(s.begin() + storeIndex, s.end());
 }
-    
+
 int main()
 {
-   string s;
-   reverseWords(s);
-   s=" ";
-   reverseWords(s);
-   s="1 ";
-   reverseWords(s);
-   s="love";
-   reverseWords(s);
-   s="i love cpp";
-   reverseWords(s);
+  string s;
+  reverseWords(s);
+  s = " ";
+  reverseWords(s);
+  s = "1 ";
+  reverseWords(s);
+  s = "love";
+  reverseWords(s);
+  s = "i love cpp";
+  reverseWords(s);
 
-   return 0;
-}    
+  return 0;
+}

@@ -15,64 +15,64 @@ Given {1,2,3,4}, reorder it to {1,4,2,3}.
 
 // O(N) time, O(1) space in total
 void reorderList(ListNode *head) {
-    if (!head || !head->next) return;
+  if (!head || !head->next) return;
 
-    // find the middle node: O(n)
-    ListNode *p1 = head, *p2 = head->next;
-    while (p2 && p2->next) {
-        p1 = p1->next;
-        p2 = p2->next->next;
-    }
+  // find the middle node: O(n)
+  ListNode *p1 = head, *p2 = head->next;
+  while (p2 && p2->next) {
+    p1 = p1->next;
+    p2 = p2->next->next;
+  }
 
-    // cut from the middle and reverse the second half: O(n)
-    ListNode *head2 = p1->next;
-    p1->next = NULL;
+  // cut from the middle and reverse the second half: O(n)
+  ListNode *head2 = p1->next;
+  p1->next = NULL;
 
-    p2 = head2->next;
-    head2->next = NULL;
-    while (p2) {
-        p1 = p2->next;
-        p2->next = head2;
-        head2 = p2;
-        p2 = p1;
-    }
+  p2 = head2->next;
+  head2->next = NULL;
+  while (p2) {
+    p1 = p2->next;
+    p2->next = head2;
+    head2 = p2;
+    p2 = p1;
+  }
 
-    // merge two lists: O(n)
-    for (p1 = head, p2 = head2; p1; ) {
-        auto t = p1->next;
-        p1 = p1->next = p2;
-        p2 = t;
-    }
+  // merge two lists: O(n)
+  for (p1 = head, p2 = head2; p1; ) {
+    auto t = p1->next;
+    p1 = p1->next = p2;
+    p2 = t;
+  }
 
-    //for (p1 = head, p2 = head2; p2; ) {
-    //    auto t = p1->next;
-    //    p1->next = p2;
-    //    p2 = p2->next;
-    //    p1 = p1->next->next = t;
-    //}
+  //for (p1 = head, p2 = head2; p2; ) {
+  //    auto t = p1->next;
+  //    p1->next = p2;
+  //    p2 = p2->next;
+  //    p1 = p1->next->next = t;
+  //}
 }
 
-void printList(ListNode *h){
-    while(h!=nullptr){
-        printf("%d->", h->val);
-        h = h->next;
-    }
-    printf("nil\n");
+void printList(ListNode *h) {
+  while (h != nullptr) {
+    printf("%d->", h->val);
+    h = h->next;
+  }
+  printf("nil\n");
 }
 
 int main(int argc, char** argv)
 {
-    int size = atoi(argv[1]);
-    ListNode* n = new ListNode[size] ;
+  int size = atoi(argv[1]);
+  ListNode* n = new ListNode[size];
 
-    for(int i=0; i<size; i++){
-        n[i].val = i;
-        if( i+1 < size) {
-            n[i].next = &n[i+1];
-        }
+  for (int i = 0; i < size; i++) {
+    n[i].val = i;
+    if (i + 1 < size) {
+      n[i].next = &n[i + 1];
     }
-    Solution s;
-    s.reorderList(&n[0]);
-    printList(&n[0]);
-    return 0;
+  }
+  Solution s;
+  s.reorderList(&n[0]);
+  printList(&n[0]);
+  return 0;
 }

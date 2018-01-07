@@ -15,25 +15,25 @@ Output: 5
 #include <ctype.h>
 
 int lengthOfLastWord(string s) {
-        int len = 0, tail = s.length() - 1;
-        while (tail >= 0 && s[tail] == ' ') tail--;
-        while (tail >= 0 && s[tail] != ' ') {
-            len++;
-            tail--;
-        }
-        return len;
- }
+  int len = 0, tail = s.length() - 1;
+  while (tail >= 0 && s[tail] == ' ') tail--;
+  while (tail >= 0 && s[tail] != ' ') {
+    len++;
+    tail--;
+  }
+  return len;
+}
 
 int main(int argc, char** argv)
 {
-    const char* p;
-    p = "hello world";
-    printf("%s, %d\n", p, lengthOfLastWord(p)); 
-    p = "a";
-    printf("%s, %d\n", p, lengthOfLastWord(p)); 
-    
-    if(argc>1){
-        p = argv[1];
-        printf("%s, %d\n", p, lengthOfLastWord(p)); 
-    }
+  const char* p;
+  p = "hello world";
+  printf("%s, %d\n", p, lengthOfLastWord(p));
+  p = "a";
+  printf("%s, %d\n", p, lengthOfLastWord(p));
+
+  if (argc > 1) {
+    p = argv[1];
+    printf("%s, %d\n", p, lengthOfLastWord(p));
+  }
 }

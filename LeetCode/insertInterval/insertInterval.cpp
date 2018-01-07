@@ -18,53 +18,53 @@ This is because the new interval [4,9] overlaps with [3,5],[6,7],[8,10].
 using namespace std;
 
 struct Interval {
-    int start;
-    int end;
-    Interval() : start(0), end(0) {}
-    Interval(int s, int e) : start(s), end(e) {}
+  int start;
+  int end;
+  Interval() : start(0), end(0) {}
+  Interval(int s, int e) : start(s), end(e) {}
 };
 
 vector<Interval> insert(vector<Interval>& intervals, Interval newInterval) {
-    vector<Interval> ret;
-    auto it = intervals.begin();
-    for(; it!=intervals.end(); ++it){
-		if(newInterval.end < (*it).start) //all intervals after will not overlap with the newInterval
-			break;
-		else if(newInterval.start > (*it).end) //*it will not overlap with the newInterval
-			ret.push_back(*it);
-        else{ //update newInterval bacause *it overlap with the newInterval
-            newInterval.start = min(newInterval.start, (*it).start);
-            newInterval.end = max(newInterval.end, (*it).end);
-        }
+  vector<Interval> ret;
+  auto it = intervals.begin();
+  for (; it != intervals.end(); ++it) {
+    if (newInterval.end < (*it).start) //all intervals after will not overlap with the newInterval
+      break;
+    else if (newInterval.start > (*it).end) //*it will not overlap with the newInterval
+      ret.push_back(*it);
+    else { //update newInterval bacause *it overlap with the newInterval
+      newInterval.start = min(newInterval.start, (*it).start);
+      newInterval.end = max(newInterval.end, (*it).end);
     }
-    // don't forget the rest of the intervals and the newInterval
-	ret.push_back(newInterval);
-	for(; it!=intervals.end(); ++it)
-		ret.push_back(*it);
-	return ret;
+  }
+  // don't forget the rest of the intervals and the newInterval
+  ret.push_back(newInterval);
+  for (; it != intervals.end(); ++it)
+    ret.push_back(*it);
+  return ret;
 }
 
 int main()
 {
-    Interval i1(1,2);
-    Interval i2(3,5);
-    Interval i3(6,7);
-    Interval i4(8,10);
-    Interval i5(12,16);
-    vector<Interval> intervals;
-    intervals.push_back(i1);
-    intervals.push_back(i2);
-    intervals.push_back(i3);
-    intervals.push_back(i4);
-    intervals.push_back(i5);
+  Interval i1(1, 2);
+  Interval i2(3, 5);
+  Interval i3(6, 7);
+  Interval i4(8, 10);
+  Interval i5(12, 16);
+  vector<Interval> intervals;
+  intervals.push_back(i1);
+  intervals.push_back(i2);
+  intervals.push_back(i3);
+  intervals.push_back(i4);
+  intervals.push_back(i5);
 
-    Interval n(4,9);
-    vector<Interval> r = insert(intervals, n);
+  Interval n(4, 9);
+  vector<Interval> r = insert(intervals, n);
 
-    for(int i=0; i<r.size(); i++){
-        cout << "[ " << r[i].start << ", " << r[i].end << " ] ";
-    }
-    cout <<endl;
+  for (int i = 0; i < r.size(); i++) {
+    cout << "[ " << r[i].start << ", " << r[i].end << " ] ";
+  }
+  cout << endl;
 
-    return 0;
+  return 0;
 }

@@ -32,31 +32,31 @@ which is like a one-side wall of partial container. Fix the higher one and flow 
 For example, if current height of left is lower, we fill water in the left bin. Until left meets right, we filled the whole container.
 */
 int trap(int A[], int n) {
-        int left=0; int right=n-1;
-        int res=0;
-        int maxleft=0, maxright=0;
-        while(left<=right){
-            if(A[left]<=A[right]){
-                if(A[left]>=maxleft) maxleft=A[left];
-                else res+=maxleft-A[left];
-                left++;
-            }
-            else{
-                if(A[right]>=maxright) maxright= A[right];
-                else res+=maxright-A[right];
-                right--;
-            }
-        }
-        return res;
+  int left = 0; int right = n - 1;
+  int res = 0;
+  int maxleft = 0, maxright = 0;
+  while (left <= right) {
+    if (A[left] <= A[right]) {
+      if (A[left] >= maxleft) maxleft = A[left];
+      else res += maxleft - A[left];
+      left++;
     }
+    else {
+      if (A[right] >= maxright) maxright = A[right];
+      else res += maxright - A[right];
+      right--;
+    }
+  }
+  return res;
+}
 
 
 #define TEST(a) printf("%d\n", trap(a, sizeof(a)/sizeof(int)))
 int main()
 {
-    int a[]={2,0,2};
-    TEST(a);
-    int b[]={0,1,0,2,1,0,1,3,2,1,2,1};
-    TEST(b);
-    return 0;
+  int a[] = { 2,0,2 };
+  TEST(a);
+  int b[] = { 0,1,0,2,1,0,1,3,2,1,2,1 };
+  TEST(b);
+  return 0;
 }

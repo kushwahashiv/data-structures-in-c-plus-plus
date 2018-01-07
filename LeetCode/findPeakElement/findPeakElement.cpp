@@ -28,35 +28,35 @@ using namespace std;
 */
 
 int findPeakElement(const vector<int> &num)
-    {
-        int low = 0;
-        int high = num.size()-1;
+{
+  int low = 0;
+  int high = num.size() - 1;
 
-        while(low < high)
-        {
-            int mid1 = (low+high)/2;
-            int mid2 = mid1+1;
-            if(num[mid1] < num[mid2])
-                low = mid2;
-            else
-                high = mid1;
-        }
-        return low;
-    }
+  while (low < high)
+  {
+    int mid1 = (low + high) / 2;
+    int mid2 = mid1 + 1;
+    if (num[mid1] < num[mid2])
+      low = mid2;
+    else
+      high = mid1;
+  }
+  return low;
+}
 
 void printVector(vector<int> &n) {
-    cout << "[ ";
-    int i;
-    for(i=0; i<n.size(); i++){
-        cout << n[i] << (i==n.size()-1 ? " ]" : ", ");
-    }
-    cout << endl;
+  cout << "[ ";
+  int i;
+  for (i = 0; i < n.size(); i++) {
+    cout << n[i] << (i == n.size() - 1 ? " ]" : ", ");
+  }
+  cout << endl;
 }
 
 void test(int a[], int n) {
-    vector<int> v(a, a+n);
-    cout << "Peak Index = " << findPeakElement(v) << "\t";
-    printVector(v);
+  vector<int> v(a, a + n);
+  cout << "Peak Index = " << findPeakElement(v) << "\t";
+  printVector(v);
 }
 
 
@@ -64,38 +64,38 @@ void test(int a[], int n) {
 
 int main(int argc, char**argv)
 {
-    int n0[] = {1};
-    TEST(n0);
+  int n0[] = { 1 };
+  TEST(n0);
 
-    int n1[] = {1,2};
-    TEST(n1);
+  int n1[] = { 1,2 };
+  TEST(n1);
 
-    int n2[] = {2,1};
-    TEST(n2);
+  int n2[] = { 2,1 };
+  TEST(n2);
 
-    int n3[] = {1,2,3};
-    TEST(n3);
+  int n3[] = { 1,2,3 };
+  TEST(n3);
 
-    int n4[] = {3,2,1};
-    TEST(n4);
+  int n4[] = { 3,2,1 };
+  TEST(n4);
 
-    int n5[] = {1,2,3,2};
-    TEST(n5);
+  int n5[] = { 1,2,3,2 };
+  TEST(n5);
 
-    int n6[] = {0,1,2,9,7,5,4,2,1};
-    TEST(n6);
+  int n6[] = { 0,1,2,9,7,5,4,2,1 };
+  TEST(n6);
 
-    int n7[] = {1,2,1,2,1};
-    TEST(n7);
+  int n7[] = { 1,2,1,2,1 };
+  TEST(n7);
 
-    int n8[] = {1,2,1,2,3,1};
-    TEST(n8);
+  int n8[] = { 1,2,1,2,3,1 };
+  TEST(n8);
 
-    int n9[] = {1,2,3,2,4,2,1};
-    TEST(n9);
+  int n9[] = { 1,2,3,2,4,2,1 };
+  TEST(n9);
 
-    int n10[] = {1,3,1,2,1,3,1};
-    TEST(n10);
+  int n10[] = { 1,3,1,2,1,3,1 };
+  TEST(n10);
 
-    return 0;
+  return 0;
 }

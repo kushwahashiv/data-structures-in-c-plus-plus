@@ -26,24 +26,24 @@ Explanation:  There are three ways to climb to the top.
 
 
 int climbStairs(int n) {
-    int a = 1, b = 1;
-    while (n--)
-        a = (b += a) - a;
-    return a;
+  int a = 1, b = 1;
+  while (n--)
+    a = (b += a) - a;
+  return a;
 }
 
 // 2
 //Time too long
 int climbStairs2(int n)
 {
-  if (n <= 3) 
+  if (n <= 3)
     return n;
   return climbStairs(n - 1) + climbStairs(n - 2);
 }
 
 int main(int argc, char** argv)
 {
-std::cout<< climbStairs2(5) <<std::endl;
+  std::cout << climbStairs2(5) << std::endl;
   system("pause");
 
   return 0;

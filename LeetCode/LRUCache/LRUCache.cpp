@@ -35,72 +35,72 @@ Since using erase on a list with an iterator takes constant time, all operations
 */
 class LRUCache {
 public:
-    LRUCache(int capacity) : _capacity(capacity) {}
+  LRUCache(int capacity) : _capacity(capacity) {}
 
-    int get(int key) {
-        auto it = cache.find(key);
-        if (it == cache.end()) return -1;
-        touch(it);
-        return it->second.first;
-    }
+  int get(int key) {
+    auto it = cache.find(key);
+    if (it == cache.end()) return -1;
+    touch(it);
+    return it->second.first;
+  }
 
-    void set(int key, int value) {
-        auto it = cache.find(key);
-        if (it != cache.end()) touch(it);
-        else {
-			if (cache.size() == _capacity) {
-				cache.erase(used.back());
-				used.pop_back();
-			}
-            used.push_front(key);
-        }
-        cache[key] = { value, used.begin() };
+  void set(int key, int value) {
+    auto it = cache.find(key);
+    if (it != cache.end()) touch(it);
+    else {
+      if (cache.size() == _capacity) {
+        cache.erase(used.back());
+        used.pop_back();
+      }
+      used.push_front(key);
     }
+    cache[key] = { value, used.begin() };
+  }
 
 private:
-    typedef list<int> LI;
-    typedef pair<int, LI::iterator> PII;
-    typedef unordered_map<int, PII> HIPII;
+  typedef list<int> LI;
+  typedef pair<int, LI::iterator> PII;
+  typedef unordered_map<int, PII> HIPII;
 
-    void touch(HIPII::iterator it) {
-        int key = it->first;
-        used.erase(it->second.second);
-        used.push_front(key);
-        it->second.second = used.begin();
-    }
+  void touch(HIPII::iterator it) {
+    int key = it->first;
+    used.erase(it->second.second);
+    used.push_front(key);
+    it->second.second = used.begin();
+  }
 
-    HIPII cache;
-    LI used;
-    int _capacity;
+  HIPII cache;
+  LI used;
+  int _capacity;
 };
 
-int main(int argc, char** argv) 
+int main(int argc, char** argv)
 {
-    srand(time(0));
+  srand(time(0));
 
-    int capacity = 5;
-    int test_loop_times = 10;
-    if (argc>1){
-        capacity = atoi(argv[1]);
-    }
-    if (argc>2){
-        test_loop_times = atoi(argv[1]);
-    }
+  int capacity = 5;
+  int test_loop_times = 10;
+  if (argc > 1) {
+    capacity = atoi(argv[1]);
+  }
+  if (argc > 2) {
+    test_loop_times = atoi(argv[1]);
+  }
 
-    LRUCache cache(capacity);
+  LRUCache cache(capacity);
 
-    int v; 
-    for(int i=0; i<test_loop_times; i++) {
-        v = i;//rand() % capacity;
-        cout << "set " << v << ": ";
-        cache.set(v, v);
-        cache.print();
+  int v;
+  for (int i = 0; i < test_loop_times; i++) {
+    v = i;//rand() % capacity;
+    cout << "set " << v << ": ";
+    cache.set(v, v);
+    cache.print();
 
-        v = rand() % capacity;
-        cout << "get " << v << ": " << cache.get(v);
-        cache.print();
+    v = rand() % capacity;
+    cout << "get " << v << ": " << cache.get(v);
+    cache.print();
 
-        cout << endl;
-    }
-    return 0;
+    cout << endl;
+  }
+  return 0;
 }

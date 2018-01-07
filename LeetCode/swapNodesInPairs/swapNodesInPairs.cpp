@@ -30,24 +30,24 @@ struct ListNode {
 };
 
 ListNode* swapPairs(ListNode* head) {
-    ListNode **pp = &head, *a, *b;
-    while ((a = *pp) && (b = a->next)) {
-        a->next = b->next;
-        b->next = a;
-        *pp = b;
-        pp = &(a->next);
-    }
-    return head;
+  ListNode **pp = &head, *a, *b;
+  while ((a = *pp) && (b = a->next)) {
+    a->next = b->next;
+    b->next = a;
+    *pp = b;
+    pp = &(a->next);
+  }
+  return head;
 }
 
- ListNode *swapPairs1(ListNode *head) {
-    for (ListNode *p = head; p && p->next; p = p->next->next) {
-      int n = p->val;
-      p->val = p->next->val;
-      p->next->val = n;
-    }
-    return head;
+ListNode *swapPairs1(ListNode *head) {
+  for (ListNode *p = head; p && p->next; p = p->next->next) {
+    int n = p->val;
+    p->val = p->next->val;
+    p->next->val = n;
   }
+  return head;
+}
 
 int main()
 {

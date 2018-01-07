@@ -21,50 +21,50 @@ For example,
 using namespace std;
 
 vector<vector<int> > permute(vector<int> &num) {
-	    vector<vector<int> > result;
+  vector<vector<int> > result;
 
-	    permuteRecursive(num, 0, result);
-	    return result;
-    }
+  permuteRecursive(num, 0, result);
+  return result;
+}
 
-    // permute num[begin..end]
-    // invariant: num[0..begin-1] have been fixed/permuted
-	void permuteRecursive(vector<int> &num, int begin, vector<vector<int> > &result)	{
-		if (begin >= num.size()) {
-		    // one permutation instance
-		    result.push_back(num);
-		    return;
-		}
+// permute num[begin..end]
+// invariant: num[0..begin-1] have been fixed/permuted
+void permuteRecursive(vector<int> &num, int begin, vector<vector<int> > &result) {
+  if (begin >= num.size()) {
+    // one permutation instance
+    result.push_back(num);
+    return;
+  }
 
-		for (int i = begin; i < num.size(); i++) {
-		    swap(num[begin], num[i]);
-		    permuteRecursive(num, begin + 1, result);
-		    // reset
-		    swap(num[begin], num[i]);
-		}
-    }
+  for (int i = begin; i < num.size(); i++) {
+    swap(num[begin], num[i]);
+    permuteRecursive(num, begin + 1, result);
+    // reset
+    swap(num[begin], num[i]);
+  }
+}
 
 int main(int argc, char** argv)
 {
-    int n = 3;
-    if (argc>1){
-       n = atoi(argv[1]); 
-    }
+  int n = 3;
+  if (argc > 1) {
+    n = atoi(argv[1]);
+  }
 
-    vector<int> v;
-    for (int i=0; i<n; i++) {
-        v.push_back(i+1);
-    }
-    vector<vector<int> > vv;
-    vv = permute(v);
-    
-    for(int i=0; i<vv.size(); i++) {
-        cout << "{ ";
-        for(int j=0; j<vv[i].size(); j++){
-            cout << vv[i][j] << " ";
-        }
-        cout << "}" <<endl;
-    }
+  vector<int> v;
+  for (int i = 0; i < n; i++) {
+    v.push_back(i + 1);
+  }
+  vector<vector<int> > vv;
+  vv = permute(v);
 
-    return 0;
+  for (int i = 0; i < vv.size(); i++) {
+    cout << "{ ";
+    for (int j = 0; j < vv[i].size(); j++) {
+      cout << vv[i][j] << " ";
+    }
+    cout << "}" << endl;
+  }
+
+  return 0;
 }

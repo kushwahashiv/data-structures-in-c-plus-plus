@@ -29,31 +29,31 @@ struct TreeNode
 };
 
 vector<int> inorderTraversal(TreeNode *root) {
-        vector<int> vector;
-        if(!root)
-        return vector;
-        stack<TreeNode *> stack;
-        stack.push(root);
-        while(!stack.empty())
-        {
-            TreeNode *pNode = stack.top();
-            if(pNode->left)
-            {
-                stack.push(pNode->left);
-                pNode->left = NULL;
-            }
-            else
-            {
-                vector.push_back(pNode->val);
-                stack.pop();
-                if(pNode->right)
-                stack.push(pNode->right);
-            }
-        }
-        return vector;
+  vector<int> vector;
+  if (!root)
+    return vector;
+  stack<TreeNode *> stack;
+  stack.push(root);
+  while (!stack.empty())
+  {
+    TreeNode *pNode = stack.top();
+    if (pNode->left)
+    {
+      stack.push(pNode->left);
+      pNode->left = NULL;
     }
+    else
+    {
+      vector.push_back(pNode->val);
+      stack.pop();
+      if (pNode->right)
+        stack.push(pNode->right);
+    }
+  }
+  return vector;
+}
 
-    // 2
+// 2
 
 vector<int> inorderTraversal(TreeNode *root)
 {
@@ -91,7 +91,7 @@ int main()
   root->left->right = new TreeNode(5);
   root->left->left->left = new TreeNode(8);
 
-  auto result =  inorderTraversal(root);
+  auto result = inorderTraversal(root);
   for (auto item : result)
   {
     std::cout << item << ", ";

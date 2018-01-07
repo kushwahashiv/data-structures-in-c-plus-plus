@@ -25,36 +25,36 @@ You may be able to write an algorithm which goes through the list only once, but
 leading the total operations larger than O(2n).
 */
 void sortColors(int A[], int n) {
-            int second=n-1, zero=0;
-            for (int i=0; i<=second; i++) {
-                while (A[i]==2 && i<second) swap(A[i], A[second--]);
-                while (A[i]==0 && i>zero) swap(A[i], A[zero++]);
-            }
- }
+  int second = n - 1, zero = 0;
+  for (int i = 0; i <= second; i++) {
+    while (A[i] == 2 && i < second) swap(A[i], A[second--]);
+    while (A[i] == 0 && i > zero) swap(A[i], A[zero++]);
+  }
+}
 
 void printArray(int a[], int n) {
-    for(int i=0; i<n; i++){
-        printf("%d ", a[i]);
-    }
-    printf("\n");
+  for (int i = 0; i < n; i++) {
+    printf("%d ", a[i]);
+  }
+  printf("\n");
 }
 
 int main(int argc, char** argv)
 {
-    int n = 7;
-    if (argc>1)
-        n = atoi(argv[1]);
+  int n = 7;
+  if (argc > 1)
+    n = atoi(argv[1]);
 
-    srand(time(nullptr));
+  srand(time(nullptr));
 
-    int *a = new int[n];
-    for (int i=0; i<n; i++){
-        a[i] = rand()%3;
-    }
-    printArray(a, n);
-    sortColors(a, n);
-    printArray(a, n);
+  int *a = new int[n];
+  for (int i = 0; i < n; i++) {
+    a[i] = rand() % 3;
+  }
+  printArray(a, n);
+  sortColors(a, n);
+  printArray(a, n);
 
-    delete[] a;
+  delete[] a;
 }
 

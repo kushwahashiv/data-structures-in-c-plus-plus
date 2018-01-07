@@ -4,9 +4,9 @@
 
 /*
  * Given a string, find the length of the longest substring T that contains at most 2 distinct characters.
- * 
+ *
  * For example, Given s = “eceba”,
- * 
+ *
  * T is "ece" which its length is 3.
  */
 
@@ -32,36 +32,36 @@ using namespace std;
  * This solution can be easy to extend to "find the length of longest substring with at most K distinct char(s)"
  */
 int lengthOfLongestSubstringTwoDistinct(string s) {
-    int maxLen = 0;
-    int charMap[256] = {0};
-    int wordCnt = 0;
-    int start = 0;
+  int maxLen = 0;
+  int charMap[256] = { 0 };
+  int wordCnt = 0;
+  int start = 0;
 
-    for(int i=0; i<s.size(); i++){
-        if ( charMap[s[i]]++ == 0 ){
-            wordCnt++;
-        }
-        while (wordCnt>2){
-            charMap[s[start]]--;
-            if (charMap[s[start]]==0){
-                wordCnt--;
-            }
-            start++;
-        }
-        maxLen = max(maxLen, i - start + 1);
+  for (int i = 0; i < s.size(); i++) {
+    if (charMap[s[i]]++ == 0) {
+      wordCnt++;
     }
+    while (wordCnt > 2) {
+      charMap[s[start]]--;
+      if (charMap[s[start]] == 0) {
+        wordCnt--;
+      }
+      start++;
+    }
+    maxLen = max(maxLen, i - start + 1);
+  }
 
-    return maxLen;
+  return maxLen;
 }
 
 
 int main(int argc, char** argv)
 {
-    string s = "eceba";
-    if (argc>1){
-        s = argv[1];
-    }
-    cout << s << " : " << lengthOfLongestSubstringTwoDistinct(s) << endl;
+  string s = "eceba";
+  if (argc > 1) {
+    s = argv[1];
+  }
+  cout << s << " : " << lengthOfLongestSubstringTwoDistinct(s) << endl;
 
-    return 0;
+  return 0;
 }

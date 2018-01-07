@@ -52,7 +52,7 @@ int findMin(vector<int> &num) {
 }
 
 void printArray(vector<int>& arr) {
-  for (auto i: arr) {
+  for (auto i : arr) {
     printf("%d, ", i);
   }
 }

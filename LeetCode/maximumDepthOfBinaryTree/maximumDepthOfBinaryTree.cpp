@@ -19,29 +19,29 @@ struct TreeNode {
 };
 
 int maxDepth(TreeNode* root) {
-    if(root == nullptr){
-        return 0;
-    }
-    int depth_left = maxDepth(root->left) + 1;
-    int depth_right = maxDepth(root->right) + 1;
-    return depth_left > depth_right ? depth_left : depth_right;
+  if (root == nullptr) {
+    return 0;
+  }
+  int depth_left = maxDepth(root->left) + 1;
+  int depth_right = maxDepth(root->right) + 1;
+  return depth_left > depth_right ? depth_left : depth_right;
 }
 
 
 class Solution {
 public:
   int maxDepth(TreeNode *root) {
-    if (root == nullptr){
+    if (root == nullptr) {
       return 0;
     }
-    if (!root->left && !root->right){
+    if (!root->left && !root->right) {
       return 1;
     }
     int left = 1, right = 1;
-    if (root->left){
+    if (root->left) {
       left += maxDepth(root->left);
     }
-    if (root->right){
+    if (root->right) {
       right += maxDepth(root->right);
     }
     return left > right ? left : right;

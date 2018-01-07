@@ -114,7 +114,7 @@ TreeNode* upsideDownBinaryTree(TreeNode* root)
 
 void printTree_pre_order(TreeNode *root)
 {
-  if (root == nullptr){
+  if (root == nullptr) {
     cout << "# ";
     return;
   }

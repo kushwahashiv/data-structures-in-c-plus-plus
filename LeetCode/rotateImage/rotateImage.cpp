@@ -45,69 +45,69 @@ rotate the input matrix in-place such that it becomes:
 using namespace std;
 
 void rotate(vector<vector<int>>& matrix) {
-        int n = matrix.size();
-        int a = 0;
-        int b = n-1;
-        while(a<b){
-            for(int i=0;i<(b-a);++i){
-                swap(matrix[a][a+i], matrix[a+i][b]);
-                swap(matrix[a][a+i], matrix[b][b-i]);
-                swap(matrix[a][a+i], matrix[b-i][a]);
-            }
-            ++a;
-            --b;
-        }
- }
-
-void rotate(vector<vector<int> > &matrix) {
-    int n = matrix.size();
-    for( int i=0; i<n/2; i++ ){
-        int low=i, high=n-i-1;
-        for (int j=low; j<high; j++){
-            int tmp;
-            tmp = matrix[i][j];
-            // left to top 
-            matrix[i][j] = matrix[n-j-1][i];
-            // bottom to left
-            matrix[n-j-1][i] = matrix[n-i-1][n-j-1];
-            // right to bottom
-            matrix[n-i-1][n-j-1] = matrix[j][n-i-1];
-            // top to right
-            matrix[j][n-i-1] = tmp;
-        }
+  int n = matrix.size();
+  int a = 0;
+  int b = n - 1;
+  while (a < b) {
+    for (int i = 0; i < (b - a); ++i) {
+      swap(matrix[a][a + i], matrix[a + i][b]);
+      swap(matrix[a][a + i], matrix[b][b - i]);
+      swap(matrix[a][a + i], matrix[b - i][a]);
     }
+    ++a;
+    --b;
+  }
 }
 
-void printMatrix(vector<vector<int> > &matrix) 
+void rotate(vector<vector<int> > &matrix) {
+  int n = matrix.size();
+  for (int i = 0; i < n / 2; i++) {
+    int low = i, high = n - i - 1;
+    for (int j = low; j < high; j++) {
+      int tmp;
+      tmp = matrix[i][j];
+      // left to top 
+      matrix[i][j] = matrix[n - j - 1][i];
+      // bottom to left
+      matrix[n - j - 1][i] = matrix[n - i - 1][n - j - 1];
+      // right to bottom
+      matrix[n - i - 1][n - j - 1] = matrix[j][n - i - 1];
+      // top to right
+      matrix[j][n - i - 1] = tmp;
+    }
+  }
+}
+
+void printMatrix(vector<vector<int> > &matrix)
 {
-    for(int i=0; i<matrix.size(); i++){
-        for(int j=0; j< matrix[i].size(); j++) {
-            printf("%3d ", matrix[i][j]) ;
-        }
-        cout << endl;
+  for (int i = 0; i < matrix.size(); i++) {
+    for (int j = 0; j < matrix[i].size(); j++) {
+      printf("%3d ", matrix[i][j]);
     }
     cout << endl;
+  }
+  cout << endl;
 }
 
 
 int main(int argc, char** argv)
 {
-    int n = 2;
-    if (argc>1){
-        n = atoi(argv[1]);
+  int n = 2;
+  if (argc > 1) {
+    n = atoi(argv[1]);
+  }
+  vector< vector<int> > matrix;
+  for (int i = 1; i <= n; i++) {
+    vector<int> v;
+    for (int j = 1; j <= n; j++) {
+      v.push_back((i - 1)*n + j);
     }
-    vector< vector<int> > matrix;
-    for (int i=1; i<=n; i++) {
-        vector<int> v;
-        for(int j=1; j<=n; j++){
-            v.push_back( (i-1)*n + j );
-        }
-        matrix.push_back(v);
-    }
+    matrix.push_back(v);
+  }
 
-    printMatrix(matrix);
-    rotate(matrix);
-    printMatrix(matrix);
+  printMatrix(matrix);
+  rotate(matrix);
+  printMatrix(matrix);
 
-    return 0;
+  return 0;
 }

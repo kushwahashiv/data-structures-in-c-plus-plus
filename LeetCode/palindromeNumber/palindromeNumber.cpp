@@ -14,22 +14,22 @@ There is a more generic way of solving this problem.
 #include <iostream>
 
 bool isPalindrome(int x) {
-        if(x<0|| (x!=0 &&x==0)) return false;
-        int sum=0;
-        while(x>sum)
-        {
-            sum = sum*10+x;
-            x = x/10;
-        }
-        return (x==sum)||(x==sum/10);
- }
+  if (x < 0 || (x != 0 && x == 0)) return false;
+  int sum = 0;
+  while (x > sum)
+  {
+    sum = sum * 10 + x;
+    x = x / 10;
+  }
+  return (x == sum) || (x == sum / 10);
+}
 
 int main()
 {
-    printf("%d is %d\n", 0, isPalindrome(0) );
-    printf("%d is %d\n", -101, isPalindrome(-101) );
-    printf("%d is %d\n", 1001, isPalindrome(1001) );
-    printf("%d is %d\n", 1234321, isPalindrome(1234321) );
-    printf("%d is %d\n", 2147447412, isPalindrome(2147447412) );
-    printf("%d is %d\n", 2142, isPalindrome(2142) );
+  printf("%d is %d\n", 0, isPalindrome(0));
+  printf("%d is %d\n", -101, isPalindrome(-101));
+  printf("%d is %d\n", 1001, isPalindrome(1001));
+  printf("%d is %d\n", 1234321, isPalindrome(1234321));
+  printf("%d is %d\n", 2147447412, isPalindrome(2147447412));
+  printf("%d is %d\n", 2142, isPalindrome(2142));
 }

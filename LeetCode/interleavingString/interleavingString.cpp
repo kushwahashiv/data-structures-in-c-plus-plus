@@ -28,41 +28,41 @@ If we arrive i,j from i, j-1, then if i, j-1 is already interleaving and j and c
 */
 bool isInterleave(string s1, string s2, string s3) {
 
-    if(s3.length() != s1.length() + s2.length())
-        return false;
+  if (s3.length() != s1.length() + s2.length())
+    return false;
 
-    bool table[s1.length()+1][s2.length()+1];
+  bool table[s1.length() + 1][s2.length() + 1];
 
-    for(int i=0; i<s1.length()+1; i++)
-        for(int j=0; j< s2.length()+1; j++){
-            if(i==0 && j==0)
-                table[i][j] = true;
-            else if(i == 0)
-                table[i][j] = ( table[i][j-1] && s2[j-1] == s3[i+j-1]);
-            else if(j == 0)
-                table[i][j] = ( table[i-1][j] && s1[i-1] == s3[i+j-1]);
-            else
-                table[i][j] = (table[i-1][j] && s1[i-1] == s3[i+j-1] ) || (table[i][j-1] && s2[j-1] == s3[i+j-1] );
-        }
+  for (int i = 0; i < s1.length() + 1; i++)
+    for (int j = 0; j < s2.length() + 1; j++) {
+      if (i == 0 && j == 0)
+        table[i][j] = true;
+      else if (i == 0)
+        table[i][j] = (table[i][j - 1] && s2[j - 1] == s3[i + j - 1]);
+      else if (j == 0)
+        table[i][j] = (table[i - 1][j] && s1[i - 1] == s3[i + j - 1]);
+      else
+        table[i][j] = (table[i - 1][j] && s1[i - 1] == s3[i + j - 1]) || (table[i][j - 1] && s2[j - 1] == s3[i + j - 1]);
+    }
 
-    return table[s1.length()][s2.length()];
+  return table[s1.length()][s2.length()];
 }
 
 #define TEST(s1, s2, s3) cout << s1 << ", " << s2 << " = " << s3 << " : " << isInterleave(s1,s2,s3) << endl;
 int main()
 {
-    string s1=  "aabcc", s2 = "dbbca";
-    TEST(s1,s2, "aadbbcbcac");
-    TEST(s1,s2, "aadbbbaccc");
+  string s1 = "aabcc", s2 = "dbbca";
+  TEST(s1, s2, "aadbbcbcac");
+  TEST(s1, s2, "aadbbbaccc");
 
-    s1="c"; s2="ca";
-    TEST(s1, s2, "cca");
-    TEST(s1, s2, "cac");
+  s1 = "c"; s2 = "ca";
+  TEST(s1, s2, "cca");
+  TEST(s1, s2, "cac");
 
-    s1 = "bbbbbabbbbabaababaaaabbababbaaabbabbaaabaaaaababbbababbbbbabbbbababbabaabababbbaabababababbbaaababaa";
-    s2 = "babaaaabbababbbabbbbaabaabbaabbbbaabaaabaababaaaabaaabbaaabaaaabaabaabbbbbbbbbbbabaaabbababbabbabaab";
-    string s3 = "babbbabbbaaabbababbbbababaabbabaabaaabbbbabbbaaabbbaaaaabbbbaabbaaabababbaaaaaabababbababaababbababbbababbbbaaaabaabbabbaaaaabbabbaaaabbbaabaaabaababaababbaaabbbbbabbbbaabbabaabbbbabaaabbababbabbabbab";
-    TEST(s1, s2, s3);
-    
-    return 0;
+  s1 = "bbbbbabbbbabaababaaaabbababbaaabbabbaaabaaaaababbbababbbbbabbbbababbabaabababbbaabababababbbaaababaa";
+  s2 = "babaaaabbababbbabbbbaabaabbaabbbbaabaaabaababaaaabaaabbaaabaaaabaabaabbbbbbbbbbbabaaabbababbabbabaab";
+  string s3 = "babbbabbbaaabbababbbbababaabbabaabaaabbbbabbbaaabbbaaaaabbbbaabbaaabababbaaaaaabababbababaababbababbbababbbbaaaabaabbabbaaaaabbabbaaaabbbaabaaabaababaababbaaabbbbbabbbbaabbabaabbbbabaaabbababbabbabbab";
+  TEST(s1, s2, s3);
+
+  return 0;
 }

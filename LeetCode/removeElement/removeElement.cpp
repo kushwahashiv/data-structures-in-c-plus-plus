@@ -13,25 +13,25 @@ Your function should return length = 2, with the first two elements of nums bein
 */
 
 int removeElement(int A[], int n, int elem) {
-    int begin=0;
-    for(int i=0;i<n;i++) if(A[i]!=elem) A[begin++]=A[i];
-    return begin;
+  int begin = 0;
+  for (int i = 0; i < n; i++) if (A[i] != elem) A[begin++] = A[i];
+  return begin;
 }
 
 
-    int removeElement(int A[], int n, int elem) {
-        int tail = n-1;
-        int i = 0;
-        while ( i<=tail ){
-            if (A[i]==elem){
-                A[i] = A[tail--];
-                continue;
-            }
-            i++;
-        }
-        
-        return tail+1;
+int removeElement(int A[], int n, int elem) {
+  int tail = n - 1;
+  int i = 0;
+  while (i <= tail) {
+    if (A[i] == elem) {
+      A[i] = A[tail--];
+      continue;
     }
+    i++;
+  }
+
+  return tail + 1;
+}
 
 int main()
 {

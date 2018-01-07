@@ -24,24 +24,24 @@ using namespace std;
 
 
 string simplifyPath(string path) {
-    string res, tmp;
-    vector<string> stk;
-    stringstream ss(path);
-    while(getline(ss,tmp,'/')) {
-        if (tmp == "" or tmp == ".") continue;
-        if (tmp == ".." and !stk.empty()) stk.pop_back();
-        else if (tmp != "..") stk.push_back(tmp);
-    }
-    for(auto str : stk) res += "/"+str;
-    return res.empty() ? "/" : res;
+  string res, tmp;
+  vector<string> stk;
+  stringstream ss(path);
+  while (getline(ss, tmp, '/')) {
+    if (tmp == "" or tmp == ".") continue;
+    if (tmp == ".." and !stk.empty()) stk.pop_back();
+    else if (tmp != "..") stk.push_back(tmp);
+  }
+  for (auto str : stk) res += "/" + str;
+  return res.empty() ? "/" : res;
 }
 
 int main(int argc, char** argv)
 {
-    string path("/a/./b/../../c/");
-    if (argc > 1 ){
-        path = argv[1];
-    }
+  string path("/a/./b/../../c/");
+  if (argc > 1) {
+    path = argv[1];
+  }
 
-    cout << path << " : " << simplifyPath(path) << endl;
+  cout << path << " : " << simplifyPath(path) << endl;
 }

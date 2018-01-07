@@ -41,39 +41,39 @@ To cover the BST to sorted array, we needn't use an extra array, we just travers
 using namespace std;
 
 struct TreeNode {
-int val;
-TreeNode *left;
-TreeNode *right;
-TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+  int val;
+  TreeNode *left;
+  TreeNode *right;
+  TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
 };
 
 class Solution {
 public:
-    void recoverTreeHelper(TreeNode *root) {
-        if (root == nullptr) return;
+  void recoverTreeHelper(TreeNode *root) {
+    if (root == nullptr) return;
 
-        recoverTreeHelper(root->left);
-        if (prev) {
-            if (prev->val > root->val){
-                if (n1==nullptr) {
-                    n1 = prev;
-                }
-                n2 = root;
-            }
+    recoverTreeHelper(root->left);
+    if (prev) {
+      if (prev->val > root->val) {
+        if (n1 == nullptr) {
+          n1 = prev;
         }
-        prev = root;
-        recoverTreeHelper(root->right);
+        n2 = root;
+      }
     }
-    
-    void recoverTree(TreeNode *root) {
-        n1 = n2 = prev = nullptr;
-        recoverTreeHelper(root);
-        if (n1 && n2) {
-            swap(n1->val, n2->val);
-        }
+    prev = root;
+    recoverTreeHelper(root->right);
+  }
+
+  void recoverTree(TreeNode *root) {
+    n1 = n2 = prev = nullptr;
+    recoverTreeHelper(root);
+    if (n1 && n2) {
+      swap(n1->val, n2->val);
     }
+  }
 private:
-    TreeNode *n1, *n2, *prev;
+  TreeNode *n1, *n2, *prev;
 };
 
 

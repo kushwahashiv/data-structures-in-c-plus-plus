@@ -22,77 +22,77 @@ using namespace std;
 
 // method: 1
 vector<vector<int> > threeSum(vector<int> &num) {
-    vector<vector<int> > res;
-    std::sort(num.begin(), num.end());
-    for (int i = 0; i < num.size(); i++) {
-        int target = -num[i];
-        int front = i + 1;
-        int back = num.size() - 1;
+  vector<vector<int> > res;
+  std::sort(num.begin(), num.end());
+  for (int i = 0; i < num.size(); i++) {
+    int target = -num[i];
+    int front = i + 1;
+    int back = num.size() - 1;
 
-        while (front < back) {
+    while (front < back) {
 
-            int sum = num[front] + num[back];
+      int sum = num[front] + num[back];
 
-            // Finding answer which start from number num[i]
-            if (sum < target)
-                front++;
+      // Finding answer which start from number num[i]
+      if (sum < target)
+        front++;
 
-            else if (sum > target)
-                back--;
+      else if (sum > target)
+        back--;
 
-            else {
-                vector<int> triplet(3, 0);
-                triplet[0] = num[i];
-                triplet[1] = num[front];
-                triplet[2] = num[back];
-                res.push_back(triplet);
+      else {
+        vector<int> triplet(3, 0);
+        triplet[0] = num[i];
+        triplet[1] = num[front];
+        triplet[2] = num[back];
+        res.push_back(triplet);
 
-                // Processing duplicates of Number 2
-                // Rolling the front pointer to the next different number forwards
-                while (front < back && num[front] == triplet[1]) front++;
+        // Processing duplicates of Number 2
+        // Rolling the front pointer to the next different number forwards
+        while (front < back && num[front] == triplet[1]) front++;
 
-                // Processing duplicates of Number 3
-                // Rolling the back pointer to the next different number backwards
-                while (front < back && num[back] == triplet[2]) rear--;
-            }
+        // Processing duplicates of Number 3
+        // Rolling the back pointer to the next different number backwards
+        while (front < back && num[back] == triplet[2]) rear--;
+      }
 
-        }
-
-        // Processing duplicates of Number 1
-        while (i + 1 < num.size() && num[i + 1] == num[i])
-            i++;
     }
-    return res;
+
+    // Processing duplicates of Number 1
+    while (i + 1 < num.size() && num[i + 1] == num[i])
+      i++;
+  }
+  return res;
 }
 
 
 //2.
 vector<vector<int>> threeSum(vector<int>& nums) {
-	vector<vector<int>> result;
-	sort(nums.begin(), nums.end());
+  vector<vector<int>> result;
+  sort(nums.begin(), nums.end());
 
-	for (auto i = 0; i < nums.size();) {
-		auto target = -nums[i];
-		int l = i + 1, u = nums.size() - 1;
+  for (auto i = 0; i < nums.size();) {
+    auto target = -nums[i];
+    int l = i + 1, u = nums.size() - 1;
 
-		while (l < u) {
-			auto sum = nums[l] + nums[u];
+    while (l < u) {
+      auto sum = nums[l] + nums[u];
 
-			if (sum < target)
-				while (++l < nums.size() && nums[l] == nums[l - 1]);  // Processing duplicates of Number 2
-			else if (sum > target)
-				while (--u < nums.size() && nums[u] == nums[u + 1]);  // Processing duplicates of Number 3
-			else {
-				result.push_back(vector<int>{nums[i], nums[l], nums[u]});
-				while (++l < nums.size() && nums[l] == nums[l - 1]);  // Processing duplicates of Number 2
-				while (--u < nums.size() && nums[u] == nums[u + 1]);  // Processing duplicates of Number 3
-			}
-		}
-		// Processing duplicates of Number 1
-		while (++i < nums.size() && nums[i] == nums[i - 1]);
-	}
+      if (sum < target)
+        while (++l < nums.size() && nums[l] == nums[l - 1]);  // Processing duplicates of Number 2
+      else if (sum > target)
+        while (--u < nums.size() && nums[u] == nums[u + 1]);  // Processing duplicates of Number 3
+      else {
+        result.push_back(vector<int>{nums[i], nums[l], nums[u]});
+        while (++l < nums.size() && nums[l] == nums[l - 1]);  // Processing duplicates of Number 2
+        while (--u < nums.size() && nums[u] == nums[u + 1]);  // Processing duplicates of Number 3
+      }
+    }
+    // Processing duplicates of Number 1
+    while (++i < nums.size() && nums[i] == nums[i - 1]);
+  }
 
-	return result;
+  return result;
 }
 
 void printMatrix(vector<vector<int> > &matrix)

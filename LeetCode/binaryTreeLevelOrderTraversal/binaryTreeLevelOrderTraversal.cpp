@@ -26,7 +26,7 @@ return its level order traversal as:
 using namespace std;
 
 
-struct TreeNode 
+struct TreeNode
 {
   int val;
   TreeNode *left;
@@ -38,18 +38,18 @@ vector<vector<int>> ret;
 
 void buildVector(TreeNode *root, int depth)
 {
-    if(root == NULL) return;
-    if(ret.size() == depth)
-        ret.push_back(vector<int>());
+  if (root == NULL) return;
+  if (ret.size() == depth)
+    ret.push_back(vector<int>());
 
-    ret[depth].push_back(root->val);
-    buildVector(root->left, depth + 1);
-    buildVector(root->right, depth + 1);
+  ret[depth].push_back(root->val);
+  buildVector(root->left, depth + 1);
+  buildVector(root->right, depth + 1);
 }
 
 vector<vector<int> > levelOrder(TreeNode *root) {
-    buildVector(root, 0);
-    return ret;
+  buildVector(root, 0);
+  return ret;
 }
 
 // supportiing function below

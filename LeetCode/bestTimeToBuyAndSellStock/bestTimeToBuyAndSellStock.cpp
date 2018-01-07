@@ -30,19 +30,19 @@ struct Node
 
 
 int maxProfit(vector<int> &prices) {
-    int maxPro = 0;
-    int minPrice = INT_MAX;
-    for(int i = 0; i < prices.size(); i++){
-        minPrice = min(minPrice, prices[i]);
-        maxPro = max(maxPro, prices[i] - minPrice);
-    }
-    return maxPro;
+  int maxPro = 0;
+  int minPrice = INT_MAX;
+  for (int i = 0; i < prices.size(); i++) {
+    minPrice = min(minPrice, prices[i]);
+    maxPro = max(maxPro, prices[i] - minPrice);
+  }
+  return maxPro;
 }
 
 int main()
 {
-  std::vector<int> prices = {22, 32, 45, 31, 55, 21, 10, 19};
-  std::cout<< maxProfit(prices) <<std::endl;
+  std::vector<int> prices = { 22, 32, 45, 31, 55, 21, 10, 19 };
+  std::cout << maxProfit(prices) << std::endl;
   std::cout << maxProfit2(prices) << std::endl;
   std::cout << maxProfit3(prices) << std::endl;
 

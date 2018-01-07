@@ -62,7 +62,7 @@ int main()
 
   for (std::string item : result)
   {
-    std::cout << item <<std::endl;
+    std::cout << item << std::endl;
   }
 
   system("pause");

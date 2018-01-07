@@ -20,32 +20,32 @@ If no valid conversion could be performed, a zero value is returned. If the corr
 #define INT_MAX      2147483647
 
 int atoi(const char *str) {
-    int sign = 1, base = 0, i = 0;
-    while (str[i] == ' ') { i++; }
-    if (str[i] == '-' || str[i] == '+') {
-        sign = 1 - 2 * (str[i++] == '-');
+  int sign = 1, base = 0, i = 0;
+  while (str[i] == ' ') { i++; }
+  if (str[i] == '-' || str[i] == '+') {
+    sign = 1 - 2 * (str[i++] == '-');
+  }
+  while (str[i] >= '0' && str[i] <= '9') {
+    if (base > INT_MAX / 10 || (base == INT_MAX / 10 && str[i] - '0' > 7)) {
+      if (sign == 1) return INT_MAX;
+      else return INT_MIN;
     }
-    while (str[i] >= '0' && str[i] <= '9') {
-        if (base >  INT_MAX / 10 || (base == INT_MAX / 10 && str[i] - '0' > 7)) {
-            if (sign == 1) return INT_MAX;
-            else return INT_MIN;
-        }
-        base  = 10 * base + (str[i++] - '0');
-    }
-    return base * sign;
+    base = 10 * base + (str[i++] - '0');
+  }
+  return base * sign;
 }
 
 int main()
 {
-    printf("\"%s\" = %d\n", "123", atoi("123"));
-    printf("\"%s\" = %d\n", "   123", atoi("    123"));
-    printf("\"%s\" = %d\n", "+123", atoi("+123"));
-    printf("\"%s\" = %d\n", " -123", atoi(" -123"));
-    printf("\"%s\" = %d\n", "123ABC", atoi("123ABC"));
-    printf("\"%s\" = %d\n", " abc123ABC", atoi(" abc123ABC"));
-    printf("\"%s\" = %d\n", "2147483647", atoi("2147483647"));
-    printf("\"%s\" = %d\n", "-2147483648", atoi("-2147483648"));
-    printf("\"%s\" = %d\n", "2147483648", atoi("2147483648"));
-    printf("\"%s\" = %d\n", "-2147483649", atoi("-2147483649"));
-    return 0;
+  printf("\"%s\" = %d\n", "123", atoi("123"));
+  printf("\"%s\" = %d\n", "   123", atoi("    123"));
+  printf("\"%s\" = %d\n", "+123", atoi("+123"));
+  printf("\"%s\" = %d\n", " -123", atoi(" -123"));
+  printf("\"%s\" = %d\n", "123ABC", atoi("123ABC"));
+  printf("\"%s\" = %d\n", " abc123ABC", atoi(" abc123ABC"));
+  printf("\"%s\" = %d\n", "2147483647", atoi("2147483647"));
+  printf("\"%s\" = %d\n", "-2147483648", atoi("-2147483648"));
+  printf("\"%s\" = %d\n", "2147483648", atoi("2147483648"));
+  printf("\"%s\" = %d\n", "-2147483649", atoi("-2147483649"));
+  return 0;
 }

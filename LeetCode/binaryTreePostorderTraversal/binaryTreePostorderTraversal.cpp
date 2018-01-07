@@ -29,24 +29,24 @@ struct TreeNode {
 };
 
 vector<int> postorderTraversal(TreeNode *root) {
-        stack<TreeNode*> nodeStack;
-        vector<int> result;
-        //base case
-        if(root==NULL)
-        return result;
-        nodeStack.push(root);
-    while(!nodeStack.empty())
-    {
-        TreeNode* node= nodeStack.top();
-        result.push_back(node->val);
-        nodeStack.pop();
-        if(node->left)
-        nodeStack.push(node->left);
-        if(node->right)
-        nodeStack.push(node->right);
-    }
-     reverse(result.begin(),result.end());
-     return result;
+  stack<TreeNode*> nodeStack;
+  vector<int> result;
+  //base case
+  if (root == NULL)
+    return result;
+  nodeStack.push(root);
+  while (!nodeStack.empty())
+  {
+    TreeNode* node = nodeStack.top();
+    result.push_back(node->val);
+    nodeStack.pop();
+    if (node->left)
+      nodeStack.push(node->left);
+    if (node->right)
+      nodeStack.push(node->right);
+  }
+  reverse(result.begin(), result.end());
+  return result;
 
 }
 
@@ -67,7 +67,7 @@ vector<int> postorderTraversal1(TreeNode *root)
     {
       stack.push_back(n->left);
     }
-    if (n->right) 
+    if (n->right)
     {
       stack.push_back(n->right);
     }
@@ -83,20 +83,20 @@ vector<int> postorderTraversal2(TreeNode *root) {
   vector<TreeNode*> stack;
   TreeNode *node = root;
   TreeNode *lastVisitNode = nullptr;
-  while (stack.size() > 0 || node != nullptr){
+  while (stack.size() > 0 || node != nullptr) {
 
-    if (node != nullptr){
+    if (node != nullptr) {
       // keep going the left
       stack.push_back(node);
       node = node->left;
     }
-    else{
+    else {
       TreeNode *n = stack.back();
       // left way is finsised, keep going to the right way
-      if (n->right != nullptr && lastVisitNode != n->right){
+      if (n->right != nullptr && lastVisitNode != n->right) {
         node = n->right;
       }
-      else{
+      else {
         // both left and right has been accessed.
         stack.pop_back();
         v.push_back(n->val);
@@ -115,7 +115,7 @@ TreeNode* createTree(int a[], int n)
   TreeNode **tree = new TreeNode*[n];
 
   for (int i = 0; i < n; i++) {
-    if (a[i] == 0){
+    if (a[i] == 0) {
       tree[i] = nullptr;
       continue;
     }
@@ -123,9 +123,9 @@ TreeNode* createTree(int a[], int n)
   }
   int pos = 1;
   for (int i = 0; i < n && pos < n; i++) {
-    if (tree[i]){
+    if (tree[i]) {
       tree[i]->left = tree[pos++];
-      if (pos < n){
+      if (pos < n) {
         tree[i]->right = tree[pos++];
       }
     }
@@ -135,7 +135,7 @@ TreeNode* createTree(int a[], int n)
 
 void printTree_post_order(TreeNode *root)
 {
-  if (root == nullptr){
+  if (root == nullptr) {
     cout << "# ";
     return;
   }
@@ -147,7 +147,7 @@ void printTree_post_order(TreeNode *root)
 
 void printArray(vector<int> v)
 {
-  for (int i = 0; i < v.size(); i++){
+  for (int i = 0; i < v.size(); i++) {
     cout << v[i] << " ";
   }
   cout << endl;

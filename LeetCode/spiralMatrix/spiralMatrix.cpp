@@ -41,68 +41,68 @@ If later we decided to do spiral traversal on a different direction (e.g. Counte
 then we only need to change the Direction matrix; the main loop does not need to be touched.
 */
 vector<int> spiralOrder(vector<vector<int>>& matrix) {
-    vector<vector<int> > dirs{{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
-    vector<int> res;
-    int nr = matrix.size();     if (nr == 0) return res;
-    int nc = matrix[0].size();  if (nc == 0) return res;
+  vector<vector<int> > dirs{ {0, 1}, {1, 0}, {0, -1}, {-1, 0} };
+  vector<int> res;
+  int nr = matrix.size();     if (nr == 0) return res;
+  int nc = matrix[0].size();  if (nc == 0) return res;
 
-    vector<int> nSteps{nc, nr-1};
+  vector<int> nSteps{ nc, nr - 1 };
 
-    int iDir = 0;   // index of direction.
-    int ir = 0, ic = -1;    // initial position
-    while (nSteps[iDir%2]) {
-        for (int i = 0; i < nSteps[iDir%2]; ++i) {
-            ir += dirs[iDir][0]; ic += dirs[iDir][1];
-            res.push_back(matrix[ir][ic]);
-        }
-        nSteps[iDir%2]--;
-        iDir = (iDir + 1) % 4;
+  int iDir = 0;   // index of direction.
+  int ir = 0, ic = -1;    // initial position
+  while (nSteps[iDir % 2]) {
+    for (int i = 0; i < nSteps[iDir % 2]; ++i) {
+      ir += dirs[iDir][0]; ic += dirs[iDir][1];
+      res.push_back(matrix[ir][ic]);
     }
-    return res;
+    nSteps[iDir % 2]--;
+    iDir = (iDir + 1) % 4;
+  }
+  return res;
 }
 
 
 void printArray(vector<int> v)
 {
-    cout << "[";
-    for(int j=0; j<v.size(); j++) {
-        printf(" %02d", v[j]);
-    }
-    cout << "]" << endl;;
+  cout << "[";
+  for (int j = 0; j < v.size(); j++) {
+    printf(" %02d", v[j]);
+  }
+  cout << "]" << endl;;
 }
 
 void printMatrix(vector< vector<int> > &vv)
 {
-    for(int i=0; i<vv.size(); i++) {
-        printArray(vv[i]);
-    }
-    cout << endl;
+  for (int i = 0; i < vv.size(); i++) {
+    printArray(vv[i]);
+  }
+  cout << endl;
 }
 
 vector< vector<int> > createMatrix(int n, int m)
 {
-    vector< vector<int> > vv;
-    int cnt = 1;
-    for(int i=0; i<n; i++){
-        vector<int> v;
-        for(int j=0; j<m; j++){
-            v.push_back(cnt++);
-        }
-        vv.push_back(v);
+  vector< vector<int> > vv;
+  int cnt = 1;
+  for (int i = 0; i < n; i++) {
+    vector<int> v;
+    for (int j = 0; j < m; j++) {
+      v.push_back(cnt++);
     }
-    return vv;
+    vv.push_back(v);
+  }
+  return vv;
 }
 
 int main(int argc, char** argv)
 {
-    int n=3, m=3;
-    if (argc>2){
-        n = atoi(argv[1]);
-        m = atoi(argv[2]);
-    }
-    vector< vector<int> > matrix = createMatrix(n, m);
-    printMatrix(matrix);
-    vector<int> v = spiralOrder(matrix);
-    printArray(v);
-    return 0;
+  int n = 3, m = 3;
+  if (argc > 2) {
+    n = atoi(argv[1]);
+    m = atoi(argv[2]);
+  }
+  vector< vector<int> > matrix = createMatrix(n, m);
+  printMatrix(matrix);
+  vector<int> v = spiralOrder(matrix);
+  printArray(v);
+  return 0;
 }

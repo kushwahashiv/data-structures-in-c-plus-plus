@@ -7,98 +7,100 @@
 #include <iosteram>
 
 struct ListNode {
-    int val;
-    ListNode *next;
-    ListNode(int x) : val(x), next(nullptr) {}
+  int val;
+  ListNode *next;
+  ListNode(int x) : val(x), next(nullptr) {}
 };
 
 ListNode *mergeTwoLists(ListNode* head1, ListNode* head2);
 
 ListNode *sortList(ListNode *head) {
-    if (head==nullptr || head->next == nullptr){
-        return head;
-    }
-    //find the middle place
-    ListNode *p1=head, *p2=head->next; 
+  if (head == nullptr || head->next == nullptr) {
+    return head;
+  }
+  //find the middle place
+  ListNode *p1 = head, *p2 = head->next;
 
-    ListNode *prev;
-    while(p2 && p2->next){
-        prev = p1;
-        p1 = p1->next;
-        p2 = p2->next->next;
-    }
-    p2 = p1->next;
-    p1->next = nullptr;
-    return mergeTwoLists(sortList(head), sortList(p2));
+  ListNode *prev;
+  while (p2 && p2->next) {
+    prev = p1;
+    p1 = p1->next;
+    p2 = p2->next->next;
+  }
+  p2 = p1->next;
+  p1->next = nullptr;
+  return mergeTwoLists(sortList(head), sortList(p2));
 }
 
 
-ListNode *mergeTwoLists(ListNode* head1, ListNode* head2){
-    ListNode *p1 = head1,  *p2=head2;
-    static ListNode dummy(0);
+ListNode *mergeTwoLists(ListNode* head1, ListNode* head2) {
+  ListNode *p1 = head1, *p2 = head2;
+  static ListNode dummy(0);
 
-    dummy.next = p1;
-    ListNode *prev = &dummy;
+  dummy.next = p1;
+  ListNode *prev = &dummy;
 
-    while(p1 && p2){
-        if(p1->val < p2->val){
-            prev = p1;
-            p1 = p1->next;
-        }else{
-            prev->next = p2;
-            p2 = p2->next;
-            prev = prev->next;
-            prev->next = p1;
-        }
+  while (p1 && p2) {
+    if (p1->val < p2->val) {
+      prev = p1;
+      p1 = p1->next;
     }
-    if (p2){
-        prev->next = p2;
+    else {
+      prev->next = p2;
+      p2 = p2->next;
+      prev = prev->next;
+      prev->next = p1;
     }
+  }
+  if (p2) {
+    prev->next = p2;
+  }
 
-    return dummy.next;
+  return dummy.next;
 }
 
 void printList(ListNode* h)
 {
-    while(h!=nullptr){
-        printf("%d ", h->val);
-        h = h->next;
-    }
-    printf("\n");
+  while (h != nullptr) {
+    printf("%d ", h->val);
+    h = h->next;
+  }
+  printf("\n");
 }
 
 ListNode* createList(int a[], int n)
 {
-    ListNode *head=nullptr, *p=nullptr;
-    for(int i=0; i<n; i++){
-        if (head == nullptr){
-            head = p = new ListNode(a[i]);
-        }else{
-            p->next = new ListNode(a[i]);
-            p = p->next;
-        }
+  ListNode *head = nullptr, *p = nullptr;
+  for (int i = 0; i < n; i++) {
+    if (head == nullptr) {
+      head = p = new ListNode(a[i]);
     }
-    return head;
+    else {
+      p->next = new ListNode(a[i]);
+      p = p->next;
+    }
+  }
+  return head;
 }
 
 
 int main(int argc, char** argv)
 {
-    int n = 10;
-    if (argc>1){
-        n = atoi(argv[1]);
-    }
-    srand(time(nullptr));
+  int n = 10;
+  if (argc > 1) {
+    n = atoi(argv[1]);
+  }
+  srand(time(nullptr));
 
-    int *a = new int[n];
-    for(int i=0; i<n; i++){
-        a[i] = rand()%n + 1;
-    }
-    
-    ListNode *p = createList(a, n);
-    printList(p);
-    printList(sortList(p));
-    
-    delete[] a;
-    return 0;
+  int *a = new int[n];
+  for (int i = 0; i < n; i++) {
+    a[i] = rand() % n + 1;
+  }
+
+  ListNode *p = createList(a, n);
+  printList(p);
+  printList(sortList(p));
+
+  delete[] a;
+  return 0;
 }

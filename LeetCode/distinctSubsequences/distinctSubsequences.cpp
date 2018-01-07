@@ -16,38 +16,38 @@ Return 3.
 using namespace std;
 
 int numDistinct(string s, string t) {
-     int n = s.length(), m = t.length();
-     vector<int> dp(m+1, 0);
-     dp[0] = 1;
-     for (int j = 1; j <= n; j++){
-         for (int i = m; i >= 1; i--){
-             dp[i] += s[j-1] == t[i-1] ? dp[i-1] : 0;
-         }
-     }
-    return dp[m];
+  int n = s.length(), m = t.length();
+  vector<int> dp(m + 1, 0);
+  dp[0] = 1;
+  for (int j = 1; j <= n; j++) {
+    for (int i = m; i >= 1; i--) {
+      dp[i] += s[j - 1] == t[i - 1] ? dp[i - 1] : 0;
+    }
+  }
+  return dp[m];
 }
 
 //random invoker
 int numDistinct(string S, string T) {
-    srand(time(0));
-    if (rand()%2){
-        cout << "-----Dynamic Programming Method One-----" << endl;
-        return numDistinct1(S,T);
-    }
-    cout << "-----Dynamic Programming Method Two-----" << endl;
-    return numDistinct2(S,T);
+  srand(time(0));
+  if (rand() % 2) {
+    cout << "-----Dynamic Programming Method One-----" << endl;
+    return numDistinct1(S, T);
+  }
+  cout << "-----Dynamic Programming Method Two-----" << endl;
+  return numDistinct2(S, T);
 }
 
 
 int main(int argc, char** argv)
 {
-    string s = "rabbbit";
-    string t = "rabbit";
-    if (argc>2){
-        s = argv[1];
-        t = argv[2];
-    }
-    cout << "S=\"" << s << "\"  T=\"" << t << "\"" << endl;
-    cout << "numDistinct = " << numDistinct(s, t) << endl;
-    return 0;
+  string s = "rabbbit";
+  string t = "rabbit";
+  if (argc > 2) {
+    s = argv[1];
+    t = argv[2];
+  }
+  cout << "S=\"" << s << "\"  T=\"" << t << "\"" << endl;
+  cout << "numDistinct = " << numDistinct(s, t) << endl;
+  return 0;
 }
