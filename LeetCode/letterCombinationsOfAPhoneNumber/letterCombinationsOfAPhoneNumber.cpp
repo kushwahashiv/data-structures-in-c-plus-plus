@@ -1,22 +1,15 @@
-// Source : https://oj.leetcode.com/problems/letter-combinations-of-a-phone-number/
+// Source : https://leetcode.com/problems/letter-combinations-of-a-phone-number/description/
 // Author : Shiv S. Kushwaha
 // Date   : 2014-07-17
 
-/********************************************************************************** 
-* 
-* Given a digit string, return all possible letter combinations that the number could represent.
-* 
-* A mapping of digit to letters (just like on the telephone buttons) is given below.
-* 
-* Input:Digit string "23"
-* Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
-* 
-* Note:
-* Although the above answer is in lexicographical order, your answer could be in any order you want.
-* 
-*               
-**********************************************************************************/
-
+/*
+Given a digit string, return all possible letter combinations that the number could represent.
+A mapping of digit to letters (just like on the telephone buttons) is given below.
+Input:Digit string "23"
+Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+Note:
+Although the above answer is in lexicographical order, your answer could be in any order you want.
+*/
 #include <iostream>
 #include <vector>
 #include <string>
@@ -24,50 +17,19 @@
 using namespace std;
 
 vector<string> letterCombinations(string digits) {
-    char  phone[10][4]={ {' ',  '\0', '\0', '\0' }, //0
-                         {'\0', '\0', '\0', '\0' }, //1
-                         {'a',  'b',  'c',  '\0' }, //2
-                         {'d',  'e',  'f',  '\0' }, //3
-                         {'g',  'h',  'i',  '\0' }, //4
-                         {'j',  'k',  'l',  '\0' }, //5
-                         {'m',  'n',  'o',  '\0' }, //6
-                         {'p',  'q',  'r',  's'  }, //7
-                         {'t',  'u',  'v',  '\0' }, //8
-                         {'w',  'x',  'y',  'z'  }  //9
-                       };
-
-    vector<string> result;
-    if (digits.size()<=0){
-        result.push_back("");
-        return result;
+    vector<string> res;
+    string charmap[10] = {"0", "1", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+    res.push_back("");
+    for (int i = 0; i < digits.size(); i++)
+    {
+        vector<string> tempres;
+        string chars = charmap[digits[i] - '0'];
+        for (int c = 0; c < chars.size();c++)
+            for (int j = 0; j < res.size();j++)
+                tempres.push_back(res[j]+chars[c]);
+        res = tempres;
     }
-    for( int i=0; i<digits.size(); i++ ) {
-        if (!isdigit(digits[i])) {
-            vector<string> r;
-            return r;
-        } 
-        int d = digits[i] - '0';
-        if (result.size()<=0){
-            for( int j=0; j < 4 && phone[d][j] != '\0'; j++ ){
-                string s;
-                s += phone[d][j];
-                result.push_back(s);
-            }
-            continue;
-        }
-        vector<string> r;
-        for (int j=0; j<result.size(); j++){
-            for( int k=0; k < 4 && phone[d][k] != '\0'; k++ ){
-                string s = result[j] + phone[d][k];
-                //sort(s.begin(), s.end());
-                r.push_back(s); 
-            }
-        }
-        result = r;
-    }
-    //sort(result.begin(), result.end());
-
-    return result; 
+    return res;
 }
 
 void printVector(vector<string>& ss){
@@ -79,38 +41,13 @@ void printVector(vector<string>& ss){
     cout << " }" << endl;
 }
 
-// method 2
-vector<string> letterCombinations2(string digits) {
-	vector<string> result;
-	if (digits.empty()) return vector<string>();
-
-	static const vector<string> v = { "", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz" };
-	result.push_back("");   // add a seed for the initial case
-	
-	for (int i = 0; i < digits.size(); ++i) {
-		int num = digits[i] - '0';
-		if (num < 0 || num > 9) break;
-		const string& candidate = v[num];
-		if (candidate.empty()) continue;
-		vector<string> tmp;
-		for (int j = 0; j < candidate.size(); ++j) {
-			for (int k = 0; k < result.size(); ++k) {
-				tmp.push_back(result[k] + candidate[j]);
-			}
-		}
-		result.swap(tmp);
-	}
-	return result;
-}
-
-
 int main(int argc, char**argv)
 {
     string s="23";
     if (argc>1){
         s=argv[1];
     }
-    vector<string> ss = letterCombinations2(s);
+    vector<string> ss = letterCombinations(s);
     printVector(ss);
     return 0;
 }

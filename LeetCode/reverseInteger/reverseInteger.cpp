@@ -1,53 +1,41 @@
-// Source : https://oj.leetcode.com/problems/reverse-integer/
+// Source : https://leetcode.com/problems/reverse-integer/description/
 // Author : Shiv S. Kushwaha
 // Date   : 2014-06-18
 
-/********************************************************************************** 
-* 
-* Reverse digits of an integer.
-* 
-* Example1: x =  123, return  321
-* Example2: x = -123, return -321
-* 
-* 
-* Have you thought about this?
-* 
-* Here are some good questions to ask before coding. Bonus points for you if you have already thought through this!
-* 
-* > If the integer's last digit is 0, what should the output be? ie, cases such as 10, 100.
-* 
-* > Did you notice that the reversed integer might overflow? Assume the input is a 32-bit integer, 
-*   then the reverse of 1000000003 overflows. How should you handle such cases?
-* 
-* > Throw an exception? Good, but what if throwing an exception is not an option? 
-*   You would then have to re-design the function (ie, add an extra parameter).
-* 
-*               
-**********************************************************************************/
+/*
+Given a 32-bit signed integer, reverse digits of an integer.
 
-#include <stdio.h>
-#include <stdlib.h>
+Example 1:
 
-//Why need the INT_MIN be defined like that?
-//Please take a look: 
-//  http://stackoverflow.com/questions/14695118/2147483648-0-returns-true-in-c
-#define INT_MAX     2147483647
-#define INT_MIN     (-INT_MAX - 1)
+Input: 123
+Output:  321
+Example 2:
+
+Input: -123
+Output: -321
+Example 3:
+
+Input: 120
+Output: 21
+Note:
+Assume we are dealing with an environment which could only hold integers within the 32-bit signed integer range.
+For the purpose of this problem, assume that your function returns 0 when the reversed integer overflows.
+*/
+
+#include <iostream>
+
 int reverse(int x) {
-    int y=0;
-    int n;
-    while( x != 0){
-        n = x%10;
-        //Checking the over/underflow.
-        //Actually, it should be y>(INT_MAX-n)/10, but n/10 is 0, so omit it.
-        if (y > INT_MAX/10 || y < INT_MIN/10){
-             return 0;
+        int ans = 0;
+        while (x) {
+            int temp = ans * 10 + x % 10;
+            if (temp / 10 != ans)
+                return 0;
+            ans = temp;
+            x /= 10;
         }
-        y = y*10 + n;
-        x /= 10;
+        return ans;
     }
-    return y;
-}
+
 
 #define TEST(n, e)  printf("%12d  =>  %-12d    %s!\n",  n, reverse(n),  e == reverse(n)?"passed":"failed")
 

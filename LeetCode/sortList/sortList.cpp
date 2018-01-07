@@ -1,17 +1,10 @@
-// Source : https://oj.leetcode.com/problems/sort-list/
+// Source : https://leetcode.com/problems/sort-list/description/
 // Author : Shiv S. Kushwaha
 // Date   : 2014-07-06
 
-/********************************************************************************** 
-* 
-* Sort a linked list in O(n log n) time using constant space complexity.
-*               
-**********************************************************************************/
+// Sort a linked list in O(n log n) time using constant space complexity.
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-
+#include <iosteram>
 
 struct ListNode {
     int val;

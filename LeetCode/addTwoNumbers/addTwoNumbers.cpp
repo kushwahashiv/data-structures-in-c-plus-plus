@@ -1,5 +1,5 @@
 /*
-Source : https://oj.leetcode.com/problems/add-two-numbers/
+Source : https://leetcode.com/problems/add-two-numbers/description/
 Author : Shiv S. Kushwaha
 Date   : 2014-06-18
 
@@ -33,53 +33,19 @@ struct Node
 };
 
 
-class Solution
-{
-public:
-  Node *addTwoNumbers(Node *l1, Node *l2)
-  {
-    int x = 0, y = 0, carry = 0, sum = 0;
-    Node *h = nullptr, **t = &h;
-
-    while (l1 != nullptr || l2 != nullptr)
-    {
-      x = getValueAndMoveNext(l1);
-      y = getValueAndMoveNext(l2);
-
-      sum = carry + x + y;
-
-      Node *node = new Node();
-      node->val = sum % 10;
-
-      *t = node;
-      t = (&node->next);
-
-      carry = sum / 10;
+ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
+    ListNode preHead(0), *p = &preHead;
+    int extra = 0;
+    while (l1 || l2 || extra) {
+        int sum = (l1 ? l1->val : 0) + (l2 ? l2->val : 0) + extra;
+        extra = sum / 10;
+        p->next = new ListNode(sum % 10);
+        p = p->next;
+        l1 = l1 ? l1->next : l1;
+        l2 = l2 ? l2->next : l2;
     }
-
-    if (carry > 0)
-    {
-      Node *node = new Node();
-      node->val = carry % 10;
-
-      *t = node;
-    }
-    return h;
-  }
-
-private:
-  int getValueAndMoveNext(Node* &l)
-  {
-    int x(0);
-    if (l != nullptr)
-    {
-      x = l->val;
-      l = l->next;
-    }
-    return x;
-  }
-};
-
+    return preHead.next;
+}
 
 int main()
 {

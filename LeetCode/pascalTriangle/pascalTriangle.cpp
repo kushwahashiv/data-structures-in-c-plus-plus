@@ -1,47 +1,37 @@
-// Source : https://oj.leetcode.com/problems/pascals-triangle/
+// Source : https://leetcode.com/problems/pascals-triangle/description/
 // Author : Shiv S. Kushwaha
 // Date   : 2014-06-18
 
-/********************************************************************************** 
-* 
-* Given numRows, generate the first numRows of Pascal's triangle.
-* 
-* For example, given numRows = 5,
-* Return
-* 
-* [
-*      [1],
-*     [1,1],
-*    [1,2,1],
-*   [1,3,3,1],
-*  [1,4,6,4,1]
-* ]
-* 
-*               
-**********************************************************************************/
+/*
+Given numRows, generate the first numRows of Pascal's triangle.
+For example, given numRows = 5,
+Return
 
-#include <stdlib.h>
+[
+     [1],
+    [1,1],
+   [1,2,1],
+  [1,3,3,1],
+ [1,4,6,4,1]
+]
+*/
+
 #include <vector>
 #include <iostream>
 using namespace std;
 
-vector<vector<int> > generate(int numRows) 
-{
-    vector<vector<int> > pascalTriangle;
-    for (int i=0; i<numRows; i++){
-        vector<int> v;
-        if (i==0){
-            v.push_back(1);
-        } else {
-            v.push_back(1);
-            for(int j=0; j<pascalTriangle[i-1].size()-1; j++){
-                v.push_back(pascalTriangle[i-1][j] + pascalTriangle[i-1][j+1]);
-            }
-            v.push_back(1);
+vector<vector<int> > generate(int numRows) {
+        vector<vector<int>> r(numRows);
+
+        for (int i = 0; i < numRows; i++) {
+            r[i].resize(i + 1);
+            r[i][0] = r[i][i] = 1;
+
+            for (int j = 1; j < i; j++)
+                r[i][j] = r[i - 1][j - 1] + r[i - 1][j];
         }
-        pascalTriangle.push_back(v); 
-    }
-    return pascalTriangle;
+
+        return r;
 }
 
 void printTriangle(vector< vector<int> > pt)

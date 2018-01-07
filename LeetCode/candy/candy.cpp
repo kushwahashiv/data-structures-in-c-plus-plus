@@ -1,8 +1,7 @@
+// https://leetcode.com/problems/candy/description/
+// Author : Shiv S. Kushwaha
+
 /*
-https://oj.leetcode.com/problems/candy/
-
- Author : Shiv S. Kushwaha
-
 There are N children standing in a line. Each child is assigned a rating value.
 You are giving candies to these children subjected to the following requirements:
 Each child must have at least one candy.
@@ -27,41 +26,39 @@ For example:
 3) total candy is 19
 */
 
-#include <stdlib.h>
 #include <time.h>
 #include <iostream>
 #include <vector>
 using namespace std;
 
 
-void print(vector<int> &v);
-
-
 int candy(vector<int> &ratings)
-{
-
-  vector<int> candyCnt(ratings.size());
-  //allocate candies, considering the minimal rating on the left
-
-  candyCnt[0] = 1;
-  for (int i = 1; i < ratings.size(); i++)
-  {
-    candyCnt[i] = ratings[i] > ratings[i - 1] ? candyCnt[i - 1] + 1 : 1;
-  }
-
-  print(candyCnt);
-  //modify the allocation, considering the minimal rating on the right
-  int totalCandy = candyCnt[ratings.size() - 1];
-
-  for (int i = ratings.size() - 2; i >= 0; i--)
-  {
-    candyCnt[i] = (ratings[i] > ratings[i + 1] && candyCnt[i + 1] + 1 > candyCnt[i]) ? candyCnt[i + 1] + 1 : candyCnt[i];
-    //count total candies by the way
-    totalCandy += candyCnt[i];
-  }
-  print(candyCnt);
-  return totalCandy;
+ {
+	 int size=ratings.size();
+	 if(size<=1)
+		 return size;
+	 vector<int> num(size,1);
+	 for (int i = 1; i < size; i++)
+	 {
+		 if(ratings[i]>ratings[i-1])
+			 num[i]=num[i-1]+1;
+	 }
+	 for (int i= size-1; i>0 ; i--)
+	 {
+		 if(ratings[i-1]>ratings[i])
+			 num[i-1]=max(num[i]+1,num[i-1]);
+	 }
+	 int result=0;
+	 for (int i = 0; i < size; i++)
+	 {
+		 result+=num[i];
+		// cout<<num[i]<<" ";
+	 }
+	 return result;
 }
+
+
+// SF
 
 void generateRatings(vector<int> &ratings, int n)
 {

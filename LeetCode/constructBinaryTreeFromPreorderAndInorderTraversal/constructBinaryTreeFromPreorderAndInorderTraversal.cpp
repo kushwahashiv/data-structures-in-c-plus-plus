@@ -1,18 +1,12 @@
-// Source : https://oj.leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/
+// Source : https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/description/
 // Author : Shiv S. Kushwaha
 // Date   : 2014-07-09
 
-/********************************************************************************** 
-* 
-* Given preorder and inorder traversal of a tree, construct the binary tree.
-* 
-* Note:
-* You may assume that duplicates do not exist in the tree.
-* 
-*               
-**********************************************************************************/
-
-#include <stdio.h>
+/*
+Given preorder and inorder traversal of a tree, construct the binary tree.
+Note:
+You may assume that duplicates do not exist in the tree.
+*/
 #include <vector>
 #include <queue>
 using namespace std;
@@ -24,53 +18,29 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
 };
 
-TreeNode *buildTree(vector<int>& preorder, int& preidx, vector<int>& inorder);
 
 TreeNode *buildTree(vector<int> &preorder, vector<int> &inorder) {
-    int preidx=0;
-    return buildTree(preorder, preidx, inorder);
+    return create(preorder, inorder, 0, preorder.size() - 1, 0, inorder.size() - 1);
 }
 
-TreeNode *buildTree(vector<int>& preorder, int& preidx, vector<int>& inorder) {
-
-    if (preorder.size()<=0 || inorder.size()<=0 ) return nullptr;
-
-    TreeNode *root = new TreeNode(preorder[preidx]);
-    if (inorder.size()==1){
-        return root;
+TreeNode* create(vector<int>& preorder, vector<int>& inorder, int ps, int pe, int is, int ie){
+    if(ps > pe){
+        return nullptr;
     }
-
-    int i;
-    for(i=0; i<inorder.size(); i++){
-        if (inorder[i] == preorder[preidx]){
+    TreeNode* node = new TreeNode(preorder[ps]);
+    int pos;
+    for(int i = is; i <= ie; i++){
+        if(inorder[i] == node->val){
+            pos = i;
             break;
         }
     }
-
-    //error: not found
-    if (i == inorder.size()) return nullptr;
-
-    if (preidx+1 >= preorder.size()){
-        return root;
-    }
-
-    
-    vector<int> v(inorder.begin(), inorder.begin()+i);
-    if (v.size()>0) {
-        preidx++;
-        root->left = buildTree(preorder, preidx, v);
-    }
-
-    v.clear();
-    v.assign(inorder.begin()+i+1, inorder.end());
-    if (v.size()>0) {
-        preidx++;
-        root->right = buildTree(preorder, preidx, v);
-    }
-
-    return root;
+    node->left = create(preorder, inorder, ps + 1, ps + pos - is, is, pos - 1);
+    node->right = create(preorder, inorder, pe - ie + pos + 1, pe, pos + 1, ie);
+    return node;
 }
 
+// SF
 void printTree_pre_order(TreeNode *root)
 {
     if (root == nullptr){

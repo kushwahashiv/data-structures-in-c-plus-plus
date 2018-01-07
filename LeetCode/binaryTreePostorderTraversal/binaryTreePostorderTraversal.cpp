@@ -1,29 +1,21 @@
 /*
-Source : https://oj.leetcode.com/problems/binary-tree-postorder-traversal/
+Source : https://leetcode.com/problems/binary-tree-postorder-traversal/description/
 Author : Shiv S. Kushwaha
 Date   : 2014-07-21
 
-*********************************************************************************
-
 Given a binary tree, return the postorder traversal of its nodes' values.
-
 For example:
 Given binary tree {1,#,2,3},
-
-     1
-   /  \
-  #     2
- / \   / \
-#   # 3   #
-
+   1
+    \
+     2
+    /
+   3
 return [3,2,1].
 
 Note: Recursive solution is trivial, could you do it iteratively?
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -36,26 +28,30 @@ struct TreeNode {
   TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
 };
 
-vector<int> postorderTraversal1(TreeNode *root);
-vector<int> postorderTraversal2(TreeNode *root);
+vector<int> postorderTraversal(TreeNode *root) {
+        stack<TreeNode*> nodeStack;
+        vector<int> result;
+        //base case
+        if(root==NULL)
+        return result;
+        nodeStack.push(root);
+    while(!nodeStack.empty())
+    {
+        TreeNode* node= nodeStack.top();
+        result.push_back(node->val);
+        nodeStack.pop();
+        if(node->left)
+        nodeStack.push(node->left);
+        if(node->right)
+        nodeStack.push(node->right);
+    }
+     reverse(result.begin(),result.end());
+     return result;
 
-
-// We have two methods here.
-//   1) the first one acutally is pre-order but reversed the access order.
-//   2) the second one is the traditional one 
-
-vector<int> postorderTraversal(TreeNode *root)
-{
-  if (rand() % 3){
-    cout << "---method one---" << endl;
-    return postorderTraversal1(root);
-  }
-  cout << "---method two---" << endl;
-  return postorderTraversal2(root);
 }
 
-
-vector<int> postorderTraversal1(TreeNode *root) 
+//
+vector<int> postorderTraversal1(TreeNode *root)
 {
   vector<int> v;
   vector<TreeNode*> stack;
@@ -111,7 +107,7 @@ vector<int> postorderTraversal2(TreeNode *root) {
   return v;
 }
 
-
+// supporting functions
 TreeNode* createTree(int a[], int n)
 {
   if (n <= 0) return nullptr;

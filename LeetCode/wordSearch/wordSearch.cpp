@@ -1,57 +1,58 @@
-// Source : https://oj.leetcode.com/problems/word-search/
+// Source : https://leetcode.com/problems/word-search/description/
 // Author : Shiv S. Kushwaha
 // Date   : 2014-07-19
 
-/********************************************************************************** 
-* 
-* Given a 2D board and a word, find if the word exists in the grid.
-* 
-* The word can be constructed from letters of sequentially adjacent cell, 
-* where "adjacent" cells are those horizontally or vertically neighboring. 
-* The same letter cell may not be used more than once.
-* 
-* For example,
-* Given board = 
-* 
-* [
-*   ["ABCE"],
-*   ["SFCS"],
-*   ["ADEE"]
-* ]
-* 
-* word = "ABCCED", -> returns true,
-* word = "SEE", -> returns true,
-* word = "ABCB", -> returns false.
-* 
-*               
-**********************************************************************************/
+/*
+Given a 2D board and a word, find if the word exists in the grid.
+The word can be constructed from letters of sequentially adjacent cell, where "adjacent" cells are those horizontally or vertically neighboring. The same letter cell may not be used more than once.
 
+For example,
+Given board =
+[
+  ['A','B','C','E'],
+  ['S','F','C','S'],
+  ['A','D','E','E']
+]
+word = "ABCCED", -> returns true,
+word = "SEE", -> returns true,
+word = "ABCB", -> returns false.
+*/
 #include <iostream>
 #include <vector>
 #include <string>
 using namespace std;
 
-//Recursive backtracking algorithm
-bool exist(vector<vector<char> > &board, string word, int idx, int row, int col, vector< vector<int> > &mask) {
-    int i = row;
-    int j = col;
-    if (board[i][j] == word[idx] && mask[i][j]==0 ) {
-        mask[i][j]=1; //mark the current char is matched
-        if (idx+1 == word.size()) return true;
-        //checking the next char in `word` through the right, left, up, down four directions in the `board`.
-        idx++; 
-        if (( i+1<board.size()    && exist(board, word, idx, i+1, j, mask) ) ||
-            ( i>0                 && exist(board, word, idx, i-1, j, mask) ) ||
-            ( j+1<board[i].size() && exist(board, word, idx, i, j+1, mask) ) ||
-            ( j>0                 && exist(board, word, idx, i, j-1, mask) ) )
+bool dfs (vector<vector<char>>& board, string &word, int col, int row, int beg)
+    {
+        bool res(false);
+        if (board[col][row] == word[beg])
         {
-             return true;
+            if (beg >= word.size()-1)
+                return true;
+            char temp (board[col][row]);
+            board[col][row] = '*';
+            if (col+1<board.size() && dfs(board,word,col+1,row,beg+1))
+                res = true;
+            else if (col>0 && dfs(board,word,col-1,row,beg+1))
+                res = true;
+            else if (row+1 < board[0].size() && dfs(board,word,col,row+1,beg+1))
+                res = true;
+            else if (row>0 && dfs(board,word,col,row-1,beg+1))
+                res = true;
+            board[col][row] = temp;
         }
-        mask[i][j]=0; //cannot find any successful solution, clear the mark. (backtracking)
+        return res;
+    }
+    bool exist(vector<vector<char>>& board, string word) {
+        for (int i(0);i!=board.size();++i)
+            for (int j(0);j!=board[i].size();++j)
+                if (dfs(board,word,i,j,0))
+                    return true;
+        return false;
     }
 
-    return false;
-}
+
+    // 2
 
 bool exist(vector<vector<char> > &board, string word) {
     if (board.size()<=0 || word.size()<=0) return false;
@@ -74,6 +75,8 @@ bool exist(vector<vector<char> > &board, string word) {
     return false;
 }
 
+
+//
 vector< vector<char> > buildBoard(char b[][5], int r, int c) {
     vector< vector<char> > board;
     for (int i=0; i<r; i++){

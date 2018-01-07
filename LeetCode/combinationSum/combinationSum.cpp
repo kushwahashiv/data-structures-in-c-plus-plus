@@ -1,26 +1,22 @@
+// https://leetcode.com/problems/combination-sum/description/
+// Author : Shiv S. Kushwaha
+// Date   : 2014-07-19
+// Date   : 2014-07-19
+
 /*
- https://oj.leetcode.com/problems/combination-sum/
- Author : Shiv S. Kushwaha
- Date   : 2014-07-19
-
- Problem:
- Given a set of candidate numbers (C) and a target number (T), find all unique combinations
- in C where the candidate numbers sums to T.
-
- The same repeated number may be chosen from C unlimited number of times.
-
- Note:
-
- All numbers (including target) will be positive integers.
- Elements in a combination (a1, a2, … , ak) must be in non-descending order. (ie, a1 ≤ a2 ≤ … ≤ ak).
- The solution set must not contain duplicate combinations.
-
- For example, given candidate set 2,3,6,7 and target 7,
- A solution set is:
- [7]
- [2, 2, 3]
-
- */
+Given a set of candidate numbers (C) (without duplicates) and a target number (T),
+ find all unique combinations in C where the candidate numbers sums to T.
+The same repeated number may be chosen from C unlimited number of times.
+Note:
+All numbers (including target) will be positive integers.
+The solution set must not contain duplicate combinations.
+For example, given candidate set [2, 3, 6, 7] and target 7,
+A solution set is:
+[
+  [7],
+  [2, 2, 3]
+]
+*/
 
 #include <iostream>
 #include <vector>
@@ -28,43 +24,31 @@
 using namespace std;
 
 
-void combinationSumHelper(vector<int> &candidates, int start, int target, vector<int> &solution, vector< vector<int> > &result)
-{
-  if (target < 0)
-  {
-    return;
-  }
-  if (target == 0)
-  {
-    result.push_back(solution);
-  }
-  for (int i = start; i<candidates.size(); i++)
-  {
-    //remote duplicates
-    if (i>start && candidates[i] == candidates[i - 1])
-    {
-      continue;
+class Solution {
+public:
+    std::vector<std::vector<int> > combinationSum3(int k, int n) {
+        std::vector<std::vector<int> > res;
+        std::vector<int> combination;
+        combinationSum3(n, res, combination, 1, k);
+        return res;
     }
-    solution.push_back(candidates[i]);
-    combinationSumHelper(candidates, i, target - candidates[i], solution, result);
-    solution.pop_back();
-  }
-}
+private:
+    void combinationSum3(int target, std::vector<std::vector<int> > &res, std::vector<int> &combination, int begin, int need) {
+        if (!target) {
+            res.push_back(combination);
+            return;
+        }
+        else if (!need)
+            return;
+        for (int i = begin; i != 10 && target >= i * need + need * (need - 1) / 2; ++i) {
+            combination.push_back(i);
+            combinationSum3(target - i, res, combination, i + 1, need - 1);
+            combination.pop_back();
+        }
+    }
+};
 
-vector<vector<int> > combinationSum(vector<int> &candidates, int target)
-{
-  vector< vector<int> > result;
-  if (candidates.size() <= 0)
-  {
-    return result;
-  }
-  sort(candidates.begin(), candidates.end());
-
-  vector<int> solution;
-  combinationSumHelper(candidates, 0, target, solution, result);
-
-  return result;
-}
+// SF
 
 void printMatrix(vector< vector<int> > &vv)
 {

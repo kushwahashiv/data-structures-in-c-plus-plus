@@ -1,25 +1,47 @@
-// Source : https://oj.leetcode.com/problems/word-break/
+// Source : https://leetcode.com/problems/word-break/description/
 // Author : Shiv S. Kushwaha
 // Date   : 2014-07-01
 
-/********************************************************************************** 
-* 
-* Given a string s and a dictionary of words dict, determine if s can be segmented 
-* into a space-separated sequence of one or more dictionary words.
-* 
-* For example, given
-* s = "leetcode",
-* dict = ["leet", "code"].
-* 
-* Return true because "leetcode" can be segmented as "leet code".
-* 
-*               
-**********************************************************************************/
+/*
+Given a non-empty string s and a dictionary wordDict containing a list of non-empty words,
+determine if s can be segmented into a space-separated sequence of one or more dictionary words.
+ You may assume the dictionary does not contain duplicate words.
+For example, given
+s = "leetcode",
+dict = ["leet", "code"].
+Return true because "leetcode" can be segmented as "leet code".
+The wordDict parameter had been changed to a list of strings (instead of a set of strings). Please reload the code definition to get the latest changes.
+*/
 
 #include <iostream>
 #include <vector>
 #include <set>
 using namespace std;
+
+bool wordBreak(string s, unordered_set<string> &dict) {
+        if(dict.size()==0) return false;
+
+        vector<bool> dp(s.size()+1,false);
+        dp[0]=true;
+
+        for(int i=1;i<=s.size();i++)
+        {
+            for(int j=i-1;j>=0;j--)
+            {
+                if(dp[j])
+                {
+                    string word = s.substr(j,i-j);
+                    if(dict.find(word)!= dict.end())
+                    {
+                        dp[i]=true;
+                        break; //next i
+                    }
+                }
+            }
+        }
+
+        return dp[s.size()];
+    }
 
 bool wordBreak(string s, set<string> &dict) {
 

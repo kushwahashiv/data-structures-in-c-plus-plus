@@ -1,12 +1,8 @@
-// Source : https://oj.leetcode.com/problems/insertion-sort-list/
+// Source : https://leetcode.com/problems/insertion-sort-list/description/
 // Author : Shiv S. Kushwaha
 // Date   : 2014-07-19
 
-/********************************************************************************** 
-* 
-* Sort a linked list using insertion sort.
-*               
-**********************************************************************************/
+//Sort a linked list using insertion sort.
 
 #include <stdio.h>
 #include <stdlib.h>

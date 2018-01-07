@@ -2,43 +2,31 @@
 // Author : Shiv S. Kushwaha
 // Date   : 2014-06-29
 
-/**********************************************************************************
-*
-* Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
-*
-* For example, given n = 3, a solution set is:
-*
-* "((()))", "(()())", "(())()", "()(())", "()()()"
-*
-*
-**********************************************************************************/
+/*
+Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+For example, given n = 3, a solution set is:
+"((()))", "(()())", "(())()", "()(())", "()()()"
+*/
 
 #include <string>
 #include <iostream>
 #include <vector>
 using namespace std;
 
-void generator(vector<string>& result, int left, int right, string s);
+void generator(vector<string> &v, string str, int n, int m){
+        if(n==0 && m==0) {
+            v.push_back(str);
+            return;
+        }
+        if(m > 0){ generator(v, str+")", n, m-1); }
+        if(n > 0){ generator(v, str+"(", n-1, m+1); }
+    }
+
 vector<string> generateParenthesis(int n) {
-
-	vector<string> result;
-	string s;
-	generator(result, n, n, s);
-	return result;
-}
-
-void generator(vector<string>& result, int left, int right, string s) {
-	if (left == 0 && right == 0) {
-		result.push_back(s);
-		return;
-	}
-	if (left > 0) {
-		generator(result, left - 1, right, s + '(');
-	}
-	if (right > 0 && right > left) {
-		generator(result, left, right - 1, s + ')');
-	}
-}
+        vector<string> res;
+        generator(res, "", n, 0);
+        return res;
+    }
 
 void printResult(vector<string>& result)
 {

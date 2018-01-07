@@ -2,11 +2,8 @@
 // Author : Shiv S. Kushwaha
 // Date   : 2014-12-03
 
-/*
- *    Given two strings S and T, determine if they are both one edit distance apart.
- */
+//Given two strings S and T, determine if they are both one edit distance apart.
 
-#include <stdlib.h>
 #include <string.h>
 #include <iostream>
 #include <string>

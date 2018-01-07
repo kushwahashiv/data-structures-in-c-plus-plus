@@ -1,85 +1,56 @@
-// Source : https://oj.leetcode.com/problems/valid-number/
+// Source : https://leetcode.com/problems/valid-number/description/
 // Author : Shiv S. Kushwaha
 // Date   : 2014-08-26
 
-/********************************************************************************** 
-* 
-* Validate if a given string is numeric.
-* 
-* Some examples:
-* "0" => true
-* "   0.1  " => true
-* "abc" => false
-* "1 a" => false
-* "2e10" => true
-* 
-* Note: It is intended for the problem statement to be ambiguous. 
-*       You should gather all requirements up front before implementing one.
-* 
-*               
-**********************************************************************************/
+/*
+Validate if a given string is numeric.
+Some examples:
+"0" => true
+" 0.1 " => true
+"abc" => false
+"1 a" => false
+"2e10" => true
+Note: It is intended for the problem statement to be ambiguous. You should gather all requirements up front before implementing one.
 
+Update (2015-02-10):
+The signature of the C++ function had been updated.
+If you still see your function signature accepts a const char * argument, please click the reload button  to reset your code definition.
+*/
 #include <iostream>
 using namespace std;
 
 
-bool isdigit(const char c){
-    return (c>='0' && c<='9');
-}
-bool isspace(const char c) {
-    return (c==' ' || c =='\t' || c=='\n' || c=='\r' || c=='\f' || c=='\v');
-}
+bool isNumber(const char *s)
+{
+    int i = 0;
 
-bool isNumber(const char *s) {
-    bool point = false;
-    bool hasE = false;
-    
-    //trim the space
-    while(isspace(*s)) s++;
-    //check empty 
-    if (*s == '\0' ) return false;
-    //check sign
-    if (*s=='+' || *s=='-') s++;
+    // skip the whilespaces
+    for(; s[i] == ' '; i++) {}
 
-    const char *head  = s;
-    for(; *s!='\0'; s++){
-        // if meet point
-        if ( *s == '.' ){
-            if ( hasE == true || point == true){
-                return false;
-            }
-            if ( s == head && !isdigit(*(s+1))  ){
-                return false;
-            }
-            point = true; 
-            continue; 
-        }
-        //if meet "e"
-        if ( *s == 'e' ){
-            if ( hasE == true || s == head) {
-                return false;
-            }
-            s++;
-            if ( *s=='+' || *s=='-' )  s++;
-            if ( !isdigit(*s) ) return false;
-      
-            hasE = true; 
-            continue; 
-        }
-        //if meet space, check the rest chars are space or not
-        if (isspace(*s)){
-            for (; *s != '\0'; s++){
-                if (!isspace(*s)) return false;
-            }
-            return true;
-        }
-        if ( !isdigit(*s) ) {
+    // check the significand
+    if(s[i] == '+' || s[i] == '-') i++; // skip the sign if exist
+
+    int n_nm, n_pt;
+    for(n_nm=0, n_pt=0; (s[i]<='9' && s[i]>='0') || s[i]=='.'; i++)
+        s[i] == '.' ? n_pt++:n_nm++;
+    if(n_pt>1 || n_nm<1) // no more than one point, at least one digit
+        return false;
+
+    // check the exponent if exist
+    if(s[i] == 'e') {
+        i++;
+        if(s[i] == '+' || s[i] == '-') i++; // skip the sign
+
+        int n_nm = 0;
+        for(; s[i]>='0' && s[i]<='9'; i++, n_nm++) {}
+        if(n_nm<1)
             return false;
-        }
-       
     }
-    
-    return true; 
+
+    // skip the trailing whitespaces
+    for(; s[i] == ' '; i++) {}
+
+    return s[i]==0;  // must reach the ending 0 of the string
 }
 
 

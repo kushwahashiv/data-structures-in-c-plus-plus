@@ -1,29 +1,23 @@
-// Source : https://oj.leetcode.com/problems/binary-tree-preorder-traversal/
+// Source :https://leetcode.com/problems/binary-tree-preorder-traversal/description/
 // Author : Shiv S. Kushwaha
 // Date   : 2014-07-21
 
-/********************************************************************************** 
-* 
-* Given a binary tree, return the preorder traversal of its nodes' values.
-* 
-* For example:
-* Given binary tree {1,#,2,3},
-* 
-*    1
-*     \
-*      2
-*     /
-*    3
-* 
-* return [1,2,3].
-* 
-* Note: Recursive solution is trivial, could you do it iteratively?
-*               
-**********************************************************************************/
+/*
+Given a binary tree, return the preorder traversal of its nodes' values.
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
+For example:
+Given binary tree [1,null,2,3],
+   1
+    \
+     2
+    /
+   3
+return [1,2,3].
+
+Note: Recursive solution is trivial, could you do it iteratively?
+*/
+
+
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -35,21 +29,29 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
 };
 
-vector<int> preorderTraversal1(TreeNode *root);
-vector<int> preorderTraversal2(TreeNode *root);
+vector<int> preorderTraversal(TreeNode *root) {
+        stack<TreeNode*> nodeStack;
+        vector<int> result;
+        //base case
+        if(root==NULL)
+        return result;
+        nodeStack.push(root);
+        while(!nodeStack.empty())
+        {
+            TreeNode* node= nodeStack.top();
+            result.push_back(node->val);
+            nodeStack.pop();
+            if(node->right)
+            nodeStack.push(node->right);
+            if(node->left)
+            nodeStack.push(node->left);
+        }
+        return result;
 
-vector<int> preorderTraversal(TreeNode *root) 
-{
-    //if (rand()%2)
-    {
-        cout << "---method one---" << endl;
-        return preorderTraversal1(root);
     }
 
-    cout << "---method two---" << endl;
-    return preorderTraversal2(root);
-}
 
+// 2
 vector<int> preorderTraversal1(TreeNode *root) 
 {
     vector<int> v;
@@ -77,6 +79,7 @@ vector<int> preorderTraversal1(TreeNode *root)
     return v;
 }
 
+// 3
 vector<int> preorderTraversal2(TreeNode *root)
 {
     vector<int> v;
@@ -102,6 +105,7 @@ vector<int> preorderTraversal2(TreeNode *root)
     return v;
 }
 
+// supporting functions
 TreeNode* createTree(int a[], int n)
 {
     if (n<=0) 

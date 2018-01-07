@@ -1,188 +1,104 @@
-// Source : https://oj.leetcode.com/problems/copy-list-with-random-pointer/
-// Author : Hao Chen
+// https://leetcode.com/problems/copy-list-with-random-pointer/description/
+// Author : Shiv S. Kushwaha
 // Date   : 2014-06-18
 
-/********************************************************************************** 
-* 
-* A linked list is given such that each node contains an additional random pointer 
-* which could point to any node in the list or null.
-* 
-* Return a deep copy of the list.
-* 
-*               
-**********************************************************************************/
+/*
+A linked list is given such that each node contains an additional random pointer
+which could point to any node in the list or null.
+Return a deep copy of the list.
+*/
 
+/*
+Here's how the 1st algorithm goes.
+Consider l1 as a node on the 1st list and l2 as the corresponding node on 2nd list.
+Step 1:
+Build the 2nd list by creating a new node for each node in 1st list.
+While doing so, insert each new node after it's corresponding node in the 1st list.
+Step 2:
+The new head is the 2nd node as that was the first inserted node.
+Step 3:
+Fix the random pointers in the 2nd list: (Remember that l1->next is actually l2)
+l2->random will be the node in 2nd list that corresponds l1->random,
+which is next node of l1->random.
+Step 4:
+Separate the combined list into 2: Splice out nodes that are part of second list.
+Return the new head that we saved in step 2.
+*/
 
-
-/**
- * Definition for singly-linked list with a random pointer.
- * struct RandomListNode {
- *     int label;
- *     RandomListNode *next, *random;
- *     RandomListNode(int x) : label(x), next(NULL), random(NULL) {}
- * };
- */
-
-
-/*    
- *
- *  The idea as below:
- *
- *  Consider we have a linked list as below:
- *
- *    node1->random = node2;
- *    node2->random = node1;
- *    node3->random = node1;
- *    
- *       +-------------+                         
- *       |             v                         
- *    +-------+    +-------+    +-------+        
- *    | node1 |----> node2 |----> node3 |--->NULL
- *    +-------+    +-------+    +-------+        
- *      ^  ^           |           |             
- *      |  +-----------+           |             
- *      +--------------------------+             
- *    
- *
- *  To copy the list, 
- *   
- *    1) We insert a new node for each node's next position
- *
- * 
- *       +-------------------------+                                     
- *       |                         v                                     
- *    +--+----+     +-----+    +-------+     +-----+    +-------+     +-----+     
- *    | node1 |---> | NEW |----> node2 |---> | NEW |----> node3 |---> | NEW | ---> NULL
- *    +-------+     +-----+    +---+---+     +-----+    +--+----+     +-----+ 
- *      ^  ^                       |                       |             
- *      |  +-----------------------+                       |             
- *      +--------------------------------------------------+             
- *
- *    2) Then, we can construt the new node's random pointer:
- *
- *        (node1->next) -> random  = (node1->random) -> next;
- *
- *    3) After we take out all of the "NEW" node to finish the copy.
- *    
- */
-
-class Solution {
-public:
-    RandomListNode *copyRandomList(RandomListNode *head) {
-        RandomListNode *p = NULL, *h=NULL, *t=NULL;
-        if (head == NULL){
-            return NULL;
-        }
-        
-        //creat a new node for each node and insert its next
-        p = head;
-        while ( p != NULL){
-            RandomListNode *node = new RandomListNode(p->label);
-            node->next = p->next;
-            p->next = node;
-            p = node->next;
-        }
-        
-        //copy random pointer for each new node
-        p = head;
-        while (p != NULL){
-            if (p->random != NULL){
-                p->next->random = p->random->next;
-            }
-            p = p->next->next;
-        }
-        
-        //break to two list
-        p = head;
-        h = t = head->next;
-        while ( p != NULL ){
-            p->next = p->next->next;
-            if (t->next!=NULL){
-                t->next = t->next->next;
-            }
-            
-            p = p->next;
-            t = t->next;
-        }
-        
-        return h;
+RandomListNode *copyRandomList(RandomListNode *head) {
+    RandomListNode *newHead, *l1, *l2;
+    if (head == NULL) return NULL;
+    for (l1 = head; l1 != NULL; l1 = l1->next->next) {
+        l2 = new RandomListNode(l1->label);
+        l2->next = l1->next;
+        l1->next = l2;
     }
-};
+
+    newHead = head->next;
+    for (l1 = head; l1 != NULL; l1 = l1->next->next) {
+        if (l1->random != NULL) l1->next->random = l1->random->next;
+    }
+
+    for (l1 = head; l1 != NULL; l1 = l1->next) {
+        l2 = l1->next;
+        l1->next = l2->next;
+        if (l2->next != NULL) l2->next = l2->next->next;
+    }
+
+    return newHead;
+}
 
 
 /*
- *  Considering we have a link as below:
- *
- *
- *       +-------------+
- *       |             v
- *    +-------+    +-------+    +-------+
- *    | node1 |----> node2 |----> node3 |--->NULL
- *    +-------+    +-------+    +-------+
- *      ^  ^           |           |
- *      |  +-----------+           |
- *      +--------------------------+
- * 
- *  1) Using a map to store each node's random pointer's position
- *
- *      map[node1->random] = 1;
- *      map[node2->random] = 0;
- *      map[node3->random] = 0;
- *
- *  2) Clone the linked list (only consider the next pointer)
- *
- *      new1 --> new2 --> new3 --> NULL 
- *
- *  3) Using an array to strore the order of the cloned linked-list
- *
- *      v[0] = &new1
- *      v[1] = &new2
- *      v[2] = &new3
- * 
- *  4) Then we can clone the random pointers.
- *
- *      new->random = v [ map[node->random] ]
- *
- */ 
-class MySolution {
-public:
-    RandomListNode *copyRandomList(RandomListNode *head) {
+Here's how the 2nd algorithm goes.
+Consider l1 as a node on the 1st list and l2 as the corresponding node on 2nd list.
+Step 1:
+Build the 2nd list by creating a new node for each node in 1st list.
+While doing so, set the next pointer of the new node to the random pointer
+of the corresponding node in the 1st list.  And set the random pointer of the
+1st list's node to the newly created node.
+Step 2:
+The new head is the node pointed to by the random pointer of the 1st list.
+Step 3:
+Fix the random pointers in the 2nd list: (Remember that l1->random is l2)
+l2->random will be the node in 2nd list that corresponds to the node in the
+1st list that is pointed to by l2->next,
+Step 4:
+Restore the random pointers of the 1st list and fix the next pointers of the
+2nd list. random pointer of the node in 1st list is the next pointer of the
+corresponding node in the 2nd list.  This is what we had done in the
+1st step and now we are reverting back. next pointer of the node in
+2nd list is the random pointer of the node in 1st list that is pointed to
+by the next pointer of the corresponding node in the 1st list.
+Return the new head that we saved in step 2.
+*/
 
-        RandomListNode *p = NULL, *h=NULL, *t=NULL;
-        //using a map to store the random pointer's postion.
-        map<RandomListNode*, int> m;
-        //construct the map
-        int pos =0;
-        for ( p = head; p != NULL; p = p->next, pos++){
-            m[p] = pos;
-        }
-        
-        //clone the linked list  (only consider the next pointer)
-        //and using a vector to store each node's postion.
-        vector<RandomListNode*> v;
-        for (p = head; p != NULL; p = p->next){
-            RandomListNode *node = new RandomListNode(p->label);
-            v.push_back(node);
-            if (h==NULL){
-                h = t = node;
-            }else{
-                t->next = node;
-                t = node;
-            }
-        }
+RandomListNode *copyRandomList(RandomListNode *head) {
+    RandomListNode *newHead, *l1, *l2;
+    if (head == NULL) return NULL;
 
-        //p => source link head 
-        //t => new link head
-        //move the p and t synchronously, and 
-        //     t->random = vector[ map[p->random] ];
-        for (t=h, p = head; t!=NULL && p!= NULL; p=p->next, t=t->next){
-            if (p->random!=NULL) {
-                pos = m[p->random];
-                t->random = v[pos];
-            }
-        }
-        
-        return h;
-        
+    for (l1 = head; l1 != NULL; l1 = l1->next) {
+        l2 = new RandomListNode(l1->label);
+        l2->next = l1->random;
+        l1->random = l2;
     }
-};
+
+    newHead = head->random;
+    for (l1 = head; l1 != NULL; l1 = l1->next) {
+        l2 = l1->random;
+        l2->random = l2->next ? l2->next->random : NULL;
+    }
+
+    for (l1 = head; l1 != NULL; l1 = l1->next) {
+        l2 = l1->random;
+        l1->random = l2->next;
+        l2->next = l1->next ? l1->next->random : NULL;
+    }
+
+    return newHead;
+}
+
+int main(){
+
+return 0;
+}
