@@ -57,7 +57,7 @@ vector<string> anagrams(vector<string> &strs)
 
 int main()
 {
-  std::vector<string>  words = { "hello", "world", "hi", "world" };
+  std::vector<string>  words = { "anagram", "nagaram", "rat", "car" };
   auto result = anagrams(words);
 
   for (std::string item : result)

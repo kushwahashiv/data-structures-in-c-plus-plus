@@ -18,6 +18,7 @@ In this case, no transaction is done, i.e. max profit = 0.
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 struct Node
@@ -27,7 +28,6 @@ struct Node
   Node *right;
   Node(int x) : val(x), left(nullptr), right(nullptr) {}
 };
-
 
 int maxProfit(vector<int> &prices) {
   int maxPro = 0;
@@ -41,12 +41,9 @@ int maxProfit(vector<int> &prices) {
 
 int main()
 {
-  std::vector<int> prices = { 22, 32, 45, 31, 55, 21, 10, 19 };
+  std::vector<int> prices = { 7, 1, 5, 3, 6, 4 };
   std::cout << maxProfit(prices) << std::endl;
-  std::cout << maxProfit2(prices) << std::endl;
-  std::cout << maxProfit3(prices) << std::endl;
 
   system("pause");
-
   return 0;
 }

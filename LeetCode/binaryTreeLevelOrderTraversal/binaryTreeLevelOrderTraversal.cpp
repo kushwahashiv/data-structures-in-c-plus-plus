@@ -38,7 +38,7 @@ vector<vector<int>> ret;
 
 void buildVector(TreeNode *root, int depth)
 {
-  if (root == NULL) return;
+  if (root == nullptr) return;
   if (ret.size() == depth)
     ret.push_back(vector<int>());
 

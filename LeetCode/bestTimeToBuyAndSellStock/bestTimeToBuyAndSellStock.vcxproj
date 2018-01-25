@@ -82,8 +82,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="bestTimeToBuyAndSellStock.cpp" />
-    <ClCompile Include="bestTimeToBuyAndSellStock.II.cpp" />
-    <ClCompile Include="bestTimeToBuyAndSellStock.III.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

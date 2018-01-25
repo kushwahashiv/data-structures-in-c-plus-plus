@@ -21,7 +21,7 @@ A solution set is:
 using namespace std;
 
 // method: 1
-vector<vector<int> > threeSum(vector<int> &num) {
+vector<vector<int> > threeSum1(vector<int> &num) {
   vector<vector<int> > res;
   std::sort(num.begin(), num.end());
   for (int i = 0; i < num.size(); i++) {
@@ -53,7 +53,7 @@ vector<vector<int> > threeSum(vector<int> &num) {
 
         // Processing duplicates of Number 3
         // Rolling the back pointer to the next different number backwards
-        while (front < back && num[back] == triplet[2]) rear--;
+        while (front < back && num[back] == triplet[2]) back--;
       }
 
     }
@@ -112,7 +112,7 @@ void printMatrix(vector<vector<int> > &matrix)
 
 int main()
 {
-  vector<int> n = { -1, 1, 1, 1, -1, -1, 0, 0, 0 };
+  vector<int> n = { -1, 0, 1, 2, -1, -4 };
   vector< vector<int> > result = threeSum(n);
   printMatrix(result);
 

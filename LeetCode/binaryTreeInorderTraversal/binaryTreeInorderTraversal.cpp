@@ -15,9 +15,10 @@ return [1,3,2].
 Note: Recursive solution is trivial, could you do it iteratively?
 */
 
-
 #include <iostream>
 #include <vector>
+#include<stack>
+
 using namespace std;
 
 struct TreeNode
@@ -40,7 +41,7 @@ vector<int> inorderTraversal(TreeNode *root) {
     if (pNode->left)
     {
       stack.push(pNode->left);
-      pNode->left = NULL;
+      pNode->left = nullptr;
     }
     else
     {
@@ -54,8 +55,7 @@ vector<int> inorderTraversal(TreeNode *root) {
 }
 
 // 2
-
-vector<int> inorderTraversal(TreeNode *root)
+vector<int> inorderTraversal2(TreeNode *root)
 {
   vector<TreeNode*> stack;
   vector<int> v;

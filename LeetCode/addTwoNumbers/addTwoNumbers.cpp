@@ -25,11 +25,10 @@ ListNode(int x) : val(x), next(nullptr) {}
 #include <string>
 using namespace std;
 
-
-struct Node
-{
+struct ListNode {
   int val;
-  Node *next;
+  ListNode *next;
+  ListNode(int x) : val(x), next(nullptr) {}
 };
 
 
@@ -51,29 +50,22 @@ int main()
 {
   //Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
   //Output : 7 -> 0 -> 8
-  Solution obj;
+ 
+  ListNode* newNode;
 
-  Node* newNode;
-
-  Node* a = new Node();
-  a->val = 2;
-  newNode = new Node();
-  newNode->val = 4;
+  ListNode* a = new ListNode(2);
+  newNode = new ListNode(4);
   a->next = newNode;
-  newNode = new Node();
-  newNode->val = 3;
+  newNode = new ListNode(3);
   a->next->next = newNode;
 
-  Node* b = new Node();
-  b->val = 5;
-  newNode = new Node();
-  newNode->val = 6;
+  ListNode* b = new ListNode(5);
+  newNode = new ListNode(6);
   b->next = newNode;
-  newNode = new Node();
-  newNode->val = 4;
+  newNode = new ListNode(4);
   b->next->next = newNode;
 
-  Node* c = obj.addTwoNumbers(a, b);
+  ListNode* c = addTwoNumbers(a, b);
   while (c != nullptr)
   {
     std::cout << c->val;
