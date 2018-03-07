@@ -14,7 +14,7 @@
     <ProjectGuid>{62B74FC7-FE74-4EBB-8B1D-5F9051AE400D}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>My3Sum</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

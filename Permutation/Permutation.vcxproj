@@ -14,7 +14,7 @@
     <ProjectGuid>{ABDF8A69-D844-4E85-91A3-EF2951B5F58E}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Permutation</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

@@ -14,7 +14,7 @@
     <ProjectGuid>{E13FC0CA-2B5D-459D-A2E6-BD2E7BF6B5DF}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>TheGridSearch</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
